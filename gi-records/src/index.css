@@ -1,0 +1,50 @@
+
+html,body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: sans-serif !important;
+  background-color: #16171C !important;
+  background-size: 100%;
+  background-position: bottom;
+}
+
+.mainCard {
+  padding: 0 !important;
+}
+
+.cardChart {
+  padding: 0 !important;
+}
+
+.cardTitle{
+  text-align: center;
+}
+
+.signInContainer {
+  border-top-left-radius: 24px;
+  border-bottom-right-radius: 24px;
+}
+
+.signUpContainer {
+  border-top-left-radius: 24px;
+  border-bottom-right-radius: 24px;
+}
+
+form{
+  padding: 20px;
+  margin-top: 60px;
+}
+
+form button, form h5{
+  margin: 20px 0;
+}
+
+input[type=text]:not(.browser-default):focus:not([readonly]),
+input[type=email]:not(.browser-default):focus:not([readonly]),
+input[type=password]:not(.browser-default):focus:not([readonly]),
+
+textarea.materialize-textarea:focus:not([readonly]){
+  border-color: #ec407a;
+  box-shadow: none;
+}
