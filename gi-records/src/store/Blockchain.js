@@ -19,6 +19,7 @@ function Blockchain(props) {
   const [lats, setCoords] = useState([]);
   const [address, setAddress] = useState('');
   const [id, setId] = useState('');
+  const [temp, setTemp] = useState([]);
 
   const { profile } = props;
 
@@ -102,6 +103,7 @@ function Blockchain(props) {
 
     console.log(array);
     setCoords(array);
+    setTemp(array);
   }
 
   return (
@@ -121,7 +123,7 @@ function Blockchain(props) {
         </div>
         <button className="waves-effect waves-light btn">Get</button>
       </form>
-      <MapContainer setPoints={array}/>
+      <MapContainer temp={temp}/>
       {/*<h2 className="white-text">{lats}</h2>*/}
     </div>
   );

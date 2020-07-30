@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 
 class ChartBoard extends Component {
-    render(){
-        return(
-            <p className='white-text'>Chartboard</p>
+    render() {
+        return (
+            <div className="container">
+                <p className='white-text'>Chartboard</p>
+                <div className="square"></div>
+            </div>
         )
     }
 }

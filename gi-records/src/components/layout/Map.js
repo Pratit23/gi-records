@@ -60,25 +60,28 @@
 
 // export default connect(mapStateToProps, null)(MyMapComponent);
 
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker,Polygon } from "react-google-maps"
 import { connect } from 'react-redux'
 
-class MyMapComponent extends Component {
-    state = {
-        points: []
-    }
 
+ const MyMapComponent = (props) =>  {
 
-    render() {
+    const [points, setPoints] = useState([]);
+    useEffect(() => {
+        if((props.temp).length !== 0){
+            setPoints((props.temp)[0])
+        }
+    },)
+    
         const GoogleMapExample = withGoogleMap(props => (
             <GoogleMap defaultZoom={15} defaultCenter={{ lat: 15.998976, lng: 73.675307 }}>
                 {props.isMarkerShown && <Marker position={{ lat: 15.998976, lng: 73.675307 }} />}
                 <Polygon
-                    path={props.points}
+                    path={points}
                     //key={1}
                     options={{
-                        fillColor: "#000",
+                        fillColor: "#F15152",
                         fillOpacity: 0.4,
                         strokeColor: "#000",
                         strokeOpacity: 1,
@@ -86,6 +89,7 @@ class MyMapComponent extends Component {
                     }} />
             </GoogleMap>
         ));
+        console.log(points)
         return (
             <div>
                 <GoogleMapExample
@@ -94,7 +98,6 @@ class MyMapComponent extends Component {
                 />
             </div>
         );
-    }
 };
 
 const mapStateToProps = (state) => {

@@ -40,6 +40,23 @@ form button, form h5{
   margin: 20px 0;
 }
 
+.square{
+  height: 300px;
+  width: 300px;
+  background-color: #F15152;
+  transition: 1s;
+}
+
+.square:hover {
+  background-color: #3e8e41;
+  /*transform: rotate(360deg);*/
+  width: 100%;
+  outline-color: white;
+  outline-width: 10px;
+  outline-style: solid;
+  transform: rotate(90deg);
+}
+
 input[type=text]:not(.browser-default):focus:not([readonly]),
 input[type=email]:not(.browser-default):focus:not([readonly]),
 input[type=password]:not(.browser-default):focus:not([readonly]),
