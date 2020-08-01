@@ -3,11 +3,12 @@ import { Link, NavLink } from 'react-router-dom'
 import SignedInLinks from './SignedInLinks'
 import SignedOutLinks from './SignedOutLinks'
 import { connect } from 'react-redux'
-import Tabs from './Tabs'
+import SecondNav from './SecondNav'
 
 const Navbar = (props) => {
     const { auth, profile } = props;
     const links = auth.uid ? <SignedInLinks profile={profile} /> : <SignedOutLinks />;
+    const bar = auth.uid ? <SecondNav/> : null;
     console.log(auth);
     return (
         <nav className="nav-extended">
@@ -15,13 +16,7 @@ const Navbar = (props) => {
                 <Link to='/' className="brand-logo">Gi-Records</Link>
                 {links}
             </div>
-            <div className="nav-wrapper grey darken-4">
-                <ul id="nav-mobile" className="left hide-on-med-and-down">
-                    <li><NavLink to='/'>Dashboard</NavLink></li>
-                    <li><NavLink to='/chartboard'>Chartboard</NavLink></li>
-                    <li><NavLink to='/AddLand'>Add Land</NavLink></li>
-                </ul>
-            </div>
+            { bar }
         </nav>
     )
 }

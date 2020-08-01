@@ -69,8 +69,8 @@ import { connect } from 'react-redux'
 
     const [points, setPoints] = useState([]);
     useEffect(() => {
-        if((props.temp).length !== 0){
-            setPoints((props.temp)[0])
+            if((props.temp).length !== 0){
+                setPoints((props.temp))
         }
     },)
     

@@ -7,7 +7,7 @@ import MapContainer from '../components/layout/Map'
 
 // note, contract address must match the address provided by Truffle after migrations
 const web3 = new Web3(Web3.givenProvider);
-const contractAddr = '0xbD4A1cc44A5d34204efCF45DB45f4B2EAe1c3c42';
+const contractAddr = '0x8b050910ecbe5782064719a73e2F30098CF3A16D';
 const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
 var newArray = '';
 var splitArray = []
@@ -101,7 +101,7 @@ function Blockchain(props) {
       }
     }
 
-    console.log(array);
+    console.log("Array : ",array);
     setCoords(array);
     setTemp(array);
   }
