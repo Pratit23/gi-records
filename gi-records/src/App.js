@@ -8,6 +8,7 @@ import SignUp from './components/auth/SignUp'
 import CreateProject from './components/projects/CreateProject'
 import ChartBoard from './components/dashboard/ChartBoard'
 import AddLand from './components/dashboard/AddLand'
+import Database from './components/dashboard/Database';
 
 const App = () => {
 
@@ -19,9 +20,11 @@ const App = () => {
           <Route exact path='/' component={Dashboard} />
           <Route path='/chartboard' component={ChartBoard} />
           <Route path='/AddLand' component={AddLand} />
+          <Route path='/Database' component={Database} />
           <Route path='/project/:id' component={ProjectDetails} />
           <Route path='/SignIn' component={SignIn} />
           <Route path='/SignUp' component={SignUp} />
+          <Route path='/create' component={CreateProject} />
           <Route path='/create' component={CreateProject} />
         </Switch>
       </div>

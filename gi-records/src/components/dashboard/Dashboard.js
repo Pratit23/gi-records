@@ -52,7 +52,7 @@ class Dashboard extends Component {
             </div>
           </div>
           <div className="section">
-            <Notifications />
+            {/*<Notifications />*/}
           </div>
         </div>
       </div>

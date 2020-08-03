@@ -8,15 +8,15 @@ import SecondNav from './SecondNav'
 const Navbar = (props) => {
     const { auth, profile } = props;
     const links = auth.uid ? <SignedInLinks profile={profile} /> : <SignedOutLinks />;
-    const bar = auth.uid ? <SecondNav/> : null;
+    const bar = auth.uid ? <SecondNav /> : null;
     console.log(auth);
     return (
-        <nav className="nav-extended">
-            <div className="nav-wrapper grey darken-3">
-                <Link to='/' className="brand-logo">Gi-Records</Link>
+        <nav className="nav-extended black">
+            <div className="nav-wrapper">
+                <Link to='/' className="brand-logo">SQUAGA</Link>
                 {links}
             </div>
-            { bar }
+            {bar}
         </nav>
     )
 }

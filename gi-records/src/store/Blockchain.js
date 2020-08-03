@@ -108,7 +108,7 @@ function Blockchain(props) {
 
   return (
     <div className="container">
-      <form className="white signInContainer" onSubmit={handleSet}>
+      <form className="white" onSubmit={handleSet}>
         <h5 className="grey-text text-darken-3">Enter Details</h5>
         <div className="input-field">
           <label htmlFor="address">Account Address</label>
@@ -116,7 +116,7 @@ function Blockchain(props) {
         </div>
         <button className="waves-effect waves-light btn">Set</button>
       </form>
-      <form className="white signInContainer" onSubmit={handleGet}>
+      <form className="white" onSubmit={handleGet}>
         <div className="input-field">
           <label htmlFor="id">Transaction ID</label>
           <input type="text" id='id' onChange={e => setId(e.target.value)} />

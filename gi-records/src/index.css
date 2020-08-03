@@ -3,8 +3,8 @@ html,body {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: sans-serif !important;
-  background-color: #16171C !important;
+  font-family: 'Open Sans',sans-serif !important;
+  background-image: url("./images/4030971.jpg");
   background-size: 100%;
   background-position: bottom;
 }
@@ -24,6 +24,7 @@ html,body {
 .signInContainer {
   border-top-left-radius: 24px;
   border-bottom-right-radius: 24px;
+  padding: 0!important;
 }
 
 .signUpContainer {
@@ -57,11 +58,36 @@ form button, form h5{
   transform: rotate(90deg);
 }
 
+.signInBack {
+  /* background-image: url("./images/mainBack.jpg")!important; */
+  margin-top: 1%;
+}
+
+.nav-extended {
+  opacity: 70!important;
+}
+
+.brand-logo {
+  left: 2%!important;
+}
+
+.right {
+  margin-right: 2%!important;
+}
+
+.left {
+  margin-left: 1%!important;
+}
+
+.brand-logo{
+  font-family:"Posterama 2001 W04 Light" !important;;
+}
+
 input[type=text]:not(.browser-default):focus:not([readonly]),
 input[type=email]:not(.browser-default):focus:not([readonly]),
 input[type=password]:not(.browser-default):focus:not([readonly]),
 
 textarea.materialize-textarea:focus:not([readonly]){
-  border-color: #ec407a;
+  border-color: #01579b;
   box-shadow: none;
 }

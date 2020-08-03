@@ -9,6 +9,7 @@ const SecondNav = () => {
                     <li><NavLink to='/'>Dashboard</NavLink></li>
                     <li><NavLink to='/chartboard'>Chartboard</NavLink></li>
                     <li><NavLink to='/AddLand'>Add Land</NavLink></li>
+                    <li><NavLink to='/Database'>Database</NavLink></li>
                 </ul>
             </div>
         </div>
