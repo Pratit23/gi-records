@@ -12,7 +12,7 @@ class Database extends Component {
 
     componentDidMount() {
         let self = this;
-        fetch('/', {
+        fetch('http://localhost:2000/', {
             method: 'GET'
         }).then(res => res.json())
         .then(response => {

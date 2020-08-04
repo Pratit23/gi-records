@@ -9,7 +9,7 @@ var router = express.Router();
 
 const SELECT_ALL_QUERY = 'SELECT * FROM info';
 
-const {HOST, DATABASE, PASSWORD, USER} = require("./keys/keys")
+const {HOST, DATABASE, PASSWORD, USER} = require("./keys/keys.js")
 
 const connection = mysql.createConnection({
     host: HOST,
@@ -39,7 +39,7 @@ router.get('/', function (req, res) {
     connection.query('select * from info', function (error, results, fields) {
     if (error) throw error;
     console.log(results)
-    res.end(JSON.stringify(results));
+    res.json(results);
   });
  });
 
