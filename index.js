@@ -4,17 +4,20 @@ var app = express();
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
 var cors = require('cors');
+var router = express.Router();
+//const router = require("./routes/routes")
 
 const SELECT_ALL_QUERY = 'SELECT * FROM info';
 
 const {HOST, DATABASE, PASSWORD, USER} = require("./keys/keys")
 
-var connection = mysql.createConnection({
+const connection = mysql.createConnection({
     host: HOST,
     user: USER, 
     password: PASSWORD,
     database: DATABASE
 });
+
 
 connection.connect(function (err) {
     if (err) throw err
@@ -22,24 +25,34 @@ connection.connect(function (err) {
 })
 
 app.use(cors())
-
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 }));
-const PORT = process.env.PORT || 3000;
+
+const PORT = process.env.PORT || 2000;
 app.listen(PORT, () => {
     console.log("Listening to request on port", PORT)
 })
 
-//route for insert data
-//route for insert data
-app.get('/Dashboard', function (req, res) {
+router.get('/', function (req, res) {
     connection.query('select * from info', function (error, results, fields) {
     if (error) throw error;
+    console.log(results)
     res.end(JSON.stringify(results));
   });
  });
+
+router.get('/Database', function(req, res, next) {
+    res.locals.connection.query('select * from info', function (error, results, fields) {
+        console.log(error, results);
+        if(error) throw error;
+        res.send(JSON.stringify(results));
+    });
+});
+
+app.use(router)
+
 
 // var server = app.listen(3000, "127.0.0.1", function () {
 //     var host = server.address().address

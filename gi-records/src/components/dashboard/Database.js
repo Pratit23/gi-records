@@ -1,27 +1,32 @@
 import React, { Component } from 'react'
-import axios from 'axios'
+// import axios from 'axios'
 
 class Database extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            persons: []
+            data: []
         }
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:3000`)
-            .then(res => {
-                const person = res.data;
-                this.setState({ person });
-            })
+        let self = this;
+        fetch('/', {
+            method: 'GET'
+        }).then(res => res.json())
+        .then(response => {
+            console.log(response)
+            self.setState({data: response});
+        }).catch(err => {
+        console.log('caught it!',err);
+        })
     }
 
     render() {
         return (
             <div className="container">
-                <p>{console.log("Look at this: ",this.persons)}</p>
+                <p>{console.log("Data: ",this.state.data)}</p>
             </div>
         )
     }
