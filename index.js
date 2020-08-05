@@ -30,26 +30,35 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 }));
 
+
+function parse(str) {
+    var args = [].slice.call(arguments, 1),
+        i = 0;
+
+    return str.replace(/%s/g, () => args[i++]);
+}
+
 const PORT = process.env.PORT || 2000;
 app.listen(PORT, () => {
     console.log("Listening to request on port", PORT)
 })
 
 router.get('/', function (req, res) {
-    connection.query('select * from info', function (error, results, fields) {
+    //const SELECT_HASH_QUERY = ('select * from info where hash = ?', hash)
+    connection.query(SELECT_ALL_QUERY, function (error, results, fields) {
     if (error) throw error;
     console.log(results)
     res.json(results);
   });
  });
 
-router.get('/Database', function(req, res, next) {
-    res.locals.connection.query('select * from info', function (error, results, fields) {
-        console.log(error, results);
-        if(error) throw error;
-        res.send(JSON.stringify(results));
-    });
-});
+// router.get('/Database', function(req, res, next) {
+//     res.locals.connection.query('select * from info', function (error, results, fields) {
+//         console.log(error, results);
+//         if(error) throw error;
+//         res.send(JSON.stringify(results));
+//     });
+// });
 
 app.use(router)
 

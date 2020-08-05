@@ -20,6 +20,7 @@ function Blockchain(props) {
   const [address, setAddress] = useState('');
   const [id, setId] = useState('');
   const [temp, setTemp] = useState([]);
+  const [hash, setHash] = useState([]);
 
   const { profile } = props;
 
@@ -140,7 +141,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    update: (data) => dispatch ({type: 'UPDATE', points: data})
+    update: (data) => dispatch ({type: 'UPDATE', points: data}),
   }
 }
 
