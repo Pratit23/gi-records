@@ -40,8 +40,8 @@ class SignIn extends Component {
                 <input type="password" id='password' onChange={this.handleChange} />
               </div>
               <div className="input-field">
-                <button class="btn waves-effect waves-light black" type="submit" name="action">Sign In
-                  <i class="material-icons right">send</i>
+                <button className="btn waves-effect waves-light black" type="submit" name="action">Sign In
+                  <i className="material-icons right">send</i>
                 </button>
                 <div className="center red-text">
                   {authError ? <p>{authError}</p> : null}
