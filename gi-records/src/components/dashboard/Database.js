@@ -14,7 +14,8 @@ class Database extends Component {
             data: [],
             hash: '',
             address: '',
-            coords: ''
+            coords: '',
+            coordsArray: []
         }
     }
 
@@ -32,6 +33,13 @@ class Database extends Component {
         const { profile } = this.props;
         const fName = profile.firstName;
         const lName = profile.lastName;
+        
+        
+        var newArray = '';
+        var intArray = []
+        var array = []
+        
+        
         //const data = { hash: this.state.hash }
         console.log("Hash: ", this.state.hash)
         let self = this;
@@ -45,14 +53,14 @@ class Database extends Component {
                 console.log('caught it!', err);
             })
 
-            
+
         this.state.data.map((owner, index) => (
             this.setState({
                 coords: owner.coords
             })
         ))
 
-        console.log("coords: ",this.state.coords )
+        console.log("coords: ", this.state.coords)
         const accounts = await window.ethereum.enable();
         const account = accounts[0];
         var tempAddress = this.state.address;
@@ -76,6 +84,35 @@ class Database extends Component {
                 i++;
             }
         }
+
+        var j = 0;
+        var tempId = this.state.address;
+        var newId = this.state.address;
+        //console.log(newId)
+        var flag = true
+        while (flag == true) {
+            //console.log("get if is running")
+            newId = tempId + j;
+            var result = await SimpleContract.methods.getLats(newId).call();
+            if (result.length == 0) {
+                flag = false;
+            }
+            else {
+                newArray = newArray.concat(result)
+                newArray = newArray.split(" ")
+                for (var i = 0; i < newArray.length; i += 2) {
+                    intArray.push({ lat: parseFloat(newArray[i + 1]), lng: parseFloat(newArray[i]) })
+                }
+                array[j] = intArray;
+                intArray = []
+                newArray = ''
+                j++;
+
+                this.setState({
+                    coordsArray: array
+                })
+            }
+        }
     }
 
     render() {
@@ -92,10 +129,7 @@ class Database extends Component {
                     </div>
                     <button className="waves-effect waves-light btn">Add</button>
                 </form>
-                {this.state.data.map((owner, index) => (
-                    console.log("Datai: ", this.state.data),
-                    <p className="white-text" key={index}>{owner.coords}</p>
-                ))}
+                <MapContainer temp={this.state.coordsArray}/>
             </div>
         )
     }

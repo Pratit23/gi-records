@@ -8,8 +8,8 @@ const SecondNav = () => {
                 <ul id="nav-mobile" className="left hide-on-med-and-down">
                     <li><NavLink to='/'>Dashboard</NavLink></li>
                     <li><NavLink to='/chartboard'>Chartboard</NavLink></li>
-                    <li><NavLink to='/AddLand'>Add Land</NavLink></li>
-                    <li><NavLink to='/Database'>Database</NavLink></li>
+                    <li><NavLink to='/AddLand'>Check Blockchain</NavLink></li>
+                    <li><NavLink to='/Database'>Add Land</NavLink></li>
                 </ul>
             </div>
         </div>
