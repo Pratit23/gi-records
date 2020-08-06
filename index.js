@@ -45,7 +45,7 @@ app.listen(PORT, () => {
 
 router.get('/', function (req, res) {
     //const SELECT_HASH_QUERY = ('select * from info where hash = ?', hash)
-    connection.query(SELECT_ALL_QUERY, function (error, results, fields) {
+    connection.query('select * from info where hash= ' + '\'' +req.query.hash+'\'', function(error, results, fields) {
     if (error) throw error;
     console.log(results)
     res.json(results);

@@ -3243,12 +3243,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x8b050910ecbe5782064719a73e2F30098CF3A16D",
-      "transactionHash": "0xbff0a3eba65c4d53d2ec0d0d2fc18bf48edcbe6931f5edf51a065518858884ad"
+      "address": "0x99614c9Db403A887CC29Ccf6003098ED7076cc52",
+      "transactionHash": "0xcf348b1995b3ba76f024e4ac85a2f2881f13e20775c03f4ba8b4ee0f4d8216ae"
     }
   },
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-07-30T16:39:00.594Z",
+  "updatedAt": "2020-08-06T09:47:43.691Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

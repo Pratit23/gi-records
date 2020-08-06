@@ -1,5 +1,6 @@
 const initstate = {
-    points: null
+    points: null,
+    hash: null
 }
 
 const coordReducer = (state = initstate, action) => {
@@ -11,6 +12,13 @@ const coordReducer = (state = initstate, action) => {
             return {
                 ...state,
                 points: action.points
+            }
+        case 'UPDATE_NEW':
+            console.log('updated from database');
+            console.log(state, action);
+            return {
+                ...state,
+                hash: action.hash
             }
         default:
             return state
