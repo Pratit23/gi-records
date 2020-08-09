@@ -48,6 +48,31 @@ export const simpleStorageAbi = [
         "internalType": "string",
         "name": "_lats",
         "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_state",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_city",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_locality",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_plotNo",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_price",
+        "type": "string"
       }
     ],
     "name": "setOwner",
@@ -108,6 +133,111 @@ export const simpleStorageAbi = [
       }
     ],
     "name": "getLats",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_id",
+        "type": "string"
+      }
+    ],
+    "name": "getState",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_id",
+        "type": "string"
+      }
+    ],
+    "name": "getCity",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_id",
+        "type": "string"
+      }
+    ],
+    "name": "getLocality",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_id",
+        "type": "string"
+      }
+    ],
+    "name": "getPlotNo",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_id",
+        "type": "string"
+      }
+    ],
+    "name": "getPrice",
     "outputs": [
       {
         "internalType": "string",

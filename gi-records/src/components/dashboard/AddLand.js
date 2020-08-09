@@ -15,6 +15,11 @@ class AddLand extends Component {
             hash: '',
             address: '',
             coords: '',
+            state: '',
+            city: '',
+            locality: '',
+            plotNo: '',
+            price: '',
             coordsArray: []
         }
     }
@@ -28,7 +33,7 @@ class AddLand extends Component {
     handleSubmit = async (e) => {
         e.preventDefault();
         const web3 = new Web3(Web3.givenProvider);
-        const contractAddr = '0x99614c9Db403A887CC29Ccf6003098ED7076cc52';
+        const contractAddr = '0x7195270B599D47892B6C6a41663fC7D318AE1fd9';
         const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
         const { profile } = this.props;
         const fName = profile.firstName;
@@ -56,7 +61,12 @@ class AddLand extends Component {
 
         this.state.data.map((owner, index) => (
             this.setState({
-                coords: owner.coords
+                coords: owner.coords,
+                state: owner.state,
+                city: owner.city,
+                locality: owner.locality,
+                plotNo: owner.plotNo,
+                price: owner.price
             })
         ))
 
@@ -77,7 +87,7 @@ class AddLand extends Component {
             if (result.length == 0) {
                 //console.log("If is runnning")
                 const setResult = await SimpleContract.methods.setOwner(this.state.address, newAddress, fName,
-                    lName, this.state.coords).send({ from: account });
+                    lName, this.state.coords, this.state.state, this.state.city, this.state.locality, this.state.plotNo, this.state.price).send({ from: account });
                 flag = false;
                 console.log(setResult);
             } else {
@@ -113,12 +123,22 @@ class AddLand extends Component {
                 })
             }
         }
+
+        await fetch('http://localhost:2000/delete/?hash=' + this.state.hash, {
+            method: 'GET'
+        }).then(res => res.json())
+            .then(response => {
+                console.log(response)
+                self.setState({ data: response });
+            }).catch(err => {
+                console.log('caught it!', err);
+            })
     }
 
     render() {
         return (
             <div className="row">
-                <div style={{padding: '0'}} className="col s12">
+                <div style={{ padding: '0' }} className="col s12">
                     <div className="mapBG">
                         <MapContainer temp={this.state.coordsArray} />
                     </div>

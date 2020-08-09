@@ -75,8 +75,9 @@ const MyMapComponent = (props) => {
     })
 
     const GoogleMapExample = withGoogleMap(props => (
-        <GoogleMap defaultZoom={15} defaultCenter={{ lat: 15.998976, lng: 73.675307 }}>
-            {props.isMarkerShown && <Marker position={{ lat: 15.998976, lng: 73.675307 }} />}
+        console.log("First lat: ", points[0]),
+        <GoogleMap defaultZoom={15} defaultCenter={(points[0]) ? points[0] : { lat: 15.998976, lng: 73.675307 }}>
+            {props.isMarkerShown && <Marker position={(points[0]) ? points[0] : { lat: 15.998976, lng: 73.675307 }} />}
             <Polygon
                 path={points}
                 //key={1}
@@ -100,11 +101,4 @@ const MyMapComponent = (props) => {
     );
 };
 
-const mapStateToProps = (state) => {
-    console.log(state);
-    return {
-        points: state.coordinates.points
-    }
-}
-
-export default connect(mapStateToProps, null)(MyMapComponent);
+export default MyMapComponent;

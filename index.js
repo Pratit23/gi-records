@@ -52,6 +52,15 @@ router.get('/', function (req, res) {
   });
  });
 
+ router.get('/delete', function (req, res) {
+    //const SELECT_HASH_QUERY = ('select * from info where hash = ?', hash)
+    connection.query('delete from info where hash= ' + '\'' +req.query.hash+'\'', function(error, results, fields) {
+    if (error) throw error;
+    console.log(results)
+    res.json(results);
+  });
+ });
+
 // router.get('/Database', function(req, res, next) {
 //     res.locals.connection.query('select * from info', function (error, results, fields) {
 //         console.log(error, results);
