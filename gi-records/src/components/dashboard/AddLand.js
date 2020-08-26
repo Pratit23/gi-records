@@ -3,11 +3,10 @@ import Web3 from 'web3';
 import { simpleStorageAbi } from '../../abis/abis';
 import { connect } from 'react-redux'
 import MapContainer from '../layout/Map'
+import { Redirect } from 'react-router-dom';
 
 
 class AddLand extends Component {
-
-
     constructor(props) {
         super(props)
         this.state = {
@@ -19,12 +18,17 @@ class AddLand extends Component {
             city: '',
             locality: '',
             plotNo: '',
+            rate: '',
+            landSize: '',
             price: '',
-            coordsArray: []
+            coordsArray: [],
+            displaySecDiv: false,
+            added: false
         }
     }
 
     handleChange = (e) => {
+        e.preventDefault();
         this.setState({
             [e.target.id]: e.target.value
         })
@@ -33,7 +37,7 @@ class AddLand extends Component {
     handleSubmit = async (e) => {
         e.preventDefault();
         const web3 = new Web3(Web3.givenProvider);
-        const contractAddr = '0x7195270B599D47892B6C6a41663fC7D318AE1fd9';
+        const contractAddr = '0x6D5C5269107947e3D4017F465449445351208b75';
         const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
         const { profile } = this.props;
         const fName = profile.firstName;
@@ -66,6 +70,8 @@ class AddLand extends Component {
                 city: owner.city,
                 locality: owner.locality,
                 plotNo: owner.plotNo,
+                rate: owner.rate,
+                landSize: owner.landSize,
                 price: owner.price
             })
         ))
@@ -89,6 +95,7 @@ class AddLand extends Component {
                 const setResult = await SimpleContract.methods.setOwner(this.state.address, newAddress, fName,
                     lName, this.state.coords, this.state.state, this.state.city, this.state.locality, this.state.plotNo, this.state.price).send({ from: account });
                 flag = false;
+                console.log("State added:", this.state.added)
                 console.log(setResult);
             } else {
                 i++;
@@ -119,7 +126,7 @@ class AddLand extends Component {
                 j++;
 
                 this.setState({
-                    coordsArray: array
+                    coordsArray: array,
                 })
             }
         }
@@ -129,20 +136,32 @@ class AddLand extends Component {
         }).then(res => res.json())
             .then(response => {
                 console.log(response)
-                self.setState({ data: response });
+                self.setState({ data: response, added: true });
             }).catch(err => {
                 console.log('caught it!', err);
             })
     }
 
+    shouldComponentUpdate(prevProps, prevState) {
+        if (prevState.added != this.state.added) {
+            return true
+        } else {
+            return false
+        }
+    }
+
     render() {
+        const firstName = this.props.profile.firstName;
+        const lastName = this.props.profile.lastName;
+        const { auth } = this.props;
+        if (!auth.uid) return <Redirect to='/signin' />
         return (
             <div className="row">
                 <div style={{ padding: '0' }} className="col s12">
                     <div className="mapBG">
                         <MapContainer temp={this.state.coordsArray} />
                     </div>
-                    <form className="white addLandForm z-depth-3 col s12 l4" onSubmit={this.handleSubmit}>
+                    <form className="white addLandForm z-depth-3" onSubmit={this.handleSubmit}>
                         <div className="input-field">
                             <label htmlFor="hash">Hash Value</label>
                             <input type="text" id='hash' onChange={this.handleChange} />
@@ -153,6 +172,21 @@ class AddLand extends Component {
                         </div>
                         <button className="waves-effect waves-light btn black">Add</button>
                     </form>
+                    {
+                        console.log("Second div", this.state.added),
+                        this.state.added ?
+                            <form className="white addLandForm z-depth-3">
+                                <p>{firstName}</p>
+                                <p>{lastName}</p>
+                                <p>{this.state.coords}</p>
+                                <p>{this.state.state}</p>
+                                <p>{this.state.city}</p>
+                                <p>{this.state.locality}</p>
+                                <p>{this.state.plotNo}</p>
+                                <p>{this.state.price}</p>
+                            </form>
+                            : console.log("Second not loading")
+                    }
                 </div>
             </div>
         )
@@ -164,7 +198,8 @@ const mapStateToProps = (state) => {
     // console.log("Kuch bhi: ",state.coordinates.points)
     return {
         profile: state.firebase.profile,
-        points: state.coordinates.points
+        points: state.coordinates.points,
+        auth: state.firebase.auth,
     }
 }
 

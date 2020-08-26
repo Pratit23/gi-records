@@ -61,6 +61,17 @@ router.get('/', function (req, res) {
   });
  });
 
+ router.get('/check', function (req, res) {
+    //const SELECT_HASH_QUERY = ('select * from info where hash = ?', hash)
+    connection.query('select from price where locality= ' + '\'' +req.query.locality+'\' and mon= '+ '\''+req.query.mon+'\' and city= '+'\''+req.query.city+'\'', function(error, results, fields) {
+    if (error) throw error;
+    console.log(results)
+    res.json(results);
+  });
+ });
+
+
+
 // router.get('/Database', function(req, res, next) {
 //     res.locals.connection.query('select * from info', function (error, results, fields) {
 //         console.log(error, results);

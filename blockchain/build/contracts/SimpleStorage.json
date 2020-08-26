@@ -6173,12 +6173,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x7195270B599D47892B6C6a41663fC7D318AE1fd9",
-      "transactionHash": "0x970bee8af905c8b9d30c877b28d616139c23841fc6b343dc2e8ae05551a9fc1f"
+      "address": "0x6D5C5269107947e3D4017F465449445351208b75",
+      "transactionHash": "0xc2ad40b78b48154fbc02c6ad1ed9f1ec445e49a42a984f7dad761b9b90f76beb"
     }
   },
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-08-09T17:49:20.087Z",
+  "updatedAt": "2020-08-26T06:06:22.585Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

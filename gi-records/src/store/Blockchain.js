@@ -7,7 +7,7 @@ import MapContainer from '../components/layout/Map'
 
 // note, contract address must match the address provided by Truffle after migrations
 const web3 = new Web3(Web3.givenProvider);
-const contractAddr = '0x99614c9Db403A887CC29Ccf6003098ED7076cc52';
+const contractAddr = '0x6D5C5269107947e3D4017F465449445351208b75';
 const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
 var newArray = '';
 var splitArray = []
@@ -27,37 +27,37 @@ function Blockchain(props) {
   const fName = profile.firstName;
   const lName = profile.lastName;
 
-  const handleSet = async (e) => {
-    e.preventDefault();
+  // const handleSet = async (e) => {
+  //   e.preventDefault();
     
-    const accounts = await window.ethereum.enable();
-    const account = accounts[0];
-    var tempAddress = address;
-    var newAddress = address;
-    var flag = true;
-    var i = 0;
-    //const gas = await SimpleContract.methods.setOwner(number).estimateGas();
-    //check in a while loop until (index, userAcct) returns an empty array, which implies index is available for storage
-    while(flag == true)
-    {
-      //console.log('This is running');
-      newAddress = tempAddress + i;
-      var result = await SimpleContract.methods.getLats(newAddress).call();
-      console.log(newAddress)
-      if(result.length == 0) 
-      {
-        //console.log("If is runnning")
-        const setResult = await SimpleContract.methods.setOwner(address, newAddress, fName,
-          lName, "73.675307 15.998976 73.673804 15.995305 73.676338 15.993283 73.678700 15.997491").send({ from: account });
-        flag = false;
-        console.log(setResult);
-        console.log(fName);
-        console.log(lName);
-      } else {
-        i++;
-      }
-    }
-  }
+  //   const accounts = await window.ethereum.enable();
+  //   const account = accounts[0];
+  //   var tempAddress = address;
+  //   var newAddress = address;
+  //   var flag = true;
+  //   var i = 0;
+  //   //const gas = await SimpleContract.methods.setOwner(number).estimateGas();
+  //   //check in a while loop until (index, userAcct) returns an empty array, which implies index is available for storage
+  //   while(flag == true)
+  //   {
+  //     //console.log('This is running');
+  //     newAddress = tempAddress + i;
+  //     var result = await SimpleContract.methods.getLats(newAddress).call();
+  //     console.log(newAddress)
+  //     if(result.length == 0) 
+  //     {
+  //       //console.log("If is runnning")
+  //       const setResult = await SimpleContract.methods.setOwner(address, newAddress, fName,
+  //         lName, "73.675307 15.998976 73.673804 15.995305 73.676338 15.993283 73.678700 15.997491").send({ from: account });
+  //       flag = false;
+  //       console.log(setResult);
+  //       console.log(fName);
+  //       console.log(lName);
+  //     } else {
+  //       i++;
+  //     }
+  //   }
+  // }
 
   // const handleGet = async (e) => {
   //   e.preventDefault();
@@ -109,14 +109,6 @@ function Blockchain(props) {
 
   return (
     <div className="container">
-      <form className="white" onSubmit={handleSet}>
-        <h5 className="grey-text text-darken-3">Enter Details</h5>
-        <div className="input-field">
-          <label htmlFor="address">Account Address</label>
-          <input type="text" id='address' onChange={e => setAddress(e.target.value)} />
-        </div>
-        <button className="waves-effect waves-light btn">Set</button>
-      </form>
       <form className="white" onSubmit={handleGet}>
         <div className="input-field">
           <label htmlFor="id">Transaction ID</label>
