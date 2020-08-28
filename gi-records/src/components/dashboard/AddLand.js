@@ -27,6 +27,23 @@ class AddLand extends Component {
         }
     }
 
+    handleChangeMeta = (e) => {
+        // e.preventDefault();
+        // const web3 = new Web3(Web3.givenProvider);
+        // var metaMaskAcc = web3.currentProvider.selectedAddress;
+        // var lowerCaseAddress = (e.target.value.toLowerCase())
+        // console.log("Metamask address: ",metaMaskAcc)
+        // console.log("LoweCase address: ",lowerCaseAddress)
+        // if(metaMaskAcc == lowerCaseAddress) {
+            this.setState({
+                [e.target.id]: e.target.value
+            })
+        // }
+        // else {
+        //     alert("Error!!! Ethereum address does not match!!!")
+        // }
+    }
+
     handleChange = (e) => {
         e.preventDefault();
         this.setState({
@@ -37,7 +54,7 @@ class AddLand extends Component {
     handleSubmit = async (e) => {
         e.preventDefault();
         const web3 = new Web3(Web3.givenProvider);
-        const contractAddr = '0x6D5C5269107947e3D4017F465449445351208b75';
+        const contractAddr = '0x11d5231943D982657f7Af116a16Cec14EE68d24A';
         const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
         const { profile } = this.props;
         const fName = profile.firstName;
@@ -47,7 +64,6 @@ class AddLand extends Component {
         var newArray = '';
         var intArray = []
         var array = []
-
 
         //const data = { hash: this.state.hash }
         console.log("Hash: ", this.state.hash)
@@ -125,8 +141,11 @@ class AddLand extends Component {
                 newArray = ''
                 j++;
 
+                console.log("This is that array: ", array[(array.length) - 1])
+                console.log("And the length of this array is: ", array.length)
+
                 this.setState({
-                    coordsArray: array,
+                    coordsArray: array[(array.length) - 1],
                 })
             }
         }
@@ -167,8 +186,8 @@ class AddLand extends Component {
                             <input type="text" id='hash' onChange={this.handleChange} />
                         </div>
                         <div className="input-field">
-                            <label htmlFor="address">Ethereum Account Address</label>
-                            <input type="text" id='address' onChange={this.handleChange} />
+                            <label htmlFor="address">Ethereum Address (Lowercase letters)</label>
+                            <input type="text" id='address' onChange={this.handleChangeMeta} />
                         </div>
                         <button className="waves-effect waves-light btn black">Add</button>
                     </form>

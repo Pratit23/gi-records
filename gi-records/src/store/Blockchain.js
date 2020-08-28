@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import Web3 from 'web3';
 import { simpleStorageAbi } from '../abis/abis';
 import { connect } from 'react-redux'
-import MapContainer from '../components/layout/Map'
+import MapContainer from '../components/layout/Map1'
 
 
 // note, contract address must match the address provided by Truffle after migrations
 const web3 = new Web3(Web3.givenProvider);
-const contractAddr = '0x6D5C5269107947e3D4017F465449445351208b75';
+const contractAddr = '0x11d5231943D982657f7Af116a16Cec14EE68d24A';
 const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
 var newArray = '';
 var splitArray = []

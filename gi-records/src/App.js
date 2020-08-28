@@ -9,6 +9,7 @@ import CreateProject from './components/projects/CreateProject'
 import ChartBoard from './components/dashboard/ChartBoard'
 import ViewAllLand from './components/dashboard/ViewAllLand'
 import AddLand from './components/dashboard/AddLand';
+import SellLand from './components/dashboard/SellLand'
 
 const App = () => {
 
@@ -21,6 +22,7 @@ const App = () => {
           <Route path='/chartboard' component={ChartBoard} />
           <Route path='/ViewAllLand' component={ViewAllLand} />
           <Route path='/Database' component={AddLand} />
+          <Route path='/sellLand' component={SellLand} />
           <Route path='/project/:id' component={ProjectDetails} />
           <Route path='/SignIn' component={SignIn} />
           <Route path='/SignUp' component={SignUp} />
