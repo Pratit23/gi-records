@@ -64,13 +64,13 @@ import React, { useEffect, useState } from 'react';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, Polygon } from "react-google-maps"
 import { connect } from 'react-redux'
 
-
 const MyMapComponent = (props) => {
 
     const [points, setPoints] = useState([]);
     useEffect(() => {
         if ((props.temp).length !== 0) {
-            setPoints((props.temp)[0])
+            var l = (props.temp).length
+            setPoints((props.temp)[l - 1])
         }
     })
 

@@ -14,14 +14,14 @@ contract SimpleStorage {
     string price;
   }
 
-  mapping(address => OwnerStruct) ownerList;
+  mapping(string => OwnerStruct) ownerList;
   mapping(string => OwnerStruct) lands;
 
-  address[] public ownerAccts;
+  string[] public ownerAccts;
 
-  function setOwner(address _address, string memory _id, string memory _fName, string memory _lName, string memory _lats, string memory _state, string memory _city, string memory _locality, string memory _plotNo, string memory _price) public {
+  function setOwner(string memory _address, string memory _id, string memory _fName, string memory _lName, string memory _lats, string memory _state, string memory _city, string memory _locality, string memory _plotNo, string memory _price) public {
       OwnerStruct memory owner;
-      owner.id = _id;
+      owner.id = _address;
       owner.firstName = _fName;
       owner.lastName = _lName;
       owner.lats = _lats;
@@ -33,6 +33,18 @@ contract SimpleStorage {
       ownerList[_address] = owner;
       lands[_id] = owner;
       ownerAccts.push(_address);
+  }
+
+  function transaction(string memory _buyerID, string memory _sellerID, 
+  string memory _address, string memory _fName, string memory _lName, string memory _sellerLastID) public {
+      OwnerStruct memory owner;
+      owner = lands[_sellerID];
+      owner.id = _address;
+      owner.firstName = _fName;
+      owner.lastName = _lName;
+      lands[_buyerID] = owner;
+      lands[_sellerID] = lands[_sellerLastID];
+      delete lands[_sellerLastID];
   }
   
   function getfName(string memory _id) public view returns (string memory){
@@ -65,10 +77,6 @@ contract SimpleStorage {
 
   function getPrice(string memory _id) public view returns (string memory){
       return (lands[_id].price);
-  }
-  
-  function getOwner() public view returns(address[] memory) {
-        return ownerAccts;
   }
 
 

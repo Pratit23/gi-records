@@ -54,7 +54,7 @@ class AddLand extends Component {
     handleSubmit = async (e) => {
         e.preventDefault();
         const web3 = new Web3(Web3.givenProvider);
-        const contractAddr = '0x11d5231943D982657f7Af116a16Cec14EE68d24A';
+        const contractAddr = '0xDEf4594c9a276CB683F3203Fe581FC896c7E04aC';
         const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
         const { profile } = this.props;
         const fName = profile.firstName;
@@ -145,7 +145,7 @@ class AddLand extends Component {
                 console.log("And the length of this array is: ", array.length)
 
                 this.setState({
-                    coordsArray: array[(array.length) - 1],
+                    coordsArray: array,
                 })
             }
         }

@@ -12,9 +12,9 @@ export const simpleStorageAbi = [
     "name": "ownerAccts",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "string",
         "name": "",
-        "type": "address"
+        "type": "string"
       }
     ],
     "payable": false,
@@ -25,9 +25,9 @@ export const simpleStorageAbi = [
     "constant": false,
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "string",
         "name": "_address",
-        "type": "address"
+        "type": "string"
       },
       {
         "internalType": "string",
@@ -76,6 +76,46 @@ export const simpleStorageAbi = [
       }
     ],
     "name": "setOwner",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_buyerID",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_sellerID",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_address",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_fName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_lName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_sellerLastID",
+        "type": "string"
+      }
+    ],
+    "name": "transaction",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -243,21 +283,6 @@ export const simpleStorageAbi = [
         "internalType": "string",
         "name": "",
         "type": "string"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "getOwner",
-    "outputs": [
-      {
-        "internalType": "address[]",
-        "name": "",
-        "type": "address[]"
       }
     ],
     "payable": false,

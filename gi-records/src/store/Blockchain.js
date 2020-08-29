@@ -7,7 +7,7 @@ import MapContainer from '../components/layout/Map1'
 
 // note, contract address must match the address provided by Truffle after migrations
 const web3 = new Web3(Web3.givenProvider);
-const contractAddr = '0x11d5231943D982657f7Af116a16Cec14EE68d24A';
+const contractAddr = '0xDEf4594c9a276CB683F3203Fe581FC896c7E04aC';
 const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
 var newArray = '';
 var splitArray = []
