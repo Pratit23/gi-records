@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 
 // note, contract address must match the address provided by Truffle after migrations
 const web3 = new Web3(Web3.givenProvider);
-const contractAddr = '0xF8Fdb25E2b71E82342ac33ac63aA2DCF4BcCE972';
+const contractAddr = '0x6BfAF2f1dA818f2b9F85f40BF8fad2F857c1DDd1';
 const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
 var newArray = '';
 var splitArray = []
@@ -97,7 +97,8 @@ class Blockchain extends Component {
           buyingRate: buyingRate,
           landSize: landSize,
           hashValue: hashValue,
-          price: price
+          price: price,
+          coordsArray: array,
         })
         j++
       }
@@ -110,7 +111,6 @@ class Blockchain extends Component {
       update: true,
     })
     this.props.show(this.state.property)
-    console.log("Props: ", this.props)
   }
 
   shouldComponentUpdate(prevProps, prevState) {

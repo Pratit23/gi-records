@@ -2,20 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, Polygon } from "react-google-maps"
 import { connect } from 'react-redux'
 
-const MyMapComponent = (props) => {
+const DetailsCardMap = (props) => {
 
     const [points, setPoints] = useState([]);
     useEffect(() => {
         if ((props.temp).length !== 0) {
             var l = (props.temp).length
-            setPoints((props.temp)[l - 1])
+            setPoints(props.temp)
         }
     })
 
     const GoogleMapExample = withGoogleMap(props => (
-        console.log("First lat: ", points[0]),
-        <GoogleMap defaultZoom={15} defaultCenter={(points[0]) ? points[0] : { lat: 15.998976, lng: 73.675307 }}>
-            {props.isMarkerShown && <Marker position={(points[0]) ? points[0] : { lat: 15.998976, lng: 73.675307 }} />}
+        console.log("First lat: ", points),
+        <GoogleMap defaultZoom={15} defaultCenter={points[0] ? points[0] : { lat: 15.998976, lng: 73.675307 }}>
+            {props.isMarkerShown && <Marker position={points[0] ? points[0] : { lat: 15.998976, lng: 73.675307 }} />}
             <Polygon
                 path={points}
                 //key={1}
@@ -39,4 +39,4 @@ const MyMapComponent = (props) => {
     );
 };
 
-export default MyMapComponent;
+export default DetailsCardMap;
