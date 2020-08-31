@@ -7,7 +7,7 @@ import { withFirebase } from 'react-redux-firebase';
 class SignIn extends Component {
   state = {
     email: '',
-    password: ''
+    password: '',
   }
   handleChange = (e) => {
     this.setState({

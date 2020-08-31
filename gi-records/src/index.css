@@ -7,6 +7,7 @@ html,body {
   background-image: url("./images/4030971.jpg");
   background-size: 100%;
   background-position: bottom;
+  overflow: overlay;
 }
 
 .mainCard {
@@ -111,6 +112,22 @@ form button, form h5{
 
 .sellLandForm {
   margin-top: 50px;
+  border-radius: 24px!important;
+}
+
+.scrollLand {
+  margin-top: 2%!important;
+  margin-left: 1%!important;
+  margin-right: 70%!important;
+  position: relative!important;
+  overflow: hidden;
+  overflow-y: scroll;
+  border-radius: 24px;
+  padding: 0!important;
+}
+
+.propertyCard {
+  margin-top: 10px!important;
   border-radius: 24px!important;
 }
 

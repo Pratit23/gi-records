@@ -27,12 +27,13 @@ export const signUp = (newUser, firebase) => {
 
     firebase.auth().createUserWithEmailAndPassword(
       newUser.email, 
-      newUser.password
+      newUser.password,
     ).then(resp => {
       return firebase.firestore().collection('users').doc(resp.user.uid).set({
         firstName: newUser.firstName,
         lastName: newUser.lastName,
-        initials: newUser.firstName[0] + newUser.lastName[0]
+        initials: newUser.firstName[0] + newUser.lastName[0],
+        ethereumAdd: newUser.ethereumAdd,
       });
     }).then(() => {
       dispatch({ type: 'SIGNUP_SUCCESS' });

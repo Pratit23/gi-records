@@ -71,6 +71,21 @@ export const simpleStorageAbi = [
       },
       {
         "internalType": "string",
+        "name": "_buyingRate",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_landSize",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_hashValue",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
         "name": "_price",
         "type": "string"
       }
@@ -236,6 +251,69 @@ export const simpleStorageAbi = [
       }
     ],
     "name": "getLocality",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_id",
+        "type": "string"
+      }
+    ],
+    "name": "getBuyingRate",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_id",
+        "type": "string"
+      }
+    ],
+    "name": "getLandSize",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_id",
+        "type": "string"
+      }
+    ],
+    "name": "getHashValue",
     "outputs": [
       {
         "internalType": "string",

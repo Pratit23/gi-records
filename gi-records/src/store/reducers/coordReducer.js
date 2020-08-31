@@ -1,6 +1,7 @@
 const initstate = {
     points: null,
-    hash: null
+    hash: null,
+    property: null,
 }
 
 const coordReducer = (state = initstate, action) => {
@@ -19,6 +20,12 @@ const coordReducer = (state = initstate, action) => {
             return {
                 ...state,
                 hash: action.hash
+            }
+        case 'SHOW':
+            console.log("Show state: ", state, action)
+            return {
+                ...state,
+                property: action.property
             }
         default:
             return state

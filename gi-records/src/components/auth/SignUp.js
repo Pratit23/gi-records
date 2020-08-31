@@ -10,6 +10,7 @@ class SignUp extends Component {
     password: '',
     firstName: '',
     lastName: '',
+    ethereumAdd: ''
   }
   handleChange = (e) => {
     this.setState({
@@ -43,6 +44,10 @@ class SignUp extends Component {
           <div className="input-field">
             <label htmlFor="lastName">Last Name</label>
             <input type="text" id='lastName' onChange={this.handleChange} />
+          </div>
+          <div className="input-field">
+            <label htmlFor="ethereumAdd">Ethereum Address</label>
+            <input type="text" id='ethereumAdd' onChange={this.handleChange} />
           </div>
           <div className="input-field">
             <button className="btn pink lighten-1 z-depth-0">Sign Up</button>

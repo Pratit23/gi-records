@@ -18,8 +18,11 @@ class AddLand extends Component {
             city: '',
             locality: '',
             plotNo: '',
-            rate: '',
+            marketRate: '',
+            govRate: '',
+            buyingRate: '',
             landSize: '',
+            hash: '',
             price: '',
             coordsArray: [],
             displaySecDiv: false,
@@ -54,7 +57,7 @@ class AddLand extends Component {
     handleSubmit = async (e) => {
         e.preventDefault();
         const web3 = new Web3(Web3.givenProvider);
-        const contractAddr = '0xDEf4594c9a276CB683F3203Fe581FC896c7E04aC';
+        const contractAddr = '0xF8Fdb25E2b71E82342ac33ac63aA2DCF4BcCE972';
         const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
         const { profile } = this.props;
         const fName = profile.firstName;
@@ -86,8 +89,11 @@ class AddLand extends Component {
                 city: owner.city,
                 locality: owner.locality,
                 plotNo: owner.plotNo,
-                rate: owner.rate,
+                marketRate: owner.marketRate,
+                govRate: owner.govRate,
+                buyingRate: owner.buyingRate,
                 landSize: owner.landSize,
+                hash: owner.hash,
                 price: owner.price
             })
         ))
@@ -109,7 +115,8 @@ class AddLand extends Component {
             if (result.length == 0) {
                 //console.log("If is runnning")
                 const setResult = await SimpleContract.methods.setOwner(this.state.address, newAddress, fName,
-                    lName, this.state.coords, this.state.state, this.state.city, this.state.locality, this.state.plotNo, this.state.price).send({ from: account });
+                    lName, this.state.coords, this.state.state, this.state.city, this.state.locality
+                    ,this.state.plotNo, this.state.buyingRate, this.state.landSize, this.state.hash, this.state.price).send({ from: account });
                 flag = false;
                 console.log("State added:", this.state.added)
                 console.log(setResult);
