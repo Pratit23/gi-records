@@ -35,7 +35,7 @@ class Blockchain extends Component {
   }
 
   async componentDidMount() {
-    
+
   }
 
   handleGet = async (e) => {
@@ -123,37 +123,36 @@ class Blockchain extends Component {
 
   render() {
     return (
-      <div className="row">
+      <div className="row mb-0">
         <div style={{ padding: '0' }} className="col s12">
           <div className="mapBG">
             <MapContainer temp={this.state.coordsArray} />
-          </div>
-          <form className="white addLandForm z-depth-3" onSubmit={this.handleGet}>
-            <div className="input-field">
-              <label htmlFor="id">Ethereum Address</label>
-              <input type="text" id='id' onChange={this.handleChange} />
-            </div>
-            <button className="waves-effect waves-light btn black">Get</button>
-          </form>
-          <div className="scrollLand">
-            {(this.state.property).map(
-              (details, key) => (
-                <div className="row" key={key}>
-                  <div className="col s12" key={key}>
-                    <div className="card propertyCard blue-grey darken-1" key={key}>
-                      <Link to={'/property/' + key} key={key}>
-                        <div className="card-content white-text">
-                          <span className="card-title">Property {key + 1}</span>
-                          <p>{details.plotNo}</p>
+            <div className="yourLandFloatingDiv">
+              <form className="white addLandForm z-depth-3" onSubmit={this.handleGet}>
+                <div className="input-field">
+                  <label htmlFor="id">Ethereum Address</label>
+                  <input type="text" id='id' onChange={this.handleChange} />
+                </div>
+                <button className="waves-effect waves-light btn black">Get</button>
+              </form>
+              <div className="scrollLand">
+                {(this.state.property).map(
+                  (details, key) => (
+                    <div key={key}>
+                      <div className="col s12" key={key}>
+                        <div className="card propertyCard blue-grey darken-1" key={key}>
+                          <Link to={'/property/' + key} key={key}>
+                            <div className="card-content white-text">
+                              <span className="card-title">Property {key + 1}</span>
+                              <p>{details.plotNo}</p>
+                            </div>
+                          </Link>
                         </div>
-                      </Link>
-                      <div className="card-action propertyCard">
-                        <a>Sell</a>
                       </div>
                     </div>
-                  </div>
-                </div>
-              ))}
+                  ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -172,7 +171,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    update: (data) => dispatch({ type: 'UPDATE', points: data }),
     show: (data) => dispatch({ type: 'SHOW', property: data })
   }
 }

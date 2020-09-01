@@ -32,7 +32,7 @@ const MyMapComponent = (props) => {
     return (
         <div>
             <GoogleMapExample
-                containerElement={<div style={{ height: `100vh`, width: '99vw', margin: '0 auto' }} />}
+                containerElement={<div style={{ height: `100vh`}} />}
                 mapElement={<div style={{ height: `100%` }} />}
             />
         </div>

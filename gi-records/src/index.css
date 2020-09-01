@@ -10,6 +10,10 @@ html,body {
   overflow: overlay;
 }
 
+.mb-0 {
+  margin-bottom: 0!important;
+}
+
 .mainCard {
   padding: 0 !important;
 }
@@ -85,7 +89,7 @@ form button, form h5{
 }
 
 .mapBG {
-  position: absolute!important;
+  position: relative!important;
   height: 100%!important;
   width: 100%!important;
   margin: 0!important;
@@ -93,10 +97,6 @@ form button, form h5{
 }
 
 .addLandForm {
-  position: relative!important;
-  margin-right: 70%!important;
-  margin-left: 1%!important;
-  margin-top: 5%!important;
   border-radius: 24px;
   padding: 20px!important;
 }
@@ -117,13 +117,10 @@ form button, form h5{
 
 .scrollLand {
   margin-top: 2%!important;
-  margin-left: 1%!important;
-  margin-right: 70%!important;
-  position: relative!important;
-  overflow: hidden;
-  overflow-y: scroll;
+  overflow: auto;
   border-radius: 24px;
   padding: 0!important;
+  max-height: 389px;
 }
 
 .propertyCard {
@@ -133,6 +130,14 @@ form button, form h5{
 
 .detailInfoCard {
   position: relative!important;
+  border-radius: 24px!important;
+}
+
+.yourLandFloatingDiv {
+  position: absolute!important;
+  top: 0;
+  left: 20px;
+    width: 400px;
 }
 
 input[type=text]:not(.browser-default):focus:not([readonly]),

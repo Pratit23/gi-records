@@ -14,7 +14,7 @@ const DetailsCardMap = (props) => {
 
     const GoogleMapExample = withGoogleMap(props => (
         console.log("First lat: ", points),
-        <GoogleMap defaultZoom={15} defaultCenter={points[0] ? points[0] : { lat: 15.998976, lng: 73.675307 }}>
+        <GoogleMap defaultZoom={17} defaultCenter={points[0] ? points[0] : { lat: 15.998976, lng: 73.675307 }}>
             {props.isMarkerShown && <Marker position={points[0] ? points[0] : { lat: 15.998976, lng: 73.675307 }} />}
             <Polygon
                 path={points}
@@ -32,7 +32,7 @@ const DetailsCardMap = (props) => {
     return (
         <div>
             <GoogleMapExample
-                containerElement={<div style={{ height: `100vh`, width: '99vw', margin: '0 auto' }} />}
+                containerElement={<div style={{ height: `100vh`}} />}
                 mapElement={<div style={{ height: `100%` }} />}
             />
         </div>
