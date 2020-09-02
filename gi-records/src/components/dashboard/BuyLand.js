@@ -37,6 +37,7 @@ class BuyLand extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
+        var tempArray = []
         db.collection('sellLand')
         .where("state", "==", this.state.states)
         // .where("city", "==", this.state.city)
@@ -45,12 +46,12 @@ class BuyLand extends Component {
         .then( snapshot => {
             snapshot.forEach( doc => {
                 const data = doc.data()
-                let temp = this.state.property
-                this.setState({
-                    property: [...temp, data],
-                    showForm: false,
-                    showCards: true
-                })
+                tempArray.push(data)
+            })
+            this.setState({
+                property: tempArray,
+                showForm: false,
+                showCards: true
             })
             console.log("Snapshot thingy: ", this.state.property)
         })
@@ -66,8 +67,6 @@ class BuyLand extends Component {
     }
 
     render() {
-        console.log("These are the props: ", this.props)
-        console.log("This is the state: ", this.state)
         const { property, auth } = this.props;
         if (!auth.uid) return <Redirect to='/signin' />
         const showForm = this.state.showForm
