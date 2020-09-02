@@ -12,10 +12,16 @@ class PropertyDetails extends Component {
         var key = props.location.pathname;
         key = key.slice(-1)
         var i = parseInt(key)
+        var newProperty = property[key]
+        console.log("New Property: ", newProperty)
         this.state = {
             key: i,
             price: 0,
-            property: property
+            states: newProperty.states,
+            city: newProperty.city,
+            locality: newProperty.locality,
+            buyingRate: newProperty.buyingRate,
+            property: newProperty,
         }
     }
 
@@ -27,7 +33,8 @@ class PropertyDetails extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         console.log("Firebase: ", this.props.firebase)
-        this.props.sellProperty(this.state.key, this.state.price, this.props.firebase);
+        this.props.sellProperty(this.state.key, this.state.price, this.state.states, this.state.city, this.state.locality,
+            this.state.buyingRate, this.props.firebase);
     }
 
 
@@ -38,10 +45,10 @@ class PropertyDetails extends Component {
                     <div className="col s12">
                         <div className="card blue-grey darken-1 detailInfoCard">
                             <div className="card-content white-text">
-                                <span className="card-title">PLOT NO - {this.state.property[this.state.key].plotNo}</span>
-                                <p>Owner - {this.state.property[this.state.key].firstName} {this.state.property[this.state.key].lastName}<br />Address -<br />
-                                    {this.state.property[this.state.key].locality}, {this.state.property[this.state.key].city},<br />{this.state.property[this.state.key].states}<br />Purchase Rate - {this.state.property[this.state.key].buyingRate}/sq.ft
-                            <br />Purchase Price - ₹{this.state.property[this.state.key].price}</p>
+                                <span className="card-title">PLOT NO - {this.state.property.plotNo}</span>
+                                <p>Owner - {this.state.property.firstName} {this.state.property.lastName}<br />Address -<br />
+                                    {this.state.property.locality}, {this.state.property.city},<br />{this.state.property.states}<br />Purchase Rate - {this.state.property.buyingRate}/sq.ft
+                            <br />Purchase Price - ₹{this.state.property.price}</p>
                             </div>
                             <div className="card-action detailInfoCard">
                                 <form className="white addLandForm z-depth-3" onSubmit={this.handleSubmit}>
@@ -52,7 +59,7 @@ class PropertyDetails extends Component {
                                     <button className="waves-effect waves-light btn black">List for Selling</button>
                                 </form>
                             </div>
-                            <MapContainer temp={this.state.property[this.state.key].coordsArray[this.state.key]} />
+                            <MapContainer temp={this.state.property.coordsArray[this.state.key]} />
                         </div>
                     </div>
                 </div>
@@ -63,7 +70,6 @@ class PropertyDetails extends Component {
 
 
 const mapStateToProps = (state) => {
-    console.log("Property: ", state.coordinates.property)
     return {
         property: state.coordinates.property,
         auth: state.firebase.auth,
@@ -72,7 +78,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        sellProperty: (key, price, firebase) => dispatch(sellProperty(key, price, firebase))
+        sellProperty: (key, price, states, city, locality, buyingRate, firebase) => dispatch(sellProperty(key, price, states, city, locality, buyingRate, firebase))
     }
 }
 

@@ -66,13 +66,12 @@ const mapStateToProps = (state) => {
   return {
     projects: state.firestore.ordered.projects,
     auth: state.firebase.auth,
-    points: state.coordinates.points
   }
 }
 
 export default compose(
   connect(mapStateToProps, null),
   firestoreConnect([
-    { collection: 'projects', orderBy: ['createdAt', 'desc']}
+    { collection: 'projects', orderBy: ['createdAt', 'desc'] }
   ])
 )(Dashboard)

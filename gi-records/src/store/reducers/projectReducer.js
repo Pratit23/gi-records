@@ -9,12 +9,11 @@ const projectReducer = (state = initState, action) => {
       console.log('create project error');
       return state;
     case 'SELL_PROPERTY_ERROR':
-      console.log('create project error');
+      console.log('sell error');
       return state;
     case 'SELL_PROPERTY_SUCCESS':
       console.log('sell success');
       return state;
-
     default:
       return state;
   }
