@@ -57,7 +57,7 @@ class AddLand extends Component {
     handleSubmit = async (e) => {
         e.preventDefault();
         const web3 = new Web3(Web3.givenProvider);
-        const contractAddr = '0x6BfAF2f1dA818f2b9F85f40BF8fad2F857c1DDd1';
+        const contractAddr = '0x927dC4F79139E74B5bd6785Ae4fA1B7E661BED85';
         const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
         const { profile } = this.props;
         const fName = profile.firstName;
@@ -186,8 +186,8 @@ class AddLand extends Component {
                 <div style={{ padding: '0' }} className="col s12">
                     <div className="mapBG">
                         <MapContainer temp={this.state.coordsArray} />
-                    </div>
-                    <form className="white addLandForm z-depth-3" onSubmit={this.handleSubmit}>
+                        <div className="yourLandFloatingDiv">
+                        <form className="white addLandForm z-depth-3" onSubmit={this.handleSubmit}>
                         <div className="input-field">
                             <label htmlFor="hash">Hash Value</label>
                             <input type="text" id='hash' onChange={this.handleChange} />
@@ -213,6 +213,8 @@ class AddLand extends Component {
                             </form>
                             : console.log("Second not loading")
                     }
+                        </div>
+                    </div>
                 </div>
             </div>
         )

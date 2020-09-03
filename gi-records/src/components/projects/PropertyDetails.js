@@ -20,8 +20,10 @@ class PropertyDetails extends Component {
             states: newProperty.states,
             city: newProperty.city,
             locality: newProperty.locality,
+            plotNo: newProperty.plotNo,
             buyingRate: newProperty.buyingRate,
             property: newProperty,
+            coords: newProperty.coordsArray[key]
         }
     }
 
@@ -33,15 +35,15 @@ class PropertyDetails extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         console.log("Firebase: ", this.props.firebase)
-        this.props.sellProperty(this.state.key, this.state.price, this.state.states, this.state.city, this.state.locality,
-            this.state.buyingRate, this.props.firebase);
+        this.props.sellProperty(this.state.key, this.state.price, this.state.states, this.state.city, this.state.locality, this.state.plotNo,
+            this.state.buyingRate, this.state.coords, this.props.firebase);
     }
 
 
     render() {
         return (
-            <div classNameName="container">
-                <div className="row container">
+            <div className="container">
+                <div className="row">
                     <div className="col s12">
                         <div className="card blue-grey darken-1 detailInfoCard">
                             <div className="card-content white-text">
@@ -78,7 +80,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        sellProperty: (key, price, states, city, locality, buyingRate, firebase) => dispatch(sellProperty(key, price, states, city, locality, buyingRate, firebase))
+        sellProperty: (key, price, states, city, locality, plotNo, buyingRate, coords, firebase) => dispatch(sellProperty(key, price, states, city, locality, plotNo, buyingRate, coords, firebase))
     }
 }
 

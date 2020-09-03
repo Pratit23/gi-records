@@ -2,6 +2,7 @@ const initstate = {
     points: null,
     hash: null,
     property: null,
+    sellDetail: null,
 }
 
 const coordReducer = (state = initstate, action) => {
@@ -26,6 +27,13 @@ const coordReducer = (state = initstate, action) => {
             return {
                 ...state,
                 property: action.property
+            }
+        
+        case 'SHOW_SELL_DETAIL':
+            console.log("Sell detail: ", state, action)
+            return {
+                ...state,
+                sellDetail: action.property
             }
         default:
             return state

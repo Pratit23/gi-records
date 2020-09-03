@@ -12,6 +12,7 @@ import AddLand from './components/dashboard/AddLand';
 import SellLand from './components/dashboard/SellLand'
 import PropertyDetails from './components/projects/PropertyDetails'
 import BuyLand from './components/dashboard/BuyLand'
+import SellDetail from './components/projects/SellDetail';
 
 const App = () => {
 
@@ -28,6 +29,7 @@ const App = () => {
           <Route path='/sellLand' component={SellLand} />
           <Route path='/buyLand' component={BuyLand} />
           <Route path='/project/:id' component={ProjectDetails} />
+          <Route path='/sellDetail/:id' component={SellDetail} />
           <Route path='/SignIn' component={SignIn} />
           <Route path='/SignUp' component={SignUp} />
           <Route path='/create' component={CreateProject} />

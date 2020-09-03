@@ -23,6 +23,9 @@ class BuyLand extends Component {
 
     goBack() {
         this.setState({
+            states: '',
+            city: '',
+            locality: '',
             showForm: true,
             showCards: false,
         })
@@ -39,23 +42,25 @@ class BuyLand extends Component {
         e.preventDefault()
         var tempArray = []
         db.collection('sellLand')
-        .where("state", "==", this.state.states)
-        // .where("city", "==", this.state.city)
-        // .where("locality", "==", this.state.locality)
-        .get()
-        .then( snapshot => {
-            snapshot.forEach( doc => {
-                const data = doc.data()
-                tempArray.push(data)
+            .where("state", "==", this.state.states)
+            .where("city", "==", this.state.city)
+            .where("locality", "==", this.state.locality)
+            .get()
+            .then(snapshot => {
+                snapshot.forEach(doc => {
+                    const data = doc.data()
+                    tempArray.push(data)
+                })
+                this.setState({
+                    property: tempArray,
+                    showForm: false,
+                    showCards: true
+                })
+                console.log("Snapshot thingy: ", this.state.property)
+                this.props.sell(this.state.property)
             })
-            this.setState({
-                property: tempArray,
-                showForm: false,
-                showCards: true
-            })
-            console.log("Snapshot thingy: ", this.state.property)
-        })
-        .catch( error => console.log(error))
+            .catch(error => console.log(error))
+        console.log("CHECK THIS: ", this.state.property)
     }
 
     shouldComponentUpdate(prevProps, prevState) {
@@ -96,8 +101,9 @@ class BuyLand extends Component {
                         )
                 }
                 {
-                    showCards === true? (
+                    showCards === true ? (
                         <div>
+                            <button onClick={this.goBack} className="waves-effect waves-light btn black">Back</button>
                             <PropertyList property={this.state.property} />
                         </div>
                     ) : (
@@ -115,5 +121,10 @@ const mapStateToProps = (state) => {
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        sell: (data) => dispatch({ type: 'SHOW_SELL_DETAIL', property: data })
+    }
+}
 
-export default connect(mapStateToProps, null)(BuyLand)
+export default connect(mapStateToProps, mapDispatchToProps)(BuyLand)
