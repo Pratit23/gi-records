@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import MapContainer from '../layout/Map2'
 import { sellProperty } from '../../store/actions/propertyActions'
 import { withFirebase } from 'react-redux-firebase'
+import { Modal, Button } from 'react-materialize';
+import { Redirect } from 'react-router-dom';
 
 class PropertyDetails extends Component {
 
@@ -23,7 +25,8 @@ class PropertyDetails extends Component {
             plotNo: newProperty.plotNo,
             buyingRate: newProperty.buyingRate,
             property: newProperty,
-            coords: newProperty.coordsArray[key]
+            coords: newProperty.coordsArray[key],
+            sellState: false,
         }
     }
 
@@ -38,6 +41,17 @@ class PropertyDetails extends Component {
         this.props.sellProperty(this.state.key, this.state.price, this.state.states, this.state.city, this.state.locality, this.state.plotNo,
             this.state.buyingRate, this.state.coords, this.props.firebase);
     }
+    
+
+    // componentWillReceiveProps(newProps) {
+    //     if (newProps.property != this.props.property) {
+    //         this.setState({
+    //             load: true
+    //         })
+    //     } else {
+    //         return false
+    //     }
+    // }
 
 
     render() {
@@ -51,15 +65,29 @@ class PropertyDetails extends Component {
                                 <p>Owner - {this.state.property.firstName} {this.state.property.lastName}<br />Address -<br />
                                     {this.state.property.locality}, {this.state.property.city},<br />{this.state.property.states}<br />Purchase Rate - {this.state.property.buyingRate}/sq.ft
                             <br />Purchase Price - ₹{this.state.property.price}</p>
-                            </div>
-                            <div className="card-action detailInfoCard">
-                                <form className="white addLandForm z-depth-3" onSubmit={this.handleSubmit}>
-                                    <div className="input-field">
-                                        <label htmlFor="price">Price</label>
-                                        <input type="text" id='price' onChange={this.handleChange} />
-                                    </div>
-                                    <button className="waves-effect waves-light btn black">List for Selling</button>
-                                </form>
+                                <Modal
+                                    actions={[
+                                        <Button className="black" flat modal="close" node="button" waves="black">Close</Button>
+                                    ]}
+                                    bottomSheet={false}
+                                    fixedFooter
+                                    header="Modal Header"
+                                    id="Modal-0"
+                                    open={false}
+                                    options={{
+                                        dismissible: true,
+                                        endingTop: '10%',
+                                        inDuration: 250,
+                                        onCloseEnd: null,
+                                        onCloseStart: null,
+                                        onOpenEnd: null,
+                                        onOpenStart: null,
+                                        opacity: 0.5,
+                                        outDuration: 250,
+                                        preventScrolling: true,
+                                        startingTop: '4%'
+                                    }}
+                                    trigger={<Button node="button">Sell Property</Button>}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</Modal>
                             </div>
                             <MapContainer temp={this.state.property.coordsArray[this.state.key]} />
                         </div>
@@ -72,6 +100,7 @@ class PropertyDetails extends Component {
 
 
 const mapStateToProps = (state) => {
+    console.log("Property details mapState: ", state.coordinates.property)
     return {
         property: state.coordinates.property,
         auth: state.firebase.auth,

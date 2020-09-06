@@ -10,8 +10,6 @@ import DashChart2 from '../layout/DashChart2';
 //import DashChart3 from '../layout/DashChart3';
 
 
-
-
 class Dashboard extends Component {
   render() {
     console.log(this.props)
@@ -19,10 +17,9 @@ class Dashboard extends Component {
     if (!auth.uid) return <Redirect to='/signin' />
 
     return (
-
       <div className="row">
         <div className="col s12 m6">
-          <ProjectList projects={projects} />
+          {/*<ProjectList projects={projects} />*/}
         </div>
         <div className="col s12 m5 offset-m1">
           <div className="row">

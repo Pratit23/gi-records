@@ -6,7 +6,6 @@ import Blockchain from '../../store/Blockchain'
 class AddLand extends Component {
 
     render() {
-        //console.log(this.props)
         const { auth } = this.props;
         if (!auth.uid) return <Redirect to='/signin' />
         return (
@@ -18,7 +17,6 @@ class AddLand extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
         auth: state.firebase.auth,
     }

@@ -23,7 +23,7 @@ const coordReducer = (state = initstate, action) => {
                 hash: action.hash
             }
         case 'SHOW':
-            console.log("Show state: ", state, action)
+            console.log("Show state from coordreducer: ", state, action)
             return {
                 ...state,
                 property: action.property

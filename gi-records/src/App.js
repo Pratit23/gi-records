@@ -32,8 +32,6 @@ const App = () => {
           <Route path='/sellDetail/:id' component={SellDetail} />
           <Route path='/SignIn' component={SignIn} />
           <Route path='/SignUp' component={SignUp} />
-          <Route path='/create' component={CreateProject} />
-          <Route path='/create' component={CreateProject} />
         </Switch>
       </div>
     </BrowserRouter>

@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 
 // note, contract address must match the address provided by Truffle after migrations
 const web3 = new Web3(Web3.givenProvider);
-const contractAddr = '0x927dC4F79139E74B5bd6785Ae4fA1B7E661BED85';
+const contractAddr = '0x9CeA03B4C9f641e5dA8d93a63F11807519490b77';
 const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
 var newArray = '';
 var splitArray = []
@@ -126,7 +126,7 @@ class Blockchain extends Component {
       <div className="row mb-0">
         <div style={{ padding: '0' }} className="col s12">
           <div className="mapBG">
-            <MapContainer temp={this.state.coordsArray} />
+            <MapContainer temp={this.state.property} />
             <div className="yourLandFloatingDiv">
               <form className="white addLandForm z-depth-3" onSubmit={this.handleGet}>
                 <div className="input-field">

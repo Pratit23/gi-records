@@ -30,6 +30,7 @@ class SellDetail extends Component {
                                 <p>Owner - {this.state.property.authorFirstName} {this.state.property.authorLastName}<br />Address -<br />
                                     {this.state.property.locality}, {this.state.property.city},<br />{this.state.property.state}<br />Purchase Rate - {this.state.property.rate}/sq.ft
                             <br />Purchase Price - ₹{this.state.property.price}</p>
+                            <button className="waves-effect waves-light btn black">Quote a Price</button>
                             </div>
                             <MapContainer temp={this.state.property.coords} />
                         </div>

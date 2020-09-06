@@ -1,43 +1,70 @@
 import React, { useEffect, useState } from 'react';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, Polygon } from "react-google-maps"
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+
 
 
 const ViewAllLandMaps = (props) => {
 
     const [points, setPoints] = useState([]);
+    const [infoWindow, setInfoWindow] = useState(false)
+    const [key, setKey] = useState(0)
+
+    console.log("Map1 Props:", props)
+
     useEffect(() => {
-        if ((props.temp).length !== 0) {
-            setPoints(props.temp)
-        }
+        props.temp.map((coords, key) => {
+            points.push(coords.coordsArray[key])
+        })
+
+        console.log("Map 1 points: ", points)
     })
 
+    // const handleMouseOver = e => {
+    //     setInfoWindow(true)
+    // };
+    // const handleMouseExit = e => {
+    //     setInfoWindow(false)
+    // };
+    const handleClick = e => {
+
+    };
+
+
     const GoogleMapExample = withGoogleMap(props => (
-        console.log("Points: ", points),
-        <GoogleMap defaultZoom={15} defaultCenter={{lat: 15.998976, lng: 73.675307 }}>
+        <GoogleMap defaultZoom={15} defaultCenter={{ lat: 15.998976, lng: 73.675307 }}>
             {props.isMarkerShown && <Marker position={{ lat: 15.998976, lng: 73.675307 }} />}
-            {points.map((coords,key) => (
-            console.log("Arrays inside point: ", coords),
-            <Polygon
-                path={coords}
-                key={key}
-                options={{
-                    fillColor: "#F15152",
-                    fillOpacity: 0.4,
-                    strokeColor: "#000",
-                    strokeOpacity: 1,
-                    strokeWeight: 1
-                }} />
+            {points.map((coords, key) => (
+                console.log("Arrays inside point: ", coords),
+                <Polygon
+                    path={coords}
+                    key={key}
+                    options={{
+                        fillColor: "#F15152",
+                        fillOpacity: 0.4,
+                        strokeColor: "#000",
+                        strokeOpacity: 1,
+                        strokeWeight: 1
+                    }}
+                    // onClick={handleClick}
+                // onMouseOver={handleMouseOver} 
+                // onMouseOut={handleMouseExit}
+                />
             ))}
         </GoogleMap>
     ));
-    console.log(points)
     return (
         <div>
-            <GoogleMapExample
-                containerElement={<div style={{ height: `100vh`}} />}
-                mapElement={<div style={{ height: `100%` }} />}
-            />
+                <GoogleMapExample
+                    containerElement={<div style={{ height: `100vh` }} />}
+                    mapElement={<div style={{ height: `100%` }} />}
+                />
+            {
+                infoWindow ?
+                    <p className="black-text">Testing</p>
+                    : null
+            }
         </div>
     );
 };

@@ -124,11 +124,22 @@ function AuthIsReady({ children }) {
     return children;
   }
   else {
-    return <div class="progress">
-      <div class="indeterminate"></div>
+    return <div className="progress">
+      <div className="indeterminate"></div>
     </div>
   }
 }
+
+function saveToLocalStorage(state) {
+  try {
+    const serializedState = JSON.stringify(state)
+    localStorage.setItem('state', serializedState)
+  } catch(e) {
+
+  }
+}
+
+store.subscribe(() => saveToLocalStorage(store.getState()))
 
 // remove <AuthIsReady> tag is not using firebase.auth()
 

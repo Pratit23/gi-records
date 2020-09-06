@@ -9,11 +9,10 @@ const Navbar = (props) => {
     const { auth, profile } = props;
     const links = auth.uid ? <SignedInLinks profile={profile} /> : <SignedOutLinks />;
     const bar = auth.uid ? <SecondNav /> : null;
-    console.log(auth);
     return (
-        <nav className="nav-extended black">
+        <nav className="nav-extended black mainNav">
             <div className="nav-wrapper">
-                <Link to='/' className="brand-logo">SaatBara</Link>
+                <Link to='/' className="brand-logo">instat</Link>
                 {links}
             </div>
             {bar}
@@ -22,7 +21,6 @@ const Navbar = (props) => {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
         auth: state.firebase.auth,
         profile: state.firebase.profile //adding profile which is on the state to the props

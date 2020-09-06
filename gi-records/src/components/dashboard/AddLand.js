@@ -50,14 +50,15 @@ class AddLand extends Component {
     handleChange = (e) => {
         e.preventDefault();
         this.setState({
-            [e.target.id]: e.target.value
+            [e.target.id]: e.target.value,
+            address: this.props.profile.ethereumAdd,
         })
     }
 
     handleSubmit = async (e) => {
         e.preventDefault();
         const web3 = new Web3(Web3.givenProvider);
-        const contractAddr = '0x927dC4F79139E74B5bd6785Ae4fA1B7E661BED85';
+        const contractAddr = '0x9CeA03B4C9f641e5dA8d93a63F11807519490b77';
         const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
         const { profile } = this.props;
         const fName = profile.firstName;
@@ -191,10 +192,6 @@ class AddLand extends Component {
                         <div className="input-field">
                             <label htmlFor="hash">Hash Value</label>
                             <input type="text" id='hash' onChange={this.handleChange} />
-                        </div>
-                        <div className="input-field">
-                            <label htmlFor="address">Ethereum Address (Lowercase letters)</label>
-                            <input type="text" id='address' onChange={this.handleChangeMeta} />
                         </div>
                         <button className="waves-effect waves-light btn black">Add</button>
                     </form>

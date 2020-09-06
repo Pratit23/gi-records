@@ -74,6 +74,7 @@ form button, form h5{
 
 .brand-logo {
   left: 2%!important;
+  font-family:"Posterama 2001 W04 Light" !important;
 }
 
 .right {
@@ -82,10 +83,6 @@ form button, form h5{
 
 .left {
   margin-left: 1%!important;
-}
-
-.brand-logo{
-  font-family:"Posterama 2001 W04 Light" !important;;
 }
 
 .mapBG {
@@ -135,9 +132,10 @@ form button, form h5{
 
 .yourLandFloatingDiv {
   position: absolute!important;
+  padding-top: 50px!important;
   top: 0;
   left: 20px;
-    width: 400px;
+  width: 400px;
 }
 
 input[type=text]:not(.browser-default):focus:not([readonly]),
