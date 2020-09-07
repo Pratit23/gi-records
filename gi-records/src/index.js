@@ -130,17 +130,6 @@ function AuthIsReady({ children }) {
   }
 }
 
-function saveToLocalStorage(state) {
-  try {
-    const serializedState = JSON.stringify(state)
-    localStorage.setItem('state', serializedState)
-  } catch(e) {
-
-  }
-}
-
-store.subscribe(() => saveToLocalStorage(store.getState()))
-
 // remove <AuthIsReady> tag is not using firebase.auth()
 
 ReactDOM.render(

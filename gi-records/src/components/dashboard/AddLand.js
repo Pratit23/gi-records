@@ -58,7 +58,7 @@ class AddLand extends Component {
     handleSubmit = async (e) => {
         e.preventDefault();
         const web3 = new Web3(Web3.givenProvider);
-        const contractAddr = '0x9CeA03B4C9f641e5dA8d93a63F11807519490b77';
+        const contractAddr = '0xf7efD8f1aD05D485f425E5593b77C627fF5c95b0';
         const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
         const { profile } = this.props;
         const fName = profile.firstName;
@@ -181,7 +181,7 @@ class AddLand extends Component {
         const firstName = this.props.profile.firstName;
         const lastName = this.props.profile.lastName;
         const { auth } = this.props;
-        if (!auth.uid) return <Redirect to='/signin' />
+        if (!auth.uid) return <Redirect to='/signin'/>
         return (
             <div className="row">
                 <div style={{ padding: '0' }} className="col s12">
