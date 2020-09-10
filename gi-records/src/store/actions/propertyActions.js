@@ -24,3 +24,23 @@ export const sellProperty = (key, price, states, city, locality, plotNo, buyingR
       });
     }
   };
+
+export const quotePrice = (sellerID, price, firebase) => {
+  console.log("SellerID: ", sellerID)
+    return (dispatch, getState) => {
+      const profile = getState().firebase.profile;
+      const yourEthID = getState().firebase.profile.ethereumAdd;
+      console.log("Firebase: ", firebase)
+      firebase.firestore().collection('quotes').doc(sellerID).collection(yourEthID).add({
+        authorFirstName: profile.firstName,
+        authorLastName: profile.lastName,
+        quotedPrice: price,
+        buyerEthID: yourEthID,
+        createdAt: new Date()
+      }).then(() => {
+        dispatch({ type: 'SENT_QUOTE' });
+      }).catch(err => {
+        dispatch({ type: 'SENT_QUOTE_ERROR' }, err);
+      });
+    }
+  };

@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import PropertySummary from './PropertySummary'
 import { Link } from 'react-router-dom'
+import { array } from 'prop-types';
 
 const PropertyList = ({ property }) => {
+    var tempArray = []
     console.log("Property List: ", property)
+    var arrayOfKeys = Object.keys(property);
+    console.log("Array of keys: ", arrayOfKeys)
+    for(var i = 0; i < arrayOfKeys.length; i++)
+    {
+        tempArray.push(property[arrayOfKeys[i]])
+    }
     return (
         <div className="project-list section">
-            {property && property.map(property => {
+            {tempArray && tempArray.map((property,key) => {
                 return (
-                    <Link to={'/sellDetail/' + property.landID} key={property.landID}>
-                        <PropertySummary key={property.landID} property={property} />
+                    <Link key={key} to={'/sellDetail/' + arrayOfKeys[key]}>
+                        <PropertySummary key={key} property={property.data} />
                     </Link>
                 )
             })}

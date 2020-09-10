@@ -15,7 +15,7 @@ const ViewAllLandMaps = (props) => {
 
     useEffect(() => {
         props.temp.map((coords, key) => {
-            points.push(coords.coordsArray[key])
+            points.push(coords)
         })
 
         console.log("Map 1 points: ", points)

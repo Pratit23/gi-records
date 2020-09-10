@@ -49,14 +49,17 @@ class BuyLand extends Component {
             .then(snapshot => {
                 snapshot.forEach(doc => {
                     const data = doc.data()
-                    tempArray.push(data)
+                    console.log("DOC ID", doc.id)
+                    tempArray[doc.id] = {data}
                 })
+                console.log("Snapshot thingy: ", tempArray)
                 this.setState({
                     property: tempArray,
                     showForm: false,
                     showCards: true
                 })
-                console.log("Snapshot thingy: ", this.state.property)
+                console.log("Buy land property: ", this.state.property)
+                //localStorage.setItem('sellDetails',JSON.stringify(this.state.property))
                 this.props.sell(this.state.property)
             })
             .catch(error => console.log(error))

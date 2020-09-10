@@ -25,7 +25,7 @@ export default class SellLand extends Component {
     handleSubmit = async (e) => {
         e.preventDefault()
         const web3 = new Web3(Web3.givenProvider);
-        const contractAddr = '0xf7efD8f1aD05D485f425E5593b77C627fF5c95b0';
+        const contractAddr = '0x208c6ad7F12E86429532d372547e2c389F291c99';
         const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
         const accounts = await window.ethereum.enable();
         const account = accounts[0];

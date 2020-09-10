@@ -22,16 +22,10 @@ const PropertyDetails = (props) => {
     var data = localStorage.getItem('propertyDetails')
     data = JSON.parse(data)
 
-    const handleChange = (e) => {
-        this.setState({
-            [e.target.id]: e.target.value
-        })
-    }
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Firebase: ", this.props.firebase)
-        this.props.sellProperty(this.state.key, this.state.price, this.state.states, this.state.city, this.state.locality, this.state.plotNo,
-            this.state.buyingRate, this.state.coords, this.props.firebase);
+        props.sellProperty(stateKey, price, states, city, locality, plotNo,
+            buyingRate, coords, props.firebase);
     }
 
     const updateData = (e) => {
@@ -48,12 +42,13 @@ const PropertyDetails = (props) => {
         setStateProperty(newProperty)
         setCoords(newProperty.coordsArray[i])
         setPrice(newProperty.price)
-        if(coords.length != 0){
+        if (coords.length != 0) {
             update.push(true)
         }
     }
 
     useEffect(() => {
+        console.log("Property Detail props: ", props)
         updateData()
     }, update);
 
@@ -73,7 +68,7 @@ const PropertyDetails = (props) => {
                                 ]}
                                 bottomSheet={false}
                                 fixedFooter
-                                header="Modal Header"
+                                header="LIST PROPERTY"
                                 id="Modal-0"
                                 open={false}
                                 options={{
@@ -89,7 +84,15 @@ const PropertyDetails = (props) => {
                                     preventScrolling: true,
                                     startingTop: '4%'
                                 }}
-                                trigger={<Button node="button">Sell Property</Button>}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</Modal>
+                                trigger={<Button node="button">Sell Property</Button>}>
+                                <form className="white addLandForm z-depth-3" onSubmit={(handleSubmit)}>
+                                    <div className="input-field">
+                                        <label htmlFor="price">Price</label>
+                                        <input type="text" id='hash' onChange={e => setPrice(e.target.value)} />
+                                    </div>
+                                    <button className="waves-effect waves-light btn black">List for Selling</button>
+                                </form>
+                            </Modal>
                         </div>
                         {
                             coords ?

@@ -24,23 +24,23 @@ class SignIn extends Component {
 
     return (
       <div className="container">
-        <form className="white signInContainer" onSubmit={this.handleSubmit}>
+        <form className="black signInContainer" onSubmit={this.handleSubmit}>
           <div className="row">
             <div className="col s6 signInBack">
-              <img className="responsive-img" src={require("../../images/earthLocate.gif")} />
+              <img className="responsive-img" src={require("../../images/signInGif.gif")} />
             </div>
-            <div className="col s6">
-              <h5 className="grey-text text-darken-3">Sign In</h5>
+            <div className="col s6 signInForm">
+              <h5 className="white-text">Sign In</h5>
               <div className="input-field">
                 <label htmlFor="email">Email</label>
-                <input type="email" id='email' onChange={this.handleChange} />
+                <input className="white-text" required type="email" id='email' onChange={this.handleChange} />
               </div>
               <div className="input-field">
                 <label htmlFor="password">Password</label>
-                <input type="password" id='password' onChange={this.handleChange} />
+                <input className="white-text" required type="password" id='password' onChange={this.handleChange} />
               </div>
               <div className="input-field">
-                <button className="btn waves-effect waves-light black" type="submit" name="action">Sign In
+                <button className="btn waves-effect waves-light pink" type="submit" name="action">Sign In
                   <i className="material-icons right">send</i>
                 </button>
                 <div className="center red-text">

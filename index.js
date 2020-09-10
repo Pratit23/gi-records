@@ -30,6 +30,13 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 }));
 
+// var dict = {
+//     state: 'Maharashtra',
+//     city: 'Kudal',
+//     locality: 'Kudal MIDC',
+//     rate: '102',
+//     mon: '2020-08-09'
+// }
 
 function parse(str) {
     var args = [].slice.call(arguments, 1),
@@ -60,9 +67,12 @@ router.get('/', function (req, res) {
   });
  });
 
- router.get('/check', function (req, res) {
+ router.get('/setPrice', function (req, res) {
+     console.log("Req dict: ", req.query.state)
+     console.log("Set price route is running")
     //const SELECT_HASH_QUERY = ('select * from info where hash = ?', hash)
-    connection.query('select from price where locality= ' + '\'' +req.query.locality+'\' and mon= '+ '\''+req.query.mon+'\' and city= '+'\''+req.query.city+'\'', function(error, results, fields) {
+    connection.query('insert into price(state, city, locality, rate, mon) values ( ' + '\'' +req.query.state+'\',' + '\'' +req.query.city+'\',' + '\'' +req.query.locality+'\',' + '\'' +req.query.rate+'\', '+'\''+req.query.mon+'\');', function(error, results, fields) {
+    //connection.query('insert into price SET ?', req.query.dict , function(error, results, fields) {
     if (error) throw error;
     console.log(results)
     res.json(results);

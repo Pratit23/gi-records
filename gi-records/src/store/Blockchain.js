@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import Web3 from 'web3';
 import { simpleStorageAbi } from '../abis/abis';
 import { connect } from 'react-redux'
@@ -6,43 +6,29 @@ import MapContainer from '../components/layout/Map1'
 import { Link } from 'react-router-dom'
 
 
-// note, contract address must match the address provided by Truffle after migrations
-const web3 = new Web3(Web3.givenProvider);
-const contractAddr = '0xf7efD8f1aD05D485f425E5593b77C627fF5c95b0';
-const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
-var newArray = '';
-var splitArray = []
-var intArray = []
-var array = []
+const Blockchain = (props) => {
 
-class Blockchain extends Component {
+  // note, contract address must match the address provided by Truffle after migrations
+  const web3 = new Web3(Web3.givenProvider);
+  const contractAddr = '0x208c6ad7F12E86429532d372547e2c389F291c99';
+  const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      id: '',
-      property: [],
-      coordsArray: [],
-      update: false,
-    }
-  }
+  const [id, setId] = useState()
+  const [property, setProperty] = useState([])
+  const [coordsArray, setCoordsArray] = useState([])
+  const [update, setUpdate] = useState([])
 
-  handleChange = (e) => {
-    e.preventDefault();
-    this.setState({
-      [e.target.id]: e.target.value
-    })
-  }
+  const handleGet = async () => {
 
-  async componentDidMount() {
+    console.log("These are the props: ", props)
 
-  }
+    var newArray = '';
+    var intArray = []
+    var array = []
 
-  handleGet = async (e) => {
-    e.preventDefault();
     var j = 0;
-    var tempId = this.state.id
-    var newId = this.state.id;
+    var tempId = id
+    var newId = id;
     //console.log(newId)
     var flag = true
     while (flag == true) {
@@ -66,8 +52,8 @@ class Blockchain extends Component {
     }
 
     var flag1 = true
-    tempId = this.state.id
-    newId = this.state.id
+    tempId = id
+    newId = id
     j = 0
 
     while (flag1 == true) {
@@ -87,7 +73,8 @@ class Blockchain extends Component {
         && locality.length == 0 && plotNo.length == 0 && buyingRate.length == 0 && landSize.length == 0 && hashValue.length == 0 && price.length == 0) {
         flag1 = false
       } else {
-        this.state.property.push({
+        console.log("Else is running")
+        property.push({
           firstName: firstName,
           lastName: lastName,
           states: states,
@@ -104,64 +91,51 @@ class Blockchain extends Component {
       }
     }
 
-    console.log("First Names: ", this.state.firstName)
-    console.log("Array : ", array);
-    this.setState({
-      coordsArray: array,
-      update: true,
-    })
-    this.props.show(this.state.property)
-    localStorage.setItem('propertyDetails', JSON.stringify(this.state.property))
+    setCoordsArray(array)
+    props.show(property)
+    localStorage.setItem('propertyDetails', JSON.stringify(property))
   }
 
-  shouldComponentUpdate(prevProps, prevState) {
-    if (prevState.update != this.state.update) {
-      return true
-    } else {
-      return false
-    }
-  }
+  useEffect(() => {
+    setId(props.profile.ethereumAdd)
+  })
 
-  render() {
-    return (
-      <div className="row mb-0">
-        <div style={{ padding: '0' }} className="col s12">
-          <div className="mapBG">
-            <MapContainer temp={this.state.property} />
-            <div className="yourLandFloatingDiv">
-              <form className="white addLandForm z-depth-3" onSubmit={this.handleGet}>
-                <div className="input-field">
-                  <label htmlFor="id">Ethereum Address</label>
-                  <input type="text" id='id' onChange={this.handleChange} />
-                </div>
-                <button className="waves-effect waves-light btn black">Get</button>
-              </form>
-              <div className="scrollLand">
-                {(this.state.property).map(
-                  (details, key) => (
-                    <div key={key}>
-                      <div className="col s12" key={key}>
-                        <div className="card propertyCard blue-grey darken-1" key={key}>
-                          <Link to={'/property/' + key} key={key}>
-                            <div className="card-content white-text">
-                              <span className="card-title">Property {key + 1}</span>
-                              <p>{details.plotNo}</p>
-                            </div>
-                          </Link>
-                        </div>
+  useEffect(() => {
+    handleGet()
+  }, [id])
+
+  return (
+    <div className="row mb-0">
+      <div style={{ padding: '0' }} className="col s12">
+        <div className="mapBG">
+          <MapContainer temp={coordsArray} />
+          <div className="yourLandFloatingDiv">
+            <div className="scrollLand">
+              {(property).map(
+                (details, key) => (
+                  <div key={key}>
+                    <div className="col s12" key={key}>
+                      <div className="card propertyCard blue-grey darken-1" key={key}>
+                        <Link to={'/property/' + key} key={key}>
+                          <div className="card-content white-text">
+                            <span className="card-title">Property {key + 1}</span>
+                            <p>{details.plotNo}</p>
+                          </div>
+                        </Link>
                       </div>
                     </div>
-                  ))}
-              </div>
+                  </div>
+                ))}
             </div>
           </div>
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 const mapStateToProps = (state) => {
+  console.log("check this shit: ", state.firebase.profile)
   return {
     profile: state.firebase.profile,
     points: state.coordinates.points

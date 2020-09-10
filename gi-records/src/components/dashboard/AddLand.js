@@ -58,7 +58,7 @@ class AddLand extends Component {
     handleSubmit = async (e) => {
         e.preventDefault();
         const web3 = new Web3(Web3.givenProvider);
-        const contractAddr = '0xf7efD8f1aD05D485f425E5593b77C627fF5c95b0';
+        const contractAddr = '0x208c6ad7F12E86429532d372547e2c389F291c99';
         const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
         const { profile } = this.props;
         const fName = profile.firstName;
@@ -149,14 +149,29 @@ class AddLand extends Component {
                 newArray = ''
                 j++;
 
-                console.log("This is that array: ", array[(array.length) - 1])
-                console.log("And the length of this array is: ", array.length)
-
                 this.setState({
                     coordsArray: array,
                 })
             }
         }
+
+        
+            var state =  'Maharashtra'
+            var city = 'Kudal'
+            var locality = 'Kudal MIDC'
+            var rate = '102'
+            var mon = '2020-08-09'
+
+
+        await fetch('http://localhost:2000/setPrice/?state=' + state + '&city=' + city + '&locality=' + locality + '&rate=' + rate + '&mon=' + mon, {
+            method: 'GET'
+        }).then(res => res.json())
+            .then(response => {
+                console.log(response)
+                self.setState({ data: response, added: true });
+            }).catch(err => {
+                console.log('caught it!', err);
+            })
 
         await fetch('http://localhost:2000/delete/?hash=' + this.state.hash, {
             method: 'GET'

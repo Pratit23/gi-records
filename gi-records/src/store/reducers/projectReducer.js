@@ -14,6 +14,12 @@ const projectReducer = (state = initState, action) => {
     case 'SELL_PROPERTY_SUCCESS':
       console.log('sell success');
       return state;
+    case 'SENT_QUOTE':
+      console.log('quote sent');
+      return state;
+    case 'SENT_QUOTE_ERROR':
+      console.log('quote not sent');
+      return state;
     default:
       return state;
   }

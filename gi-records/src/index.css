@@ -96,6 +96,7 @@ form button, form h5{
 .addLandForm {
   border-radius: 24px;
   padding: 20px!important;
+  margin-top: 14px!important;
 }
 
 .landInfo {
@@ -136,6 +137,14 @@ form button, form h5{
   top: 0;
   left: 20px;
   width: 400px;
+}
+
+.signUpGif {
+  margin-top: 52px!important;
+}
+
+.signInForm {
+  margin-top: 50px!important;
 }
 
 input[type=text]:not(.browser-default):focus:not([readonly]),
