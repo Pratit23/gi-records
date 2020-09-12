@@ -5,6 +5,10 @@ import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
 import { Redirect } from 'react-router-dom';
 import { db } from '../../config/fbConfig'
+import { object } from 'prop-types'
+
+var data = localStorage.getItem('userDetails')
+data = JSON.parse(data)
 
 class BuyLand extends Component {
 
@@ -59,7 +63,8 @@ class BuyLand extends Component {
                     showCards: true
                 })
                 console.log("Buy land property: ", this.state.property)
-                //localStorage.setItem('sellDetails',JSON.stringify(this.state.property))
+                console.log("Length of state property: ", (this.state.property).length)
+                localStorage.setItem('sellDetails',JSON.stringify(this.state.property))
                 this.props.sell(this.state.property)
             })
             .catch(error => console.log(error))

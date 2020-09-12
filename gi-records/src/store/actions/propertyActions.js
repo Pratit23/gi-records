@@ -31,11 +31,12 @@ export const quotePrice = (sellerID, price, firebase) => {
       const profile = getState().firebase.profile;
       const yourEthID = getState().firebase.profile.ethereumAdd;
       console.log("Firebase: ", firebase)
-      firebase.firestore().collection('quotes').doc(sellerID).collection(yourEthID).add({
+      firebase.firestore().collection('quotes').doc(yourEthID).set({
         authorFirstName: profile.firstName,
         authorLastName: profile.lastName,
         quotedPrice: price,
         buyerEthID: yourEthID,
+        sellerEthID: sellerID,
         createdAt: new Date()
       }).then(() => {
         dispatch({ type: 'SENT_QUOTE' });

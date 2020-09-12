@@ -15,13 +15,12 @@ const createNotification = (notification) => {
 }
 
 exports.quoteSent = functions.firestore
-  .document('quotes/{sellerID}/{buyerID}')
-  .onCreate(doc => { 
+  .document('quotes/{sellerID}')
+  .onUpdate(doc => { 
     const property = doc.data();
-    console.log("Firestore function triggered")
     const notification = {
       content: 'Sent a price quotation',
-      user: `${property.authorFirstName} ${property.authorLastName}`,
       time: admin.firestore.FieldValue.serverTimestamp()
     }
+    return createNotification(notification)
   })

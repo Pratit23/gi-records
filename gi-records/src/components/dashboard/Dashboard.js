@@ -7,19 +7,20 @@ import { compose } from 'redux'
 import { Redirect } from 'react-router-dom';
 import DashChart1 from '../layout/DashChart1';
 import DashChart2 from '../layout/DashChart2';
+import { db } from '../../config/fbConfig'
 //import DashChart3 from '../layout/DashChart3';
 
 
 class Dashboard extends Component {
+
   render() {
     console.log(this.props)
-    const { projects, auth } = this.props;
+    const { projects, auth, notifications } = this.props;
     if (!auth.uid) return <Redirect to='/signin' />
 
     return (
       <div className="row">
         <div className="col s12 m6">
-          <ProjectList projects={projects} />
         </div>
         <div className="col s12 m5 offset-m1">
           <div className="row">
@@ -49,7 +50,7 @@ class Dashboard extends Component {
             </div>
           </div>
           <div className="section">
-            {/*<Notifications />*/}
+    
           </div>
         </div>
       </div>
@@ -59,16 +60,32 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  console.log("State: ", state);
+  localStorage.setItem('userDetails', JSON.stringify(state.firebase.profile))
   return {
     projects: state.firestore.ordered.projects,
     auth: state.firebase.auth,
+    notifications: state.firestore.ordered.quotes,
+    ethID: state.firebase.profile.ethereumAdd
   }
 }
 
+
 export default compose(
   connect(mapStateToProps, null),
-  firestoreConnect([
-    { collection: 'projects', orderBy: ['createdAt', 'desc'] }
+  firestoreConnect((props) => [
+    { collection: 'quotes', orderBy: ['createdAt', 'desc'], storeAs: 'notif' },
   ])
 )(Dashboard)
+
+
+// return [
+//   {
+//     collection: 'users',             // parent collection
+//     doc: props.userId,        // sub-document
+//     subcollections: [
+//       { collection: 'images' }        // sub-collection
+//     ],
+//     storeAs: 'images'
+//   }
+// ]

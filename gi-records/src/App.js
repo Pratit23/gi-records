@@ -13,6 +13,7 @@ import SellLand from './components/dashboard/SellLand'
 import PropertyDetails from './components/projects/PropertyDetails'
 import BuyLand from './components/dashboard/BuyLand'
 import SellDetail from './components/projects/SellDetail';
+import Notifications from './components/dashboard/Notifications';
 
 const App = () => {
 
@@ -25,6 +26,7 @@ const App = () => {
           <Route path='/chartboard' component={ChartBoard} />
           <Route path='/ViewAllLand' component={ViewAllLand} />
           <Route path='/property/:id' component={PropertyDetails} />
+          <Route path='/notifications' component={Notifications} />
           <Route path='/Database' component={AddLand} />
           <Route path='/sellLand' component={SellLand} />
           <Route path='/buyLand' component={BuyLand} />

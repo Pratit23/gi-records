@@ -9,15 +9,18 @@ class SignIn extends Component {
     email: '',
     password: '',
   }
+
   handleChange = (e) => {
     this.setState({
       [e.target.id]: e.target.value
     })
   }
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.signIn(this.state, this.props.firebase)
   }
+
   render() {
     const { authError, auth } = this.props;
     if (auth.uid) return <Redirect to='/' />

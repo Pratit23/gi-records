@@ -14,6 +14,7 @@ const Navbar = (props) => {
             <div className="nav-wrapper">
                 <Link to='/' className="brand-logo">instat</Link>
                 {links}
+                <Link to='/notifications'><i className="material-icons white-text notifIcon">notifications_none</i></Link>
             </div>
             {bar}
         </nav>

@@ -147,6 +147,22 @@ form button, form h5{
   margin-top: 50px!important;
 }
 
+.notifIcon {
+  float: right!important;
+}
+
+.notifCards {
+  border-radius: 24px!important;
+}
+
+.collapsible-header {
+  margin: 0!important;
+}
+
+.collapsible-body {
+  background-color: #ef5350!important;
+}
+
 input[type=text]:not(.browser-default):focus:not([readonly]),
 input[type=email]:not(.browser-default):focus:not([readonly]),
 input[type=password]:not(.browser-default):focus:not([readonly]),
