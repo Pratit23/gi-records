@@ -4,6 +4,7 @@ import SignedInLinks from './SignedInLinks'
 import SignedOutLinks from './SignedOutLinks'
 import { connect } from 'react-redux'
 import SecondNav from './SecondNav'
+import Sidenav from './Sidenav'
 
 const Navbar = (props) => {
     const { auth, profile } = props;
@@ -12,7 +13,8 @@ const Navbar = (props) => {
     return (
         <nav className="nav-extended black mainNav">
             <div className="nav-wrapper">
-                <Link to='/' className="brand-logo">instat</Link>
+                <Sidenav/>
+                <Link to='/' className="brand-logo">BRUH</Link>
                 {links}
                 <Link to='/notifications'><i className="material-icons white-text notifIcon">notifications_none</i></Link>
             </div>

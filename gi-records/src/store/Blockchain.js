@@ -105,27 +105,34 @@ const Blockchain = (props) => {
   }, [id])
 
   return (
-    <div className="row mb-0">
-      <div style={{ padding: '0' }} className="col s12">
-        <div className="mapBG">
-          <MapContainer temp={coordsArray} />
-          <div className="yourLandFloatingDiv">
-            <div className="scrollLand">
-              {(property).map(
-                (details, key) => (
-                  <div key={key}>
-                    <div className="col s12" key={key}>
-                      <div className="card propertyCard blue-grey darken-1" key={key}>
-                        <Link to={'/property/' + key} key={key}>
-                          <div className="card-content white-text">
-                            <span className="card-title">Property {key + 1}</span>
-                            <p>{details.plotNo}</p>
+    <div>
+      <div className="section">
+        <h1>Your Lands</h1>
+      </div>
+      <div className="section dashSec2">
+        <div className="row mb-0">
+          <div style={{ padding: '0' }} className="col s12">
+            <div className="mapBG">
+              <MapContainer temp={coordsArray} />
+              <div className="yourLandFloatingDiv">
+                <div className="scrollLand">
+                  {(property).map(
+                    (details, key) => (
+                      <div key={key}>
+                        <div className="col s12" key={key}>
+                          <div className="card propertyCard blue-grey darken-1" key={key}>
+                            <Link to={'/property/' + key} key={key}>
+                              <div className="card-content white-text">
+                                <span className="card-title">Property {key + 1}</span>
+                                <p>{details.plotNo}</p>
+                              </div>
+                            </Link>
                           </div>
-                        </Link>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                ))}
+                    ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>

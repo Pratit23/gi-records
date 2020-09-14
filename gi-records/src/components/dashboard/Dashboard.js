@@ -19,42 +19,48 @@ class Dashboard extends Component {
     if (!auth.uid) return <Redirect to='/signin' />
 
     return (
-      <div className="row">
-        <div className="col s12 m6">
+      <div>
+        <div className="section">
+          <h1>Dashboard</h1>
         </div>
-        <div className="col s12 m5 offset-m1">
+        <div className="section dashSec2">
           <div className="row">
             <div className="col s12 m6">
-              <div className="card red darken-1">
-                <div className="mainCard card-content white-text">
-                  <div className="section">
-                    <span className="cardTitle card-title white-text">Watchlist</span>
+            </div>
+            <div className="col s12 m5 offset-m1">
+              <div className="row">
+                <div className="col s12 m6">
+                  <div className="card red darken-1">
+                    <div className="mainCard card-content white-text">
+                      <div className="section">
+                        <span className="cardTitle card-title white-text">Watchlist</span>
+                      </div>
+                      <div className="cardChart section">
+                        <DashChart1 />
+                      </div>
+                    </div>
                   </div>
-                  <div className="cardChart section">
-                    <DashChart1 />
+                </div>
+                <div className="col s12 m6">
+                  <div className="card  blue darken-1">
+                    <div className="mainCard card-content white-text">
+                      <div className="section">
+                        <span className="cardTitle card-title white-text">Rate</span>
+                      </div>
+                      <div className="cardChart section">
+                        <DashChart2 />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="col s12 m6">
-              <div className="card  blue darken-1">
-                <div className="mainCard card-content white-text">
-                  <div className="section">
-                    <span className="cardTitle card-title white-text">Rate</span>
-                  </div>
-                  <div className="cardChart section">
-                    <DashChart2 />
-                  </div>
-                </div>
+              <div className="section">
               </div>
             </div>
-          </div>
-          <div className="section">
-    
           </div>
         </div>
-      </div>
 
+      </div>
     )
   }
 }

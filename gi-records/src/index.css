@@ -4,10 +4,11 @@ html,body {
   padding: 0;
   height: 100%;
   font-family: 'Open Sans',sans-serif !important;
-  background-image: url("./images/4030971.jpg");
+  /* background-image: url("./images/4030971.jpg");
   background-size: 100%;
   background-position: bottom;
-  overflow: overlay;
+  overflow: overlay; */
+  background-color: white;
 }
 
 .mb-0 {
@@ -73,7 +74,6 @@ form button, form h5{
 }
 
 .brand-logo {
-  left: 2%!important;
   font-family:"Posterama 2001 W04 Light" !important;
 }
 
@@ -118,7 +118,20 @@ form button, form h5{
   overflow: auto;
   border-radius: 24px;
   padding: 0!important;
-  max-height: 389px;
+  max-height: 680px;
+  width: 300px!important;
+}
+
+.scrollLand::-webkit-scrollbar {
+  width: 0.25rem;
+}
+
+.scrollLand::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollLand::-webkit-scrollbar-thumb {
+  background: transparent;
 }
 
 .propertyCard {
@@ -148,11 +161,27 @@ form button, form h5{
 }
 
 .notifIcon {
-  float: right!important;
+  float: left!important;
+  text-align: center !important;
 }
 
-.notifCards {
-  border-radius: 24px!important;
+.sideNavText {
+  text-align: center !important;
+}
+
+.sideNavText:hover {
+  text-align: center !important;
+  color: #304ffe !important; 
+}
+
+.divide {
+  background-color: white;
+  height: 1px;
+  width: 100%;
+}
+
+.notifCard {
+  margin: 0!important;
 }
 
 .collapsible-header {
@@ -161,7 +190,198 @@ form button, form h5{
 
 .collapsible-body {
   background-color: #ef5350!important;
+  padding: 0!important;
 }
+
+.mainSideNav {
+  height: 100vh!important;
+  padding: 0!important;
+}
+
+.collapHead .collapsible-header, .collapHead {
+  background-color: transparent!important;
+  border: none !important;
+  width: 100%;
+}
+
+.dashSec2 {
+  background-color: #e0e0e0 !important;
+  border-radius: 24px !important;
+  height: 100vh !important;
+  padding: 20px !important;
+}
+
+/*=========TESTING================*/
+body::-webkit-scrollbar {
+  width: 0.25rem;
+}
+
+body::-webkit-scrollbar-track {
+  background: #1e1e24;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #6649b8;
+}
+
+.navbar {
+  position: fixed;
+  background-color: var(--bg-primary);
+  transition: width 600ms ease;
+  overflow: none;
+}
+
+.navbar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.nav-item {
+  width: 100%;
+}
+
+.nav-item:last-child {
+  margin-top: auto;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  height: 5rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  filter: grayscale(100%) opacity(0.7);
+  transition: var(--transition-speed);
+}
+
+.nav-link:hover {
+  filter: grayscale(0%) opacity(1);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.link-text {
+  display: none;
+  margin-left: 1rem;
+}
+
+.nav-link svg {
+  width: 2rem;
+  min-width: 2rem;
+  margin: 0 1.5rem;
+}
+
+.fa-primary {
+  color: #ff7eee;
+}
+
+.fa-secondary {
+  color: #df49a6;
+}
+
+.fa-primary,
+.fa-secondary {
+  transition: var(--transition-speed);
+}
+
+.logo {
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  font-size: 1.5rem;
+  letter-spacing: 0.3ch;
+  width: 100%;
+}
+
+.logo svg {
+  transform: rotate(0deg);
+  transition: var(--transition-speed);
+}
+
+.logo-text
+{
+  display: inline;
+  position: absolute;
+  left: -999px;
+  transition: var(--transition-speed);
+}
+
+.navbar:hover .logo svg {
+  transform: rotate(-180deg);
+}
+
+/* Small screens */
+@media only screen and (max-width: 600px) {
+  .navbar {
+    bottom: 0;
+    width: 100vw;
+    height: 5rem;
+  }
+
+  .logo {
+    display: none;
+  }
+
+  .navbar-nav {
+    flex-direction: row;
+  }
+
+  .nav-link {
+    justify-content: center;
+  }
+}
+
+/* Large screens */
+@media only screen and (min-width: 600px) {
+  .navbar {
+    top: 0;
+    width: 16.6666666667%;
+    height: 100vh;
+  }
+
+  /* .navbar:hover {
+    width: 16rem;
+  }
+
+  .navbar:hover .link-text {
+    display: inline;
+  }
+
+  .navbar:hover .logo svg
+  {
+    margin-left: 11rem;
+  }
+
+  .navbar:hover .logo-text
+  {
+    left: 0px;
+  } */
+}
+
+.theme-icon {
+  display: none;
+}
+
+.dark #darkIcon {
+  display: block;
+}
+
+.light #lightIcon {
+  display: block;
+}
+
+.solar #solarIcon {
+  display: block;
+}
+
 
 input[type=text]:not(.browser-default):focus:not([readonly]),
 input[type=email]:not(.browser-default):focus:not([readonly]),

@@ -10,7 +10,12 @@ const SellDetail = (props) => {
     const [property, setProperty] = useState([])
     const [update, setUpdate] = useState([])
     const [coords, setCoords] = useState([])
-    const [qPrice, setQPrice] = useState([])
+    const [states, setStates] = useState('')
+    const [city, setCity] = useState('')
+    const [locality, setLocatily] = useState('')
+    const [plotNo, setPlotNo] = useState('')
+    const [landID, setLandID] = useState('')
+    const [qPrice, setQPrice] = useState('')
 
     // var data = localStorage.getItem('sellDetails')
     // data = JSON.parse(data)
@@ -21,7 +26,16 @@ const SellDetail = (props) => {
         const i = props.match.params.id;
         var newProperty = props.property[i]
         newProperty = newProperty.data
-        props.quotePrice(newProperty.sellerID, qPrice, props.firebase);
+        setStates(newProperty.state)
+        setCity(newProperty.city)
+        setLocatily(newProperty.locality)
+        setPlotNo(newProperty.plotNo)
+        setLandID(newProperty.landID)
+        const firebase = props.firebase
+        console.log("Firebase: ", firebase)
+        console.log("New property test: ", newProperty.state)
+        props.quotePrice(newProperty.sellerID, qPrice, newProperty.state, newProperty.city, newProperty.locality, newProperty.plotNo, newProperty.landID , coords, newProperty.authorFirstName, newProperty.authorLastName,firebase);
+        //props.quotePrice(newProperty ,firebase);
     }
 
     const updateData = (e) => {
@@ -107,7 +121,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        quotePrice: (sellerID, price, firebase) => dispatch(quotePrice(sellerID, price, firebase))
+        quotePrice: (sellerID, price, states, city, locality, plotNo, landID, coords, sellerFName, sellerLName ,firebase) => dispatch(quotePrice(sellerID, price, states, city, locality, plotNo, landID, coords, sellerFName, sellerLName ,firebase))
     }
 }
 
