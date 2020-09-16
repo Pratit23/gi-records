@@ -5,7 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
 import { Redirect } from 'react-router-dom';
 import { db } from '../../config/fbConfig'
-import { object } from 'prop-types'
+import Sidenav from '../layout/Sidenav'
 
 var data = localStorage.getItem('userDetails')
 data = JSON.parse(data)
@@ -54,7 +54,7 @@ class BuyLand extends Component {
                 snapshot.forEach(doc => {
                     const data = doc.data()
                     console.log("DOC ID", doc.id)
-                    tempArray[doc.id] = {data}
+                    tempArray[doc.id] = { data }
                 })
                 console.log("Snapshot thingy: ", tempArray)
                 this.setState({
@@ -64,7 +64,7 @@ class BuyLand extends Component {
                 })
                 console.log("Buy land property: ", this.state.property)
                 console.log("Length of state property: ", (this.state.property).length)
-                localStorage.setItem('sellDetails',JSON.stringify(this.state.property))
+                localStorage.setItem('sellDetails', JSON.stringify(this.state.property))
                 this.props.sell(this.state.property)
             })
             .catch(error => console.log(error))
@@ -86,38 +86,45 @@ class BuyLand extends Component {
         const showCards = this.state.showCards
 
         return (
-            <div className="container">
-                {
-                    showForm ? (
-                        <form className="white addLandForm z-depth-3" onSubmit={this.handleSubmit}>
-                            <div className="input-field">
-                                <label htmlFor="states">State</label>
-                                <input type="text" id='states' onChange={this.handleChange} />
-                            </div>
-                            <div className="input-field">
-                                <label htmlFor="city">City</label>
-                                <input type="text" id='city' onChange={this.handleChange} />
-                            </div>
-                            <div className="input-field">
-                                <label htmlFor="locality">Locality</label>
-                                <input type="text" id='locality' onChange={this.handleChange} />
-                            </div>
-                            <button className="waves-effect waves-light btn black">Search</button>
-                        </form>
-                    ) : (
-                            null
-                        )
-                }
-                {
-                    showCards === true ? (
-                        <div>
-                            <button onClick={this.goBack} className="waves-effect waves-light btn black">Back</button>
-                            <PropertyList property={this.state.property} />
-                        </div>
-                    ) : (
-                            null
-                        )
-                }
+            <div className="row">
+                <div className="col s2 mainSideNav">
+                    <Sidenav />
+                </div>
+                <div className="col s10">
+                    <div className="container">
+                        {
+                            showForm ? (
+                                <form className="white addLandForm z-depth-3" onSubmit={this.handleSubmit}>
+                                    <div className="input-field">
+                                        <label htmlFor="states">State</label>
+                                        <input type="text" id='states' onChange={this.handleChange} />
+                                    </div>
+                                    <div className="input-field">
+                                        <label htmlFor="city">City</label>
+                                        <input type="text" id='city' onChange={this.handleChange} />
+                                    </div>
+                                    <div className="input-field">
+                                        <label htmlFor="locality">Locality</label>
+                                        <input type="text" id='locality' onChange={this.handleChange} />
+                                    </div>
+                                    <button className="waves-effect waves-light btn black">Search</button>
+                                </form>
+                            ) : (
+                                    null
+                                )
+                        }
+                        {
+                            showCards === true ? (
+                                <div>
+                                    <button onClick={this.goBack} className="waves-effect waves-light btn black">Back</button>
+                                    <PropertyList property={this.state.property} />
+                                </div>
+                            ) : (
+                                    null
+                                )
+                        }
+                    </div>
+                </div>
             </div>
         )
     }

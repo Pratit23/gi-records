@@ -53,8 +53,6 @@ class Notifications extends Component {
             });
     }
 
-
-
     render() {
         const { notifications, accepted } = this.props
         console.log("Notif props: ", this.props)

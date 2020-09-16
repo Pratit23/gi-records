@@ -5,6 +5,12 @@ import { connect } from 'react-redux'
 import MapContainer from '../layout/Map'
 import { Redirect } from 'react-router-dom';
 import  Sidenav from '../layout/Sidenav'
+import { db } from '../../config/fbConfig'
+import M from 'materialize-css'
+
+var tempData = []
+const month = new Date().getMonth()
+const year = new Date().getFullYear()
 
 
 class AddLand extends Component {
@@ -157,22 +163,70 @@ class AddLand extends Component {
         }
 
 
-        var state = 'Maharashtra'
-        var city = 'Kudal'
-        var locality = 'Kudal MIDC'
-        var rate = '102'
-        var mon = '2020-08-09'
+        // var state = 'Maharashtra'
+        // var city = 'Kudal'
+        // var locality = 'Kudal MIDC'
+        // var rate = '102'
+        // var mon = '2020-08-09'
 
 
-        await fetch('http://localhost:2000/setPrice/?state=' + state + '&city=' + city + '&locality=' + locality + '&rate=' + rate + '&mon=' + mon, {
-            method: 'GET'
-        }).then(res => res.json())
-            .then(response => {
-                console.log(response)
-                self.setState({ data: response, added: true });
-            }).catch(err => {
-                console.log('caught it!', err);
+        // await fetch('http://localhost:2000/setPrice/?state=' + state + '&city=' + city + '&locality=' + locality + '&rate=' + rate + '&mon=' + mon, {
+        //     method: 'GET'
+        // }).then(res => res.json())
+        //     .then(response => {
+        //         console.log(response)
+        //         self.setState({ data: response, added: true });
+        //     }).catch(err => {
+        //         console.log('caught it!', err);
+        //     })
+
+        const docID = this.state.city + this.state.locality + month + year
+        console.log("BRUUU DOC ID: ", docID)
+
+        await db.collection("rates").doc(docID)
+            .get()
+            .then(snapshot => {
+                console.log("this is running")
+                tempData = snapshot.data()
+            }).catch(error => console.log(error))
+            
+            console.log("BRUUUU data: ", tempData)
+            
+        if(!tempData) {
+            await db.collection("rates").doc(docID).set({
+                state: this.state.state,
+                city: this.state.city,
+                locality: this.state.locality,
+                marketRate: this.state.marketRate,
+                govRate: this.state.govRate,
+                buyingRate: this.state.buyingRate,
+                month: month,
+                year: year,
             })
+            .then(function () {
+                M.toast({ html: 'Land Added' })
+            }).catch(function (error) {
+                console.error("Error: ", error);
+            });
+        } else {
+            if(parseInt(this.state.marketRate) > parseInt(tempData.marketRate) || parseInt(this.state.govRate) > parseInt(tempData.govRate) || parseInt(this.state.buyingRate) > parseInt(tempData.buyingRate) || !tempData) {
+                await db.collection("rates").doc(docID).set({
+                    state: this.state.state,
+                    city: this.state.city,
+                    locality: this.state.locality,
+                    marketRate: this.state.marketRate,
+                    govRate: this.state.govRate,
+                    buyingRate: this.state.buyingRate,
+                    month: month,
+                    year: year,
+                })
+                .then(function () {
+                    M.toast({ html: 'Land Added' })
+                }).catch(function (error) {
+                    console.error("Error: ", error);
+                });
+            }
+        }
 
         await fetch('http://localhost:2000/delete/?hash=' + this.state.hash, {
             method: 'GET'
@@ -200,10 +254,10 @@ class AddLand extends Component {
         if (!auth.uid) return <Redirect to='/signin' />
         return (
             <div className="row">
-                <div className="col s3 mainSideNav">
+                <div className="col s2 mainSideNav">
                     <Sidenav />
                 </div>
-                <div className="col s9">
+                <div className="col s10">
                     <div className="row">
                         <div style={{ padding: '0' }} className="col s12">
                             <div className="mapBG">

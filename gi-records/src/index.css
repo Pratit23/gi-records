@@ -249,6 +249,12 @@ form button, form h5{
   float: bottom !important;
 }
 
+.sideNavCard {
+  border-radius: 24px !important;
+  margin: 10px !important;
+  background-color: #039be5 !important;
+}
+
 /*=========TESTING================*/
 body::-webkit-scrollbar {
   width: 0.25rem;
