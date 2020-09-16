@@ -8,7 +8,7 @@ html,body {
   background-size: 100%;
   background-position: bottom;
   overflow: overlay; */
-  background-color: white;
+  background-color: #eeeeee;
 }
 
 .mb-0 {
@@ -28,14 +28,12 @@ html,body {
 }
 
 .signInContainer {
-  border-top-left-radius: 24px;
-  border-bottom-right-radius: 24px;
+  border-radius: 24px !important;
   padding: 0!important;
 }
 
 .signUpContainer {
-  border-top-left-radius: 24px;
-  border-bottom-right-radius: 24px;
+  border-radius: 24px !important;
 }
 
 form{
@@ -120,6 +118,8 @@ form button, form h5{
   padding: 0!important;
   max-height: 680px;
   width: 300px!important;
+  background-color: rgba(255, 255, 255, .2) !important;
+  box-shadow: 0 5px 15px rgba(0,0,0, .2);
 }
 
 .scrollLand::-webkit-scrollbar {
@@ -196,6 +196,7 @@ form button, form h5{
 .mainSideNav {
   height: 100vh!important;
   padding: 0!important;
+  border-radius: 0 24px 24px 0;
 }
 
 .collapHead .collapsible-header, .collapHead {
@@ -204,11 +205,38 @@ form button, form h5{
   width: 100%;
 }
 
+.collapHead .collapsible-body {
+  background-color: #212121 !important;
+}
+
 .dashSec2 {
   background-color: #e0e0e0 !important;
   border-radius: 24px !important;
   height: 100vh !important;
   padding: 20px !important;
+}
+
+.acceptSec {
+  height: 100vh !important;
+}
+
+.collapWrapper {
+  height: 100vh !important;
+  background-color: #e0e0e0 !important;
+  border-radius: 24px !important;
+  padding: 10px !important;
+}
+
+.signInWrapper {
+  position: absolute !important;
+}
+
+.signInRow {
+  padding: 10px !important;
+}
+
+.mapElement {
+  border-radius: 24px !important;
 }
 
 /*=========TESTING================*/
@@ -226,9 +254,9 @@ body::-webkit-scrollbar-thumb {
 
 .navbar {
   position: fixed;
-  background-color: var(--bg-primary);
   transition: width 600ms ease;
   overflow: none;
+  border-radius: 0 24px 24px 0 !important;
 }
 
 .navbar-nav {
@@ -239,6 +267,14 @@ body::-webkit-scrollbar-thumb {
   flex-direction: column;
   align-items: center;
   height: 100%;
+}
+
+.sideNavName {
+  margin: 0 !important;
+}
+
+.profileInitial {
+  margin-top: 15px !important;
 }
 
 .nav-item {
@@ -391,3 +427,4 @@ textarea.materialize-textarea:focus:not([readonly]){
   border-color: #01579b;
   box-shadow: none;
 }
+

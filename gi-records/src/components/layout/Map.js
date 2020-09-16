@@ -33,7 +33,7 @@ const MyMapComponent = (props) => {
         <div>
             <GoogleMapExample
                 containerElement={<div style={{ height: `100vh`}} />}
-                mapElement={<div style={{ height: `100%` }} />}
+                mapElement={<div className="mapElement" style={{ height: `100%` }} />}
             />
         </div>
     );

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { signIn } from '../../store/actions/authActions'
 import { Redirect } from 'react-router-dom'
 import { withFirebase } from 'react-redux-firebase';
+import SignedOutLinks from '../layout/SignedOutLinks'
 
 class SignIn extends Component {
   state = {
@@ -26,33 +27,44 @@ class SignIn extends Component {
     if (auth.uid) return <Redirect to='/' />
 
     return (
-      <div className="container">
-        <form className="black signInContainer" onSubmit={this.handleSubmit}>
-          <div className="row">
-            <div className="col s6 signInBack">
-              <img className="responsive-img" src={require("../../images/signInGif.gif")} />
-            </div>
-            <div className="col s6 signInForm">
-              <h5 className="white-text">Sign In</h5>
-              <div className="input-field">
-                <label htmlFor="email">Email</label>
-                <input className="white-text" required type="email" id='email' onChange={this.handleChange} />
+      <div>
+        <nav className="grey darken-4">
+          <div className="nav-wrapper">
+            <a href="#" className="brand-logo"></a>
+            <ul id="nav-mobile" className="right hide-on-med-and-down">
+              <li><a href="sass.html">About</a></li>
+              <li><SignedOutLinks /></li>
+            </ul>
+          </div>
+        </nav>
+        <div className="container">
+          <form className="black signInContainer" onSubmit={this.handleSubmit}>
+            <div className="row signInRow">
+              <div className="col s6 signInBack">
+                <img className="responsive-img" src={require("../../images/signInGif.gif")} />
               </div>
-              <div className="input-field">
-                <label htmlFor="password">Password</label>
-                <input className="white-text" required type="password" id='password' onChange={this.handleChange} />
-              </div>
-              <div className="input-field">
-                <button className="btn waves-effect waves-light pink" type="submit" name="action">Sign In
+              <div className="col s6 signInForm">
+                <h5 className="white-text">Login to Your Account!</h5>
+                <div className="input-field">
+                  <label htmlFor="email">Email</label>
+                  <input className="white-text" required type="email" id='email' onChange={this.handleChange} />
+                </div>
+                <div className="input-field">
+                  <label htmlFor="password">Password</label>
+                  <input className="white-text" required type="password" id='password' onChange={this.handleChange} />
+                </div>
+                <div className="input-field">
+                  <button className="btn waves-effect waves-light pink" type="submit" name="action">Sign In
                   <i className="material-icons right">send</i>
-                </button>
-                <div className="center red-text">
-                  {authError ? <p>{authError}</p> : null}
+                  </button>
+                  <div className="center red-text">
+                    {authError ? <p>{authError}</p> : null}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     )
   }

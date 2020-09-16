@@ -15,6 +15,7 @@ import BuyLand from './components/dashboard/BuyLand'
 import SellDetail from './components/projects/SellDetail';
 import Notifications from './components/dashboard/Notifications';
 import Sidenav from './components/layout/Sidenav'
+import { signIn } from './store/actions/authActions';
 
 const App = () => {
 
@@ -22,8 +23,8 @@ const App = () => {
     <BrowserRouter>
       <div className="App">
         <div className="row">
-          <div className="col s2 grey darken-4 mainSideNav">
-            <Sidenav/>
+          <div className="col s2 mainSideNav">
+            <Sidenav />
           </div>
           <div className="col s10 mainScreen">
             <Switch>
@@ -37,8 +38,14 @@ const App = () => {
               <Route path='/buyLand' component={BuyLand} />
               <Route path='/project/:id' component={ProjectDetails} />
               <Route path='/sellDetail/:id' component={SellDetail} />
-              <Route path='/SignIn' component={SignIn} />
-              <Route path='/SignUp' component={SignUp} />
+            </Switch>
+          </div>
+        </div>
+        <div className="row signInWrapper">
+          <div className="col s12" style={{padding: '0'}}>
+            <Switch>
+              <Route path='/signin' component={SignIn} />
+              <Route path='/signup' component={SignUp} />
             </Switch>
           </div>
         </div>

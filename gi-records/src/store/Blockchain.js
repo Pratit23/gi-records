@@ -107,7 +107,7 @@ const Blockchain = (props) => {
   return (
     <div>
       <div className="section">
-        <h1>Your Lands</h1>
+        <h3>Your Lands</h3>
       </div>
       <div className="section dashSec2">
         <div className="row mb-0">
@@ -123,8 +123,8 @@ const Blockchain = (props) => {
                           <div className="card propertyCard blue-grey darken-1" key={key}>
                             <Link to={'/property/' + key} key={key}>
                               <div className="card-content white-text">
-                                <span className="card-title">Property {key + 1}</span>
-                                <p>{details.plotNo}</p>
+                                <span className="card-title">{details.plotNo}</span>
+                                <p>{details.locality}, {details.states}, {details.city}</p>
                               </div>
                             </Link>
                           </div>

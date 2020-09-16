@@ -8,17 +8,24 @@ import { Redirect } from 'react-router-dom';
 
 const trigger = <a href=""><i className="material-icons">chevron_right</i></a>
 
+var data = localStorage.getItem('userDetails')
+data = JSON.parse(data)
+
 const Sidenav = (props) => {
     const { auth, profile } = props;
     const links = auth.uid ? <SignedInLinks profile={profile} /> : <SignedOutLinks/>;
-    {/*if (!auth.uid) return <Redirect to='/signin' />*/}
+    if (!auth.uid) return <Redirect to='/signin' />
 
     return (
-        <nav className="navbar">
+        <nav className="navbar grey darken-4">
             <ul className="navbar-nav">
                 <li className="logo">
                     Testing
                 </li>
+                <li className="nav-item"><div className="divider"></div></li>
+                <li><a class="btn-floating btn-large red profileInitial">{data.initials}</a></li>
+                <li><p className="sideNavName">{data.firstName} {data.lastName}</p></li>
+                <li className="nav-item"><div className="divider"></div></li>
                 <li className="nav-item">
                     <NavLink to='/' className="sideNavText"><i className="material-icons notifIcon">dashboard</i>Dashboard</NavLink>
                 </li>
@@ -31,6 +38,9 @@ const Sidenav = (props) => {
                 <li className="nav-item">
                     <NavLink to='/Database' className="sideNavText"><i className="material-icons notifIcon">library_add</i>Add Land</NavLink>
                 </li>
+                <li className="nav-item" id="themeButton">
+                    <Link to='/notifications' className="sideNavText"><i className="material-icons white-text notifIcon">notifications_none</i><span>Notifications</span></Link>
+                </li>
                 <li className="nav-item"><div className="divider"></div></li>
                 <li className="nav-item" id="themeButton">
                     <Collapsible accordion className="collapHead">
@@ -39,17 +49,14 @@ const Sidenav = (props) => {
                             expanded={false}
                             header={<span className="white-text">Land Transact</span>}
                             node="div">
-                            <NavLink className="black-text" to='/SellLand'>Sell Land</NavLink>
-                            <NavLink className="black-text" to='/BuyLand'>Buy Land</NavLink>
+                            <NavLink className="white-text" to='/SellLand'>Sell Land</NavLink>
+                            <NavLink className="white-text" to='/BuyLand'>Buy Land</NavLink>
                         </CollapsibleItem>
                     </Collapsible>
                 </li>
                 <li className="nav-item"><div className="divider"></div></li>
                 <li className="nav-item" id="themeButton">
-                    <Link to='/notifications' className="sideNavText"><i className="material-icons white-text notifIcon">notifications_none</i><span>Notifications</span></Link>
-                </li>
-                <li className="nav-item" id="themeButton">
-                    {links}
+                    <SignedInLinks/>
                 </li>
             </ul>
         </nav>
@@ -64,3 +71,8 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, null)(Sidenav)
+
+
+
+
+

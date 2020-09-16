@@ -16,8 +16,9 @@ class Dashboard extends Component {
   render() {
     console.log(this.props)
     const { projects, auth, notifications } = this.props;
-    if (!auth.uid) return <Redirect to='/signin' />
-
+    if (!auth.uid) {
+      this.props.history.push('/signin')
+    }
     return (
       <div>
         <div className="section">
