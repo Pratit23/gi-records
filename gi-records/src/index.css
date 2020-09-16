@@ -239,6 +239,16 @@ form button, form h5{
   border-radius: 24px !important;
 }
 
+.sidenav {
+  border-radius: 0 24px 24px 0 !important;
+  background-color: #212121 !important;
+  width: 200px !important;
+}
+
+.logout {
+  float: bottom !important;
+}
+
 /*=========TESTING================*/
 body::-webkit-scrollbar {
   width: 0.25rem;

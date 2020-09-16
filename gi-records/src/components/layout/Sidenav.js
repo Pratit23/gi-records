@@ -31,37 +31,34 @@ const Sidenav = (props) => {
             >
                 <SideNavItem
                     user={{
-                        background: '',
-                        email: 'jdandturk@gmail.com',
-                        image: 'static/media/react-materialize-logo.824c6ea3.svg',
-                        name: 'John Doe'
+                        //background: 'https://placeimg.com/640/480/tech',
+                        email: auth.email,
+                        image: 'https://picsum.photos/200/300',
+                        name: data.firstName+" "+data.lastName
                     }}
                     userView
                 />
-                <SideNavItem
-                    href="#!icon"
-                    icon={<Icon>cloud</Icon>}
-                >
-                    First Link With Icon
-                </SideNavItem>
-                <SideNavItem>
-                    <li><NavLink to='/'>Dashboard</NavLink></li>
-                </SideNavItem>
-                <SideNavItem>
-                    <li><NavLink to='/chartboard'>Chartboard</NavLink></li>
-                </SideNavItem>
-                <SideNavItem>
-                    <li><NavLink to='/ViewAllLand'>Your Lands</NavLink></li>
-                </SideNavItem>
-                <SideNavItem>
-                    <li><NavLink to='/Database'>Add Land</NavLink></li>
-                </SideNavItem>
                 <SideNavItem divider />
                 <SideNavItem subheader>
-                    Subheader
+                    <span  className="white-text">Main Menu</span>
                 </SideNavItem>
+                <li><NavLink className="white-text" to='/'><Icon className="white-text">dashboard</Icon>Dashboard</NavLink></li>
+                <li><NavLink className="white-text" to='/chartboard'><Icon className="white-text">insert_chart</Icon>Chartboard</NavLink></li>
+                <li><NavLink className="white-text" to='/ViewAllLand'><Icon className="white-text">place</Icon>Your Lands</NavLink></li>
+                <li><NavLink className="white-text" to='/Database'><Icon className="white-text">add</Icon>Add Land</NavLink></li>
+                <Collapsible accordion className="collapHead">
+                        <CollapsibleItem
+                            className="collapHead"
+                            expanded={false}
+                            header={<span className="white-text">Land Transact</span>}
+                            node="div">
+                            <li><NavLink className="white-text" to='/SellLand'><Icon className="white-text">local_offer</Icon>Sell Land</NavLink></li>
+                            <li><NavLink className="white-text" to='/BuyLand'><Icon className="white-text">local_offer</Icon>Buy Land</NavLink></li>
+                        </CollapsibleItem>
+                </Collapsible>
+                <SideNavItem divider />
                 <SideNavItem>
-                    <SignedInLinks/>
+                    <SignedInLinks />
                 </SideNavItem>
             </SideNav>
         </div>
