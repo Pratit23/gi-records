@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
 import Chart from "chart.js";
+import { connect } from 'react-redux'
+import { firestoreConnect } from 'react-redux-firebase'
+import { compose } from 'redux'
 
+const month = new Date().getMonth()
+const year = new Date().getFullYear()
 
-export default class LineGraph extends Component {
+ class LineGraph extends Component {
     chartRef = React.createRef();
 
     componentDidMount() {
@@ -54,6 +59,7 @@ export default class LineGraph extends Component {
         });
     }
     render() {
+        console.log("Props of Line graph: ", this.props)
         return (
             <div>
                 <canvas
@@ -64,4 +70,19 @@ export default class LineGraph extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    console.log("State: ", state)
+    return {
+        auth: state.firebase.auth,
+        chartData: state.firestore.ordered.chartData
+    }
+}
+
+export default compose(
+    connect(mapStateToProps, null),
+    firestoreConnect((props) => [
+        { collection: 'rates', orderBy: ['createdAt', 'desc'], where: [['year', '==', year]], storeAs: 'chartData' },
+    ])
+)(LineGraph)
 

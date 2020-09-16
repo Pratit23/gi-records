@@ -4,6 +4,7 @@ import MapContainer from '../layout/Map2'
 import { quotePrice } from '../../store/actions/propertyActions'
 import { Modal, Button } from 'react-materialize';
 import { withFirebase } from 'react-redux-firebase'
+import Sidenav from '../layout/Sidenav'
 
 const SellDetail = (props) => {
 
@@ -34,7 +35,7 @@ const SellDetail = (props) => {
         const firebase = props.firebase
         console.log("Firebase: ", firebase)
         console.log("New property test: ", newProperty.state)
-        props.quotePrice(newProperty.sellerID, qPrice, newProperty.state, newProperty.city, newProperty.locality, newProperty.plotNo, newProperty.landID , coords, newProperty.authorFirstName, newProperty.authorLastName,firebase);
+        props.quotePrice(newProperty.sellerID, qPrice, newProperty.state, newProperty.city, newProperty.locality, newProperty.plotNo, newProperty.landID, coords, newProperty.authorFirstName, newProperty.authorLastName, firebase);
         //props.quotePrice(newProperty ,firebase);
     }
 
@@ -57,52 +58,59 @@ const SellDetail = (props) => {
     }, [update]);
 
     return (
-        <div className="container">
-            <div className="row">
-                <div className="col s12">
-                    <div className="card blue-grey darken-1 detailInfoCard">
-                        <div className="card-content white-text">
-                            <span className="card-title">PLOT NO - {property.plotNo}</span>
-                            <p>Owner - {property.authorFirstName} {property.authorLastName}<br />Address -<br />
-                                {property.locality}, {property.city},<br />{property.state}<br />Purchase Rate - {property.rate}/sq.ft
+        <div className="row">
+            <div className="col s2 mainSideNav">
+                <Sidenav />
+            </div>
+            <div className="col s10">
+                <div className="container">
+                    <div className="row">
+                        <div className="col s12">
+                            <div className="card blue-grey darken-1 detailInfoCard">
+                                <div className="card-content white-text">
+                                    <span className="card-title">PLOT NO - {property.plotNo}</span>
+                                    <p>Owner - {property.authorFirstName} {property.authorLastName}<br />Address -<br />
+                                        {property.locality}, {property.city},<br />{property.state}<br />Purchase Rate - {property.rate}/sq.ft
                             <br />Purchase Price - ₹{property.price}</p>
-                            <Modal
-                                actions={[
-                                    <Button className="black white-text" flat modal="close" node="button">Close</Button>
-                                ]}
-                                bottomSheet={false}
-                                fixedFooter
-                                header="LIST PROPERTY"
-                                id="Modal-0"
-                                open={false}
-                                options={{
-                                    dismissible: true,
-                                    endingTop: '10%',
-                                    inDuration: 250,
-                                    onCloseEnd: null,
-                                    onCloseStart: null,
-                                    onOpenEnd: null,
-                                    onOpenStart: null,
-                                    opacity: 0.5,
-                                    outDuration: 250,
-                                    preventScrolling: true,
-                                    startingTop: '4%'
-                                }}
-                                trigger={<Button className="black" node="button">Quote Price</Button>}>
-                                <form className="white addLandForm z-depth-3" onSubmit={(handleSubmit)}>
-                                    <div className="input-field">
-                                        <label htmlFor="price">Price</label>
-                                        <input type="text" id='hash' onChange={e => setQPrice(e.target.value)} />
-                                    </div>
-                                    <button className="waves-effect waves-light btn black">Send</button>
-                                </form>
-                            </Modal>
+                                    <Modal
+                                        actions={[
+                                            <Button className="black white-text" flat modal="close" node="button">Close</Button>
+                                        ]}
+                                        bottomSheet={false}
+                                        fixedFooter
+                                        header="LIST PROPERTY"
+                                        id="Modal-0"
+                                        open={false}
+                                        options={{
+                                            dismissible: true,
+                                            endingTop: '10%',
+                                            inDuration: 250,
+                                            onCloseEnd: null,
+                                            onCloseStart: null,
+                                            onOpenEnd: null,
+                                            onOpenStart: null,
+                                            opacity: 0.5,
+                                            outDuration: 250,
+                                            preventScrolling: true,
+                                            startingTop: '4%'
+                                        }}
+                                        trigger={<Button className="black" node="button">Quote Price</Button>}>
+                                        <form className="white addLandForm z-depth-3" onSubmit={(handleSubmit)}>
+                                            <div className="input-field">
+                                                <label htmlFor="price">Price</label>
+                                                <input type="text" id='hash' onChange={e => setQPrice(e.target.value)} />
+                                            </div>
+                                            <button className="waves-effect waves-light btn black">Send</button>
+                                        </form>
+                                    </Modal>
+                                </div>
+                                {
+                                    coords ?
+                                        <MapContainer temp={coords} />
+                                        : null
+                                }
+                            </div>
                         </div>
-                        {
-                            coords ?
-                                <MapContainer temp={coords} />
-                                : null
-                        }
                     </div>
                 </div>
             </div>
@@ -121,7 +129,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        quotePrice: (sellerID, price, states, city, locality, plotNo, landID, coords, sellerFName, sellerLName ,firebase) => dispatch(quotePrice(sellerID, price, states, city, locality, plotNo, landID, coords, sellerFName, sellerLName ,firebase))
+        quotePrice: (sellerID, price, states, city, locality, plotNo, landID, coords, sellerFName, sellerLName, firebase) => dispatch(quotePrice(sellerID, price, states, city, locality, plotNo, landID, coords, sellerFName, sellerLName, firebase))
     }
 }
 

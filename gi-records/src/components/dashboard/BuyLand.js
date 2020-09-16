@@ -7,8 +7,8 @@ import { Redirect } from 'react-router-dom';
 import { db } from '../../config/fbConfig'
 import Sidenav from '../layout/Sidenav'
 
-var data = localStorage.getItem('userDetails')
-data = JSON.parse(data)
+var localData = localStorage.getItem('userDetails')
+localData = JSON.parse(localData)
 
 class BuyLand extends Component {
 
@@ -53,8 +53,10 @@ class BuyLand extends Component {
             .then(snapshot => {
                 snapshot.forEach(doc => {
                     const data = doc.data()
-                    console.log("DOC ID", doc.id)
-                    tempArray[doc.id] = { data }
+                    console.log("DOC ID", data)
+                    if(data.sellerID != localData.ethereumAdd) {
+                        tempArray[doc.id] = { data }
+                    }
                 })
                 console.log("Snapshot thingy: ", tempArray)
                 this.setState({

@@ -9,7 +9,10 @@ import DashChart1 from '../layout/DashChart1';
 import DashChart2 from '../layout/DashChart2';
 import { db } from '../../config/fbConfig'
 import Sidenav from '../layout/Sidenav'
+import { Select } from 'react-materialize'
 //import DashChart3 from '../layout/DashChart3';
+
+var testArray = ['one', 'two', 'three']
 
 
 class Dashboard extends Component {
@@ -23,7 +26,7 @@ class Dashboard extends Component {
     return (
       <div className="row">
         <div className="col s2 mainSideNav">
-          <Sidenav/>
+          <Sidenav />
         </div>
         <div className="col s10">
           <div className="section">
@@ -31,15 +34,48 @@ class Dashboard extends Component {
           </div>
           <div className="section dashSec2">
             <div className="row">
-              <div className="col s12 m6">
-              </div>
-              <div className="col s12 m5 offset-m1">
+              <div className="col s6">
                 <div className="row">
-                  <div className="col s12 m6">
-                    <div className="card red darken-1">
+                  <div className="col s12">
+                    <div className="card red darken-1 chartCard">
                       <div className="mainCard card-content white-text">
                         <div className="section">
                           <span className="cardTitle card-title white-text">Watchlist</span>
+                          <div class="input-field cardDropDown col s12">
+                            <Select
+                              id="Select-9"
+                              multiple={false}
+                              onChange={function noRefCheck() { }}
+                              options={{
+                                classes: '',
+                                dropdownOptions: {
+                                  alignment: 'left',
+                                  autoTrigger: true,
+                                  closeOnClick: true,
+                                  constrainWidth: true,
+                                  coverTrigger: true,
+                                  hover: false,
+                                  inDuration: 150,
+                                  onCloseEnd: null,
+                                  onCloseStart: null,
+                                  onOpenEnd: null,
+                                  onOpenStart: null,
+                                  outDuration: 250
+                                }
+                              }}
+                              value=""
+                            >
+                          <option value="1">
+                                {testArray[0]}
+                          </option>
+                              <option value="2">
+                                Option 2
+                          </option>
+                              <option value="3">
+                                Option 3
+                          </option>
+                            </Select>
+                          </div>
                         </div>
                         <div className="cardChart section">
                           <DashChart1 />
@@ -47,7 +83,7 @@ class Dashboard extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="col s12 m6">
+                  {/*<div className="col s12 m6">
                     <div className="card  blue darken-1">
                       <div className="mainCard card-content white-text">
                         <div className="section">
@@ -58,7 +94,7 @@ class Dashboard extends Component {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div>*/}
                 </div>
                 <div className="section">
                 </div>

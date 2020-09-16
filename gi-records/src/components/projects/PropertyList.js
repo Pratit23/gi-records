@@ -14,13 +14,16 @@ const PropertyList = ({ property }) => {
     }
     return (
         <div className="project-list section">
-            {tempArray && tempArray.map((property,key) => {
-                return (
-                    <Link key={key} to={'/sellDetail/' + arrayOfKeys[key]}>
-                        <PropertySummary key={key} property={property.data} />
-                    </Link>
-                )
-            })}
+            {
+                tempArray.length == 0 ? <p>No lands available in this area</p>: tempArray && tempArray.map((property,key) => {
+                    return (
+                        <Link key={key} to={'/sellDetail/' + arrayOfKeys[key]}>
+                            <PropertySummary key={key} property={property.data} />
+                        </Link>
+                    )
+                })
+            }
+            
         </div>
     )
 }

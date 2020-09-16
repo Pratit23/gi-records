@@ -202,6 +202,7 @@ class AddLand extends Component {
                 buyingRate: this.state.buyingRate,
                 month: month,
                 year: year,
+                createdAt: new Date(),
             })
             .then(function () {
                 M.toast({ html: 'Land Added' })
@@ -219,6 +220,7 @@ class AddLand extends Component {
                     buyingRate: this.state.buyingRate,
                     month: month,
                     year: year,
+                    createdAt: new Date(),
                 })
                 .then(function () {
                     M.toast({ html: 'Land Added' })

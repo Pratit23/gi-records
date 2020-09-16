@@ -255,6 +255,14 @@ form button, form h5{
   background-color: #039be5 !important;
 }
 
+.chartCard {
+  border-radius: 24px !important;
+}
+
+.cardDropDown {
+  margin-left: 140px !important;
+}
+
 /*=========TESTING================*/
 body::-webkit-scrollbar {
   width: 0.25rem;

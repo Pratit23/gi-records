@@ -5,6 +5,7 @@ import { sellProperty } from '../../store/actions/propertyActions'
 import { withFirebase } from 'react-redux-firebase'
 import { Modal, Button } from 'react-materialize';
 import { Redirect } from 'react-router-dom';
+import Sidenav from '../layout/Sidenav'
 
 const PropertyDetails = (props) => {
 
@@ -53,52 +54,59 @@ const PropertyDetails = (props) => {
     }, update);
 
     return (
-        <div className="container">
-            <div className="row">
-                <div className="col s12">
-                    <div className="card blue-grey darken-1 detailInfoCard">
-                        <div className="card-content white-text">
-                            <span className="card-title">PLOT NO - {plotNo}</span>
-                            <p>Owner - {stateProperty.firstName} {stateProperty.lastName}<br />Address -<br />
-                                {locality}, {city},<br />{states}<br />Purchase Rate - {buyingRate}/sq.ft
+        <div className="row">
+            <div className="col s2 mainSideNav">
+                <Sidenav />
+            </div>
+            <div className="col s10">
+                <div className="container">
+                    <div className="row">
+                        <div className="col s12">
+                            <div className="card blue-grey darken-1 detailInfoCard">
+                                <div className="card-content white-text">
+                                    <span className="card-title">PLOT NO - {plotNo}</span>
+                                    <p>Owner - {stateProperty.firstName} {stateProperty.lastName}<br />Address -<br />
+                                        {locality}, {city},<br />{states}<br />Purchase Rate - {buyingRate}/sq.ft
                             <br />Purchase Price - ₹{price}</p>
-                            <Modal
-                                actions={[
-                                    <Button className="black white-text" flat modal="close" node="button">Close</Button>
-                                ]}
-                                bottomSheet={false}
-                                fixedFooter
-                                header="LIST PROPERTY"
-                                id="Modal-0"
-                                open={false}
-                                options={{
-                                    dismissible: true,
-                                    endingTop: '10%',
-                                    inDuration: 250,
-                                    onCloseEnd: null,
-                                    onCloseStart: null,
-                                    onOpenEnd: null,
-                                    onOpenStart: null,
-                                    opacity: 0.5,
-                                    outDuration: 250,
-                                    preventScrolling: true,
-                                    startingTop: '4%'
-                                }}
-                                trigger={<Button node="button">Sell Property</Button>}>
-                                <form className="white addLandForm z-depth-3" onSubmit={(handleSubmit)}>
-                                    <div className="input-field">
-                                        <label htmlFor="price">Price</label>
-                                        <input type="text" id='hash' onChange={e => setPrice(e.target.value)} />
-                                    </div>
-                                    <button className="waves-effect waves-light btn black">List for Selling</button>
-                                </form>
-                            </Modal>
+                                    <Modal
+                                        actions={[
+                                            <Button className="black white-text" flat modal="close" node="button">Close</Button>
+                                        ]}
+                                        bottomSheet={false}
+                                        fixedFooter
+                                        header="LIST PROPERTY"
+                                        id="Modal-0"
+                                        open={false}
+                                        options={{
+                                            dismissible: true,
+                                            endingTop: '10%',
+                                            inDuration: 250,
+                                            onCloseEnd: null,
+                                            onCloseStart: null,
+                                            onOpenEnd: null,
+                                            onOpenStart: null,
+                                            opacity: 0.5,
+                                            outDuration: 250,
+                                            preventScrolling: true,
+                                            startingTop: '4%'
+                                        }}
+                                        trigger={<Button node="button">Sell Property</Button>}>
+                                        <form className="white addLandForm z-depth-3" onSubmit={(handleSubmit)}>
+                                            <div className="input-field">
+                                                <label htmlFor="price">Price</label>
+                                                <input type="text" id='hash' onChange={e => setPrice(e.target.value)} />
+                                            </div>
+                                            <button className="waves-effect waves-light btn black">List for Selling</button>
+                                        </form>
+                                    </Modal>
+                                </div>
+                                {
+                                    coords ?
+                                        <MapContainer temp={coords} />
+                                        : null
+                                }
+                            </div>
                         </div>
-                        {
-                            coords ?
-                                <MapContainer temp={coords} />
-                                : null
-                        }
                     </div>
                 </div>
             </div>
