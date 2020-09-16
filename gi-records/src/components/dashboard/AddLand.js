@@ -4,6 +4,7 @@ import { simpleStorageAbi } from '../../abis/abis';
 import { connect } from 'react-redux'
 import MapContainer from '../layout/Map'
 import { Redirect } from 'react-router-dom';
+import  Sidenav from '../layout/Sidenav'
 
 
 class AddLand extends Component {
@@ -38,9 +39,9 @@ class AddLand extends Component {
         // console.log("Metamask address: ",metaMaskAcc)
         // console.log("LoweCase address: ",lowerCaseAddress)
         // if(metaMaskAcc == lowerCaseAddress) {
-            this.setState({
-                [e.target.id]: e.target.value
-            })
+        this.setState({
+            [e.target.id]: e.target.value
+        })
         // }
         // else {
         //     alert("Error!!! Ethereum address does not match!!!")
@@ -117,7 +118,7 @@ class AddLand extends Component {
                 //console.log("If is runnning")
                 const setResult = await SimpleContract.methods.setOwner(this.state.address, newAddress, fName,
                     lName, this.state.coords, this.state.state, this.state.city, this.state.locality
-                    ,this.state.plotNo, this.state.buyingRate, this.state.landSize, this.state.hash, this.state.price).send({ from: account });
+                    , this.state.plotNo, this.state.buyingRate, this.state.landSize, this.state.hash, this.state.price).send({ from: account });
                 flag = false;
                 console.log("State added:", this.state.added)
                 console.log(setResult);
@@ -155,12 +156,12 @@ class AddLand extends Component {
             }
         }
 
-        
-            var state =  'Maharashtra'
-            var city = 'Kudal'
-            var locality = 'Kudal MIDC'
-            var rate = '102'
-            var mon = '2020-08-09'
+
+        var state = 'Maharashtra'
+        var city = 'Kudal'
+        var locality = 'Kudal MIDC'
+        var rate = '102'
+        var mon = '2020-08-09'
 
 
         await fetch('http://localhost:2000/setPrice/?state=' + state + '&city=' + city + '&locality=' + locality + '&rate=' + rate + '&mon=' + mon, {
@@ -196,35 +197,42 @@ class AddLand extends Component {
         const firstName = this.props.profile.firstName;
         const lastName = this.props.profile.lastName;
         const { auth } = this.props;
-        if (!auth.uid) return <Redirect to='/signin'/>
+        if (!auth.uid) return <Redirect to='/signin' />
         return (
             <div className="row">
-                <div style={{ padding: '0' }} className="col s12">
-                    <div className="mapBG">
-                        <MapContainer temp={this.state.coordsArray} />
-                        <div className="yourLandFloatingDiv">
-                        <form className="white addLandForm z-depth-3" onSubmit={this.handleSubmit}>
-                        <div className="input-field">
-                            <label htmlFor="hash">Hash Value</label>
-                            <input type="text" id='hash' onChange={this.handleChange} />
-                        </div>
-                        <button className="waves-effect waves-light btn black">Add</button>
-                    </form>
-                    {
-                        console.log("Second div", this.state.added),
-                        this.state.added ?
-                            <form className="white addLandForm z-depth-3">
-                                <p>{firstName}</p>
-                                <p>{lastName}</p>
-                                <p>{this.state.coords}</p>
-                                <p>{this.state.state}</p>
-                                <p>{this.state.city}</p>
-                                <p>{this.state.locality}</p>
-                                <p>{this.state.plotNo}</p>
-                                <p>{this.state.price}</p>
-                            </form>
-                            : console.log("Second not loading")
-                    }
+                <div className="col s2 mainSideNav">
+                    <Sidenav />
+                </div>
+                <div className="col s10">
+                    <div className="row">
+                        <div style={{ padding: '0' }} className="col s12">
+                            <div className="mapBG">
+                                <MapContainer temp={this.state.coordsArray} />
+                                <div className="yourLandFloatingDiv">
+                                    <form className="white addLandForm z-depth-3" onSubmit={this.handleSubmit}>
+                                        <div className="input-field">
+                                            <label htmlFor="hash">Hash Value</label>
+                                            <input type="text" id='hash' onChange={this.handleChange} />
+                                        </div>
+                                        <button className="waves-effect waves-light btn black">Add</button>
+                                    </form>
+                                    {
+                                        console.log("Second div", this.state.added),
+                                        this.state.added ?
+                                            <form className="white addLandForm z-depth-3">
+                                                <p>{firstName}</p>
+                                                <p>{lastName}</p>
+                                                <p>{this.state.coords}</p>
+                                                <p>{this.state.state}</p>
+                                                <p>{this.state.city}</p>
+                                                <p>{this.state.locality}</p>
+                                                <p>{this.state.plotNo}</p>
+                                                <p>{this.state.price}</p>
+                                            </form>
+                                            : console.log("Second not loading")
+                                    }
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

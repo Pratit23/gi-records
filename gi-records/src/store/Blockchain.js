@@ -4,6 +4,7 @@ import { simpleStorageAbi } from '../abis/abis';
 import { connect } from 'react-redux'
 import MapContainer from '../components/layout/Map1'
 import { Link } from 'react-router-dom'
+import Sidenav from '../components/layout/Sidenav'
 
 
 const Blockchain = (props) => {
@@ -105,32 +106,37 @@ const Blockchain = (props) => {
   }, [id])
 
   return (
-    <div>
-      <div className="section">
-        <h3>Your Lands</h3>
+    <div className="row">
+      <div className="col s2 mainSideNav">
+        <Sidenav />
       </div>
-      <div className="section dashSec2">
-        <div className="row mb-0">
-          <div style={{ padding: '0' }} className="col s12">
-            <div className="mapBG">
-              <MapContainer temp={coordsArray} />
-              <div className="yourLandFloatingDiv">
-                <div className="scrollLand">
-                  {(property).map(
-                    (details, key) => (
-                      <div key={key}>
-                        <div className="col s12" key={key}>
-                          <div className="card propertyCard blue-grey darken-1" key={key}>
-                            <Link to={'/property/' + key} key={key}>
-                              <div className="card-content white-text">
-                                <span className="card-title">{details.plotNo}</span>
-                                <p>{details.locality}, {details.states}, {details.city}</p>
-                              </div>
-                            </Link>
+      <div className="col s10">
+        <div className="section">
+          <h3>Your Lands</h3>
+        </div>
+        <div className="section dashSec2">
+          <div className="row mb-0">
+            <div style={{ padding: '0' }} className="col s12">
+              <div className="mapBG">
+                <MapContainer temp={coordsArray} />
+                <div className="yourLandFloatingDiv">
+                  <div className="scrollLand">
+                    {(property).map(
+                      (details, key) => (
+                        <div key={key}>
+                          <div className="col s12" key={key}>
+                            <div className="card propertyCard blue-grey darken-1" key={key}>
+                              <Link to={'/property/' + key} key={key}>
+                                <div className="card-content white-text">
+                                  <span className="card-title">{details.plotNo}</span>
+                                  <p>{details.locality}, {details.states}, {details.city}</p>
+                                </div>
+                              </Link>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                  </div>
                 </div>
               </div>
             </div>

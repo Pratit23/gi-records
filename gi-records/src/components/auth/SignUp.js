@@ -3,6 +3,8 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { signUp } from '../../store/actions/authActions'
 import { withFirebase } from 'react-redux-firebase';
+import SignedOutLinks from '../layout/SignedOutLinks'
+import { Link, NavLink } from 'react-router-dom'
 
 const formValid = formErrors => {
   let valid = true;
@@ -87,7 +89,7 @@ class SignUp extends Component {
         Last name: ${this.state.lastName}
         Eth Address: ${this.state.ethereumAdd}
         `)
-        this.props.signUp(this.state, this.props.firebase)
+      this.props.signUp(this.state, this.props.firebase)
     } else {
       console.log(`Form Invalid`)
     }
@@ -99,58 +101,70 @@ class SignUp extends Component {
     if (auth.uid) return <Redirect to='/' />
     const { formErrors } = this.state;
     return (
-      <div className="container">
-        <form className="black signUpContainer" onSubmit={this.handleSubmit}>
-          <div className="row">
-            <div className="col s6">
-              <img className="responsive-img signUpGif" src={require("../../images/test.gif")} />
-            </div>
-            <div className="col s6">
-              <h5 className="white-text">Sign Up</h5>
-              <div className="input-field">
-                <label htmlFor="email">Email</label>
-                <input name="email" className="white-text" required type="email" id='email' onChange={this.handleChange} />
-                {formErrors.email.length > 0 && (
-                  <span className="errorMessage red-text">{formErrors.email}</span>
-                )}
+      <div>
+      <nav className="grey darken-4">
+          <div className="nav-wrapper">
+            <a href="#" className="brand-logo"></a>
+            <ul id="nav-mobile" className="right hide-on-med-and-down">
+              <li><a href="sass.html">About</a></li>
+              <li><NavLink to='/SignUp'>Signup</NavLink></li>
+              <li><NavLink to='/signin'>Login</NavLink></li>
+            </ul>
+          </div>
+        </nav>
+        <div className="container">
+          <form className="black signUpContainer" onSubmit={this.handleSubmit}>
+            <div className="row">
+              <div className="col s6">
+                <img className="responsive-img signUpGif" src={require("../../images/test.gif")} />
               </div>
-              <div className="input-field">
-                <label htmlFor="password">Password</label>
-                <input name="password" className="white-text" required type="password" id='password' onChange={this.handleChange} />
-                {formErrors.password.length > 0 && (
-                  <span className="errorMessage red-text">{formErrors.password}</span>
-                )}
-              </div>
-              <div className="input-field">
-                <label htmlFor="firstName">First Name</label>
-                <input name="firstName" className="white-text" required type="text" id='firstName' onChange={this.handleChange} />
-                {formErrors.firstName.length > 0 && (
-                  <span className="errorMessage red-text">{formErrors.firstName}</span>
-                )}
-              </div>
-              <div className="input-field">
-                <label htmlFor="lastName">Last Name</label>
-                <input name="lastName" className="white-text" required type="text" id='lastName' onChange={this.handleChange} />
-                {formErrors.lastName.length > 0 && (
-                  <span className="errorMessage red-text">{formErrors.lastName}</span>
-                )}
-              </div>
-              <div className="input-field">
-                <label htmlFor="ethereumAdd">Ethereum Address</label>
-                <input name="ethereumAdd" className="white-text" required type="text" id='ethereumAdd' onChange={this.handleChange} />
-                {formErrors.ethereumAdd.length > 0 && (
-                  <span className="errorMessage red-text">{formErrors.ethereumAdd}</span>
-                )}
-              </div>
-              <div className="input-field">
-                <button className="btn pink lighten-1 z-depth-0">Sign Up</button>
-                <div className="center red-text">
-                  {authError ? <p>{authError}</p> : null}
+              <div className="col s6">
+                <h5 className="white-text">Sign Up</h5>
+                <div className="input-field">
+                  <label htmlFor="email">Email</label>
+                  <input name="email" className="white-text" required type="email" id='email' onChange={this.handleChange} />
+                  {formErrors.email.length > 0 && (
+                    <span className="errorMessage red-text">{formErrors.email}</span>
+                  )}
+                </div>
+                <div className="input-field">
+                  <label htmlFor="password">Password</label>
+                  <input name="password" className="white-text" required type="password" id='password' onChange={this.handleChange} />
+                  {formErrors.password.length > 0 && (
+                    <span className="errorMessage red-text">{formErrors.password}</span>
+                  )}
+                </div>
+                <div className="input-field">
+                  <label htmlFor="firstName">First Name</label>
+                  <input name="firstName" className="white-text" required type="text" id='firstName' onChange={this.handleChange} />
+                  {formErrors.firstName.length > 0 && (
+                    <span className="errorMessage red-text">{formErrors.firstName}</span>
+                  )}
+                </div>
+                <div className="input-field">
+                  <label htmlFor="lastName">Last Name</label>
+                  <input name="lastName" className="white-text" required type="text" id='lastName' onChange={this.handleChange} />
+                  {formErrors.lastName.length > 0 && (
+                    <span className="errorMessage red-text">{formErrors.lastName}</span>
+                  )}
+                </div>
+                <div className="input-field">
+                  <label htmlFor="ethereumAdd">Ethereum Address</label>
+                  <input name="ethereumAdd" className="white-text" required type="text" id='ethereumAdd' onChange={this.handleChange} />
+                  {formErrors.ethereumAdd.length > 0 && (
+                    <span className="errorMessage red-text">{formErrors.ethereumAdd}</span>
+                  )}
+                </div>
+                <div className="input-field">
+                  <button className="btn pink lighten-1 z-depth-0">Sign Up</button>
+                  <div className="center red-text">
+                    {authError ? <p>{authError}</p> : null}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     )
   }

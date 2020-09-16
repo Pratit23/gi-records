@@ -4,6 +4,7 @@ import { signIn } from '../../store/actions/authActions'
 import { Redirect } from 'react-router-dom'
 import { withFirebase } from 'react-redux-firebase';
 import SignedOutLinks from '../layout/SignedOutLinks'
+import { Link, NavLink } from 'react-router-dom'
 
 class SignIn extends Component {
   state = {
@@ -33,7 +34,8 @@ class SignIn extends Component {
             <a href="#" className="brand-logo"></a>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
               <li><a href="sass.html">About</a></li>
-              <li><SignedOutLinks /></li>
+              <li><NavLink to='/SignUp'>Signup</NavLink></li>
+              <li><NavLink to='/signin'>Login</NavLink></li>
             </ul>
           </div>
         </nav>

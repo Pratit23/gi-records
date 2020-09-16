@@ -259,6 +259,10 @@ body::-webkit-scrollbar-thumb {
   border-radius: 0 24px 24px 0 !important;
 }
 
+.indiSidenav {
+  margin: 0 !important;
+}
+
 .navbar-nav {
   list-style: none;
   padding: 0;

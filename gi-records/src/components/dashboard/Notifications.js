@@ -6,6 +6,7 @@ import { db } from '../../config/fbConfig'
 import { Collapsible, CollapsibleItem, Icon, Modal, Button, Toast } from 'react-materialize'
 import M from 'materialize-css';
 import moment from 'moment'
+import Sidenav from '../layout/Sidenav'
 
 var data = localStorage.getItem('userDetails')
 data = JSON.parse(data)
@@ -59,128 +60,135 @@ class Notifications extends Component {
         console.log("Notif props: ", this.props)
         return (
             <div className="row">
-                <div className="col s6 acceptSec">
-                    <div className="section">
-                        <h4 className="black-text center-align">Accepted Offers</h4>
-                    </div>
-                    <div className="section collapWrapper">
-                        <Collapsible accordion popout>
-                            {
-                                (accepted && accepted.map((notif, key) => {
-                                    console.log("Notif: ", notif)
-                                    return (
-                                        <CollapsibleItem
-                                            key={key}
-                                            expanded={false}
-                                            header={<div><span>{notif.authorFirstName}</span><span> </span><span>{notif.authorLastName}</span><br /><span></span>₹<span>{notif.quotedPrice}</span><br /><span className="blue-text">{moment(notif.createdAt.toDate()).calendar()}</span></div>}
-                                            icon={<i className="material-icons green-text">check_circle</i>}
-                                            node="div"
-                                        ><div className="card blue-grey darken-1 notifCard">
-                                                <div className="card-content white-text">
-                                                    <span className="card-title">Offer Accepted</span>
-                                                    <span className="white-text">Accepted: {notif.accepted}</span>
-                                                </div>
-                                                <div className="card-action">
-                                                    <Modal
-                                                        actions={[
-                                                            <Button flat modal="close" node="button" waves="green">Close</Button>
-                                                        ]}
-                                                        bottomSheet={false}
-                                                        fixedFooter={false}
-                                                        header="Modal Header"
-                                                        id="Modal-0"
-                                                        open={false}
-                                                        options={{
-                                                            dismissible: true,
-                                                            endingTop: '10%',
-                                                            inDuration: 250,
-                                                            onCloseEnd: null,
-                                                            onCloseStart: null,
-                                                            onOpenEnd: null,
-                                                            onOpenStart: null,
-                                                            opacity: 0.5,
-                                                            outDuration: 250,
-                                                            preventScrolling: true,
-                                                            startingTop: '4%'
-                                                        }}
-                                                        trigger={<Button className="btn red white-text">Transact</Button>}
-                                                    ><div>
-                                                            <p>Seller Details:<br />
-                                                        First Name: {notif.sellerFName}<br />
-                                                        Last Name: {notif.sellerLName}<br /><br />
-                                                        Buyer Details:<br />
-                                                        First Name: {notif.authorFirstName}<br />
-                                                        Last Name: {notif.authorLastName}<br /><br />
-                                                            </p>
-                                                        </div><br /><a className="btn red white-text">Accept</a></Modal>
-                                                    <a className="btn blue white-text" onClick={() => this.handleDismiss(notif.landID, notif.buyerEthID)}>Decline</a>
-                                                </div>
-                                            </div>
-                                        </CollapsibleItem>
-                                    )
-                                }))
-                            }
-                        </Collapsible>
-                    </div>
+                <div className="col s2 mainSideNav">
+                    <Sidenav />
                 </div>
-                <div className="col s6">
-                    <div className="section">
-                        <h4 className="black-text center-align">Quotations</h4>
-                    </div>
-                    <div className="section collapWrapper">
-                        <Collapsible accordion popout>
-                            {
-                                notifications ? notifications.map((notif, key) => {
-                                    console.log("Notif: ", notif)
-                                    return (
-                                        <CollapsibleItem
-                                            key={key}
-                                            expanded={false}
-                                            header={<div><span>{notif.authorFirstName}</span><span> </span><span>{notif.authorLastName}</span><br /><span></span>₹<span>{notif.quotedPrice}</span><br /><span className="blue-text">{moment(notif.createdAt.toDate()).calendar()}</span></div>}
-                                            icon={<i className="material-icons red-text">call_received</i>}
-                                            node="div"
-                                        ><div className="card blue-grey darken-1 notifCard">
-                                                <div className="card-content white-text">
-                                                    <span className="card-title">Buy Offer</span>
-                                                    <span className="white-text">{notif.plotNo}</span>
-                                                </div>
-                                                <div className="card-action">
-                                                    <Modal
-                                                        actions={[
-                                                            <Button flat modal="close" node="button" waves="green">Close</Button>
-                                                        ]}
-                                                        bottomSheet={false}
-                                                        fixedFooter={false}
-                                                        header="Modal Header"
-                                                        id="Modal-0"
-                                                        open={false}
-                                                        options={{
-                                                            dismissible: true,
-                                                            endingTop: '10%',
-                                                            inDuration: 250,
-                                                            onCloseEnd: null,
-                                                            onCloseStart: null,
-                                                            onOpenEnd: null,
-                                                            onOpenStart: null,
-                                                            opacity: 0.5,
-                                                            outDuration: 250,
-                                                            preventScrolling: true,
-                                                            startingTop: '4%'
-                                                        }}
-                                                        trigger={<a><i className="material-icons">check</i></a>}
-                                                    >{
-                                                        notif.accepted === 1 ? <p className="red-text">Already Accepted</p> : <a onClick={() => this.handleAccept(notif.landID, notif.buyerEthID)} className="btn red white-text">Accept</a>
-                                                    }</Modal>
-                                                    {
-                                                        notif.accepted === 1 ? <p className="red-text">Already Accepted</p> : <a className="btn blue white-text" onClick={() => this.handleDismiss(notif.landID, notif.buyerEthID)}>Decline</a>
-                                                    }
-                                                </div>
-                                            </div>
-                                        </CollapsibleItem>
-                                    )
-                                }) : <h6>Issa empty fam</h6>
-                            }
-                        </Collapsible>
+                <div className="col s10">
+                    <div className="row">
+                        <div className="col s6 acceptSec">
+                            <div className="section">
+                                <h4 className="black-text center-align">Accepted Offers</h4>
+                            </div>
+                            <div className="section collapWrapper">
+                                <Collapsible accordion popout>
+                                    {
+                                        (accepted && accepted.map((notif, key) => {
+                                            console.log("Notif: ", notif)
+                                            return (
+                                                <CollapsibleItem
+                                                    key={key}
+                                                    expanded={false}
+                                                    header={<div><span>{notif.authorFirstName}</span><span> </span><span>{notif.authorLastName}</span><br /><span></span>₹<span>{notif.quotedPrice}</span><br /><span className="blue-text">{moment(notif.createdAt.toDate()).calendar()}</span></div>}
+                                                    icon={<i className="material-icons green-text">check_circle</i>}
+                                                    node="div"
+                                                ><div className="card blue-grey darken-1 notifCard">
+                                                        <div className="card-content white-text">
+                                                            <span className="card-title">Offer Accepted</span>
+                                                            <span className="white-text">Accepted: {notif.accepted}</span>
+                                                        </div>
+                                                        <div className="card-action">
+                                                            <Modal
+                                                                actions={[
+                                                                    <Button flat modal="close" node="button" waves="green">Close</Button>
+                                                                ]}
+                                                                bottomSheet={false}
+                                                                fixedFooter={false}
+                                                                header="Modal Header"
+                                                                id="Modal-0"
+                                                                open={false}
+                                                                options={{
+                                                                    dismissible: true,
+                                                                    endingTop: '10%',
+                                                                    inDuration: 250,
+                                                                    onCloseEnd: null,
+                                                                    onCloseStart: null,
+                                                                    onOpenEnd: null,
+                                                                    onOpenStart: null,
+                                                                    opacity: 0.5,
+                                                                    outDuration: 250,
+                                                                    preventScrolling: true,
+                                                                    startingTop: '4%'
+                                                                }}
+                                                                trigger={<Button className="btn red white-text">Transact</Button>}
+                                                            ><div>
+                                                                    <p>Seller Details:<br />
+                                                First Name: {notif.sellerFName}<br />
+                                                Last Name: {notif.sellerLName}<br /><br />
+                                                Buyer Details:<br />
+                                                First Name: {notif.authorFirstName}<br />
+                                                Last Name: {notif.authorLastName}<br /><br />
+                                                                    </p>
+                                                                </div><br /><a className="btn red white-text">Accept</a></Modal>
+                                                            <a className="btn blue white-text" onClick={() => this.handleDismiss(notif.landID, notif.buyerEthID)}>Decline</a>
+                                                        </div>
+                                                    </div>
+                                                </CollapsibleItem>
+                                            )
+                                        }))
+                                    }
+                                </Collapsible>
+                            </div>
+                        </div>
+                        <div className="col s6">
+                            <div className="section">
+                                <h4 className="black-text center-align">Quotations</h4>
+                            </div>
+                            <div className="section collapWrapper">
+                                <Collapsible accordion popout>
+                                    {
+                                        notifications ? notifications.map((notif, key) => {
+                                            console.log("Notif: ", notif)
+                                            return (
+                                                <CollapsibleItem
+                                                    key={key}
+                                                    expanded={false}
+                                                    header={<div><span>{notif.authorFirstName}</span><span> </span><span>{notif.authorLastName}</span><br /><span></span>₹<span>{notif.quotedPrice}</span><br /><span className="blue-text">{moment(notif.createdAt.toDate()).calendar()}</span></div>}
+                                                    icon={<i className="material-icons red-text">call_received</i>}
+                                                    node="div"
+                                                ><div className="card blue-grey darken-1 notifCard">
+                                                        <div className="card-content white-text">
+                                                            <span className="card-title">Buy Offer</span>
+                                                            <span className="white-text">{notif.plotNo}</span>
+                                                        </div>
+                                                        <div className="card-action">
+                                                            <Modal
+                                                                actions={[
+                                                                    <Button flat modal="close" node="button" waves="green">Close</Button>
+                                                                ]}
+                                                                bottomSheet={false}
+                                                                fixedFooter={false}
+                                                                header="Modal Header"
+                                                                id="Modal-0"
+                                                                open={false}
+                                                                options={{
+                                                                    dismissible: true,
+                                                                    endingTop: '10%',
+                                                                    inDuration: 250,
+                                                                    onCloseEnd: null,
+                                                                    onCloseStart: null,
+                                                                    onOpenEnd: null,
+                                                                    onOpenStart: null,
+                                                                    opacity: 0.5,
+                                                                    outDuration: 250,
+                                                                    preventScrolling: true,
+                                                                    startingTop: '4%'
+                                                                }}
+                                                                trigger={<a><i className="material-icons">check</i></a>}
+                                                            >{
+                                                                    notif.accepted === 1 ? <p className="red-text">Already Accepted</p> : <a onClick={() => this.handleAccept(notif.landID, notif.buyerEthID)} className="btn red white-text">Accept</a>
+                                                                }</Modal>
+                                                            {
+                                                                notif.accepted === 1 ? <p className="red-text">Already Accepted</p> : <a className="btn blue white-text" onClick={() => this.handleDismiss(notif.landID, notif.buyerEthID)}>Decline</a>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </CollapsibleItem>
+                                            )
+                                        }) : <h6>Issa empty fam</h6>
+                                    }
+                                </Collapsible>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
