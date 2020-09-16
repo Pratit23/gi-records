@@ -13,53 +13,58 @@ data = JSON.parse(data)
 
 const Sidenav = (props) => {
     const { auth, profile } = props;
-    const links = auth.uid ? <SignedInLinks profile={profile} /> : <SignedOutLinks/>;
+    const links = auth.uid ? <SignedInLinks profile={profile} /> : <SignedOutLinks />;
     if (!auth.uid) return <Redirect to='/signin' />
 
     return (
-        <nav className="navbar grey darken-4">
-            <ul className="navbar-nav">
-                <li className="logo">
-                    Testing
-                </li>
-                <li className="nav-item"><div className="divider"></div></li>
-                <li><a class="btn-floating btn-large red profileInitial">{data.initials}</a></li>
-                <li><p className="sideNavName">{data.firstName} {data.lastName}</p></li>
-                <li className="nav-item"><div className="divider"></div></li>
-                <li className="nav-item">
-                    <NavLink to='/' className="sideNavText"><i className="material-icons notifIcon">dashboard</i>Dashboard</NavLink>
-                </li>
-                <li className="nav-item">
-                    <NavLink to='/chartboard' className="sideNavText"><i className="material-icons notifIcon">insert_chart</i>Chartboard</NavLink>
-                </li>
-                <li className="nav-item">
-                    <NavLink to='/ViewAllLand' className="sideNavText"><i className="material-icons notifIcon">landscape</i>Your Lands</NavLink>
-                </li>
-                <li className="nav-item">
-                    <NavLink to='/Database' className="sideNavText"><i className="material-icons notifIcon">library_add</i>Add Land</NavLink>
-                </li>
-                <li className="nav-item" id="themeButton">
-                    <Link to='/notifications' className="sideNavText"><i className="material-icons white-text notifIcon">notifications_none</i><span>Notifications</span></Link>
-                </li>
-                <li className="nav-item"><div className="divider"></div></li>
-                <li className="nav-item" id="themeButton">
-                    <Collapsible accordion className="collapHead">
-                        <CollapsibleItem
-                            className="collapHead"
-                            expanded={false}
-                            header={<span className="white-text">Land Transact</span>}
-                            node="div">
-                            <NavLink className="white-text" to='/SellLand'>Sell Land</NavLink>
-                            <NavLink className="white-text" to='/BuyLand'>Buy Land</NavLink>
-                        </CollapsibleItem>
-                    </Collapsible>
-                </li>
-                <li className="nav-item"><div className="divider"></div></li>
-                <li className="nav-item" id="themeButton">
+        <div>
+            <style>
+                {}
+            </style>
+            <SideNav
+                id="SideNav-10"
+                options={{
+                    draggable: true,
+                    fixed: true
+                }}
+            //trigger={<Button node="button">SIDE NAV DEMO</Button>}
+            >
+                <SideNavItem
+                    user={{
+                        background: '',
+                        email: 'jdandturk@gmail.com',
+                        image: 'static/media/react-materialize-logo.824c6ea3.svg',
+                        name: 'John Doe'
+                    }}
+                    userView
+                />
+                <SideNavItem
+                    href="#!icon"
+                    icon={<Icon>cloud</Icon>}
+                >
+                    First Link With Icon
+                </SideNavItem>
+                <SideNavItem>
+                    <li><NavLink to='/'>Dashboard</NavLink></li>
+                </SideNavItem>
+                <SideNavItem>
+                    <li><NavLink to='/chartboard'>Chartboard</NavLink></li>
+                </SideNavItem>
+                <SideNavItem>
+                    <li><NavLink to='/ViewAllLand'>Your Lands</NavLink></li>
+                </SideNavItem>
+                <SideNavItem>
+                    <li><NavLink to='/Database'>Add Land</NavLink></li>
+                </SideNavItem>
+                <SideNavItem divider />
+                <SideNavItem subheader>
+                    Subheader
+                </SideNavItem>
+                <SideNavItem>
                     <SignedInLinks/>
-                </li>
-            </ul>
-        </nav>
+                </SideNavItem>
+            </SideNav>
+        </div>
     )
 }
 

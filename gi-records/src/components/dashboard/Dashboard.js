@@ -22,10 +22,10 @@ class Dashboard extends Component {
     }
     return (
       <div className="row">
-        <div className="col s2 mainSideNav">
+        <div className="col s3 mainSideNav">
           <Sidenav/>
         </div>
-        <div className="col s10">
+        <div className="col s9">
           <div className="section">
             <h1>Dashboard</h1>
           </div>
