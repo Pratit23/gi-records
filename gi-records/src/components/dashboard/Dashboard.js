@@ -10,12 +10,77 @@ import DashChart2 from '../layout/DashChart2';
 import { db } from '../../config/fbConfig'
 import Sidenav from '../layout/Sidenav'
 import { Select } from 'react-materialize'
+import Web3 from 'web3';
+import { simpleStorageAbi } from '../../abis/abis';
 //import DashChart3 from '../layout/DashChart3';
 
 var testArray = ['one', 'two', 'three']
 
 
 class Dashboard extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      showDropDown: false,
+      showButton: true,
+      property: [],
+      selectPlot: '',
+    }
+  }
+
+  handleSelect() {
+    window.$(document).ready(function(){
+      window.$('select').formSelect();
+    });
+  }
+
+  componentDidMount() {
+    window.$(document).ready(function(){
+      window.$('select').formSelect();
+    });
+  }
+
+  async handleDropdown() {
+    const web3 = new Web3(Web3.givenProvider);
+    const contractAddr = '0x208c6ad7F12E86429532d372547e2c389F291c99';
+    const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
+
+    var localData = localStorage.getItem('userDetails')
+    localData = JSON.parse(localData)
+
+    var flag1 = true
+    var tempId = localData.ethereumAdd
+    var newId = localData.ethereumAdd
+    var j = 0
+    var tempProperty = []
+
+    while (flag1 == true) {
+      newId = tempId + j;
+      var states = await SimpleContract.methods.getState(newId).call();
+      var city = await SimpleContract.methods.getCity(newId).call();
+      var locality = await SimpleContract.methods.getLocality(newId).call();
+      var plotNo = await SimpleContract.methods.getPlotNo(newId).call();
+
+      if (states.length == 0 && city.length == 0 && locality.length == 0 && plotNo.length == 0) {
+        flag1 = false
+      } else {
+        this.state.property.push({
+          states: states,
+          city: city,
+          locality: locality,
+          plotNo: plotNo
+        })
+      }
+      this.handleSelect()
+      j++
+    }
+
+    this.setState({
+      showDropDown: true,
+      showButton: false
+    })
+  }
 
   render() {
     console.log(this.props)
@@ -41,40 +106,22 @@ class Dashboard extends Component {
                       <div className="mainCard card-content white-text">
                         <div className="section">
                           <span className="cardTitle card-title white-text">Watchlist</span>
-                          <div class="input-field cardDropDown col s12">
-                            <Select
-                              id="Select-9"
-                              multiple={false}
-                              onChange={function noRefCheck() { }}
-                              options={{
-                                classes: '',
-                                dropdownOptions: {
-                                  alignment: 'left',
-                                  autoTrigger: true,
-                                  closeOnClick: true,
-                                  constrainWidth: true,
-                                  coverTrigger: true,
-                                  hover: false,
-                                  inDuration: 150,
-                                  onCloseEnd: null,
-                                  onCloseStart: null,
-                                  onOpenEnd: null,
-                                  onOpenStart: null,
-                                  outDuration: 250
-                                }
-                              }}
-                              value=""
-                            >
-                          <option value="1">
-                                {testArray[0]}
-                          </option>
-                              <option value="2">
-                                Option 2
-                          </option>
-                              <option value="3">
-                                Option 3
-                          </option>
-                            </Select>
+                          <div className="input-field section">
+                            {
+                              this.state.showButton ? <a onClick={() => this.handleDropdown()} className="btn">Get Plots</a> : null
+                            }
+                            {
+                              this.state.showDropDown ?
+                                <div className="input-field col s12">
+                                  <select id="select">
+                                    <option value="" disabled selected>Choose your option</option>
+                                    <option value="1">Option 1</option>
+                                    <option value="2">Option 2</option>
+                                    <option value="3">Option 3</option>
+                                  </select>
+                                  <label>Materialize Select</label>
+                                </div> : null
+                            }
                           </div>
                         </div>
                         <div className="cardChart section">
@@ -109,6 +156,7 @@ class Dashboard extends Component {
 
 const mapStateToProps = (state) => {
   console.log("State: ", state);
+  console.log("mapState mounted");
   localStorage.setItem('userDetails', JSON.stringify(state.firebase.profile))
   return {
     projects: state.firestore.ordered.projects,

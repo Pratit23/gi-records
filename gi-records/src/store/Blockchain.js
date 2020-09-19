@@ -121,7 +121,9 @@ const Blockchain = (props) => {
                 <MapContainer temp={coordsArray} />
                 <div className="yourLandFloatingDiv">
                   <div className="scrollLand">
-                    {(property).map(
+                    {property.length == 0 ? <div class="progress">
+                    <div class="indeterminate"></div>
+                    </div> : (property).map(
                       (details, key) => (
                         <div key={key}>
                           <div className="col s12" key={key}>

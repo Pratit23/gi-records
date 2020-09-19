@@ -8,7 +8,7 @@ const SignedInLinks = (props) => {
   return (
     <div>
       {/*<li><NavLink to='/create' className="hide-on-small-only">New Project</NavLink></li>*/}
-      <a className="logout" onClick={() => props.signOut(props.firebase)}>Log Out</a>
+      <span className="logout blue-text" onClick={() => props.signOut(props.firebase)}>Log Out</span>
       {/*<li><NavLink to='/' className="btn btn-floating pink lighten-1">{ props.profile.initials }</NavLink></li>*/}
     </div>
   )

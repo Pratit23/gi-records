@@ -7,6 +7,7 @@ import SignedOutLinks from './SignedOutLinks'
 import { Redirect } from 'react-router-dom';
 import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
+import { db } from '../../config/fbConfig'
 
 const trigger = <a href=""><i className="material-icons">chevron_right</i></a>
 
@@ -18,6 +19,7 @@ const Sidenav = (props) => {
     const links = auth.uid ? <SignedInLinks profile={profile} /> : <SignedOutLinks />;
     if (!auth.uid) return <Redirect to='/signin' />
     console.log("Accepeted:", accepted)
+
     return (
         <div>
             <style>
@@ -36,7 +38,7 @@ const Sidenav = (props) => {
                         //background: 'https://placeimg.com/640/480/tech',
                         email: auth.email,
                         image: 'https://picsum.photos/200/300',
-                        name: data.firstName + " " + data.lastName
+                        name: profile.firstName + " " + profile.lastName
                     }}
                     userView
                 />
@@ -54,20 +56,22 @@ const Sidenav = (props) => {
                         expanded={false}
                         header={<span className="white-text">Land Transact</span>}
                         node="div">
-                        <li><NavLink className="white-text" to='/SellLand'><Icon className="white-text">local_offer</Icon>Sell Land</NavLink></li>
-                        <li><NavLink className="white-text" to='/BuyLand'><Icon className="white-text">local_offer</Icon>Buy Land</NavLink></li>
+                        <ul>
+                            <li><NavLink className="white-text" to='/SellLand'><Icon className="white-text">local_offer</Icon>Sell Land</NavLink></li>
+                            <li><NavLink className="white-text" to='/BuyLand'><Icon className="white-text">local_offer</Icon>Buy Land</NavLink></li>
+                        </ul>
                     </CollapsibleItem>
                 </Collapsible>
                 <SideNavItem divider />
                 <div className="row">
                     <div className="col s12">
-                        <div className="card sideNavCard">
-                            <div className="card-content white-text">
-                            {
-                                accepted ? <NavLink to="/notifications"><span className="card-title"><Icon className="white-text">notifications</Icon>Notifs</span><p>{accepted.length} Accepted</p></NavLink> : null
-                            }
+                        <NavLink to="/notifications">
+                            <div className="card sideNavCard">
+                                <div className="card-content white-text">
+                                    <span className="card-title"><Icon className="white-text">no</Icon>Notifications</span>
+                                </div>
                             </div>
-                        </div>
+                        </NavLink>
                     </div>
                 </div>
                 <SideNavItem>
@@ -89,7 +93,7 @@ const mapStateToProps = (state) => {
 export default compose(
     connect(mapStateToProps, null),
     firestoreConnect((props) => [
-        { collection: 'quotes', orderBy: ['createdAt', 'desc'], where: [['buyerEthID', '==', data.ethereumAdd], ['accepted', '==', 1]], storeAs: 'accept' },
+        //{ collection: 'quotes', orderBy: ['createdAt', 'desc'], where: [['buyerEthID', '==', data.ethereumAdd], ['accepted', '==', 1]], storeAs: 'accept' },
     ])
 )(Sidenav)
 

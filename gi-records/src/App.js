@@ -16,8 +16,15 @@ import SellDetail from './components/projects/SellDetail';
 import Notifications from './components/dashboard/Notifications';
 import Sidenav from './components/layout/Sidenav'
 import { signIn } from './store/actions/authActions';
+import { connect } from 'react-redux';
 
-const App = () => {
+const App = (props) => {
+
+  const { auth } = props
+
+  console.log("App props: ", props)
+
+  localStorage.setItem('userDetails', JSON.stringify(auth.profile))
 
   return (
     <BrowserRouter>
@@ -41,4 +48,11 @@ const App = () => {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+      property: state.coordinates.property,
+      auth: state.firebase,
+  }
+}
+
+export default connect(mapStateToProps, null)(App);

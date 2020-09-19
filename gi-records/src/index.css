@@ -203,6 +203,8 @@ form button, form h5{
   background-color: transparent!important;
   border: none !important;
   width: 100%;
+  padding-left: 10px !important;
+  font-size: 14px !important;
 }
 
 .collapHead .collapsible-body {
@@ -260,7 +262,11 @@ form button, form h5{
 }
 
 .cardDropDown {
-  margin-left: 140px !important;
+  margin-left: 165px !important;
+}
+
+.dropdown-content {
+  height: 173px !important;
 }
 
 /*=========TESTING================*/
