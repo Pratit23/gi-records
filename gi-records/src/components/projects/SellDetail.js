@@ -78,7 +78,7 @@ const SellDetail = (props) => {
                                         ]}
                                         bottomSheet={false}
                                         fixedFooter
-                                        header="LIST PROPERTY"
+                                        header="Quote Price"
                                         id="Modal-0"
                                         open={false}
                                         options={{

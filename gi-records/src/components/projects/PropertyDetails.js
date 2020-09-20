@@ -90,7 +90,7 @@ const PropertyDetails = (props) => {
                                             preventScrolling: true,
                                             startingTop: '4%'
                                         }}
-                                        trigger={<Button node="button">Sell Property</Button>}>
+                                        trigger={<Button node="button">List Property</Button>}>
                                         <form className="white addLandForm z-depth-3" onSubmit={(handleSubmit)}>
                                             <div className="input-field">
                                                 <label htmlFor="price">Price</label>

@@ -50,6 +50,7 @@ const Sidenav = (props) => {
                 <li><NavLink className="white-text" to='/chartboard'><Icon className="white-text">insert_chart</Icon>Chartboard</NavLink></li>
                 <li><NavLink className="white-text" to='/ViewAllLand'><Icon className="white-text">place</Icon>Your Lands</NavLink></li>
                 <li><NavLink className="white-text" to='/Database'><Icon className="white-text">add</Icon>Add Land</NavLink></li>
+                <li><NavLink className="white-text" to='/public'><Icon className="white-text">add</Icon>View All</NavLink></li>
                 <Collapsible accordion className="collapHead">
                     <CollapsibleItem
                         className="collapHead"

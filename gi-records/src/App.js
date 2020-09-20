@@ -17,6 +17,7 @@ import Notifications from './components/dashboard/Notifications';
 import Sidenav from './components/layout/Sidenav'
 import { signIn } from './store/actions/authActions';
 import { connect } from 'react-redux';
+import PublicLand from './components/dashboard/PublicLand';
 
 const App = (props) => {
 
@@ -42,6 +43,7 @@ const App = (props) => {
           <Route path='/sellDetail/:id' component={SellDetail} />
           <Route path='/signin' component={SignIn} />
           <Route path='/signup' component={SignUp} />
+          <Route path='/public' component={PublicLand} />
         </Switch>
       </div>
     </BrowserRouter>

@@ -93,7 +93,8 @@ class BuyLand extends Component {
                     <Sidenav />
                 </div>
                 <div className="col s10">
-                    <div className="container">
+                    <h1>Buy Land</h1>
+                    <div className="container buyLandContainer">
                         {
                             showForm ? (
                                 <form className="white addLandForm z-depth-3" onSubmit={this.handleSubmit}>

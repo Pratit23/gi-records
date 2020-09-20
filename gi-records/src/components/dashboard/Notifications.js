@@ -7,12 +7,20 @@ import { Collapsible, CollapsibleItem, Icon, Modal, Button, Toast } from 'react-
 import M from 'materialize-css';
 import moment from 'moment'
 import Sidenav from '../layout/Sidenav'
+import GPay from '../../store/payment/GPay'
 
 var data = localStorage.getItem('userDetails')
 data = JSON.parse(data)
 
 
 class Notifications extends Component {
+
+    handleTransact = () => {
+        console.log("Handle Transact is running")
+        return (
+            <GPay/>
+        )
+    }
 
     handleDismiss = (landID, buyerEthID) => {
         const docID = landID + buyerEthID
@@ -116,7 +124,7 @@ class Notifications extends Component {
                                                 First Name: {notif.authorFirstName}<br />
                                                 Last Name: {notif.authorLastName}<br /><br />
                                                                     </p>
-                                                                </div><br /><a className="btn red white-text">Accept</a></Modal>
+                                                                </div><br /><a onClick={() => this.handleTransact()} className="btn red white-text">Accept</a></Modal>
                                                             <a className="btn blue white-text" onClick={() => this.handleDismiss(notif.landID, notif.buyerEthID)}>Decline</a>
                                                         </div>
                                                     </div>

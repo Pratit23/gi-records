@@ -65,7 +65,7 @@ class AddLand extends Component {
     handleSubmit = async (e) => {
         e.preventDefault();
         const web3 = new Web3(Web3.givenProvider);
-        const contractAddr = '0x208c6ad7F12E86429532d372547e2c389F291c99';
+        const contractAddr = '0xbdDB204381B459AD0d328A896A10d62129212634';
         const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
         const { profile } = this.props;
         const fName = profile.firstName;

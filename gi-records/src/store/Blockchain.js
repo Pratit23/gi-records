@@ -11,7 +11,7 @@ const Blockchain = (props) => {
 
   // note, contract address must match the address provided by Truffle after migrations
   const web3 = new Web3(Web3.givenProvider);
-  const contractAddr = '0x208c6ad7F12E86429532d372547e2c389F291c99';
+  const contractAddr = '0xbdDB204381B459AD0d328A896A10d62129212634';
   const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
 
   const [id, setId] = useState()
@@ -121,8 +121,8 @@ const Blockchain = (props) => {
                 <MapContainer temp={coordsArray} />
                 <div className="yourLandFloatingDiv">
                   <div className="scrollLand">
-                    {property.length == 0 ? <div class="progress">
-                    <div class="indeterminate"></div>
+                    {property.length == 0 ? <div className="progress">
+                    <div className="indeterminate"></div>
                     </div> : (property).map(
                       (details, key) => (
                         <div key={key}>

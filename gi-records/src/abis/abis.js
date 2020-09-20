@@ -12,9 +12,9 @@ export const simpleStorageAbi = [
     "name": "ownerAccts",
     "outputs": [
       {
-        "internalType": "string",
+        "internalType": "address",
         "name": "",
-        "type": "string"
+        "type": "address"
       }
     ],
     "payable": false,
@@ -25,9 +25,9 @@ export const simpleStorageAbi = [
     "constant": false,
     "inputs": [
       {
-        "internalType": "string",
+        "internalType": "address",
         "name": "_address",
-        "type": "string"
+        "type": "address"
       },
       {
         "internalType": "string",
@@ -110,9 +110,9 @@ export const simpleStorageAbi = [
         "type": "string"
       },
       {
-        "internalType": "string",
+        "internalType": "address",
         "name": "_address",
-        "type": "string"
+        "type": "address"
       },
       {
         "internalType": "string",
@@ -361,6 +361,21 @@ export const simpleStorageAbi = [
         "internalType": "string",
         "name": "",
         "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getOwners",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
       }
     ],
     "payable": false,

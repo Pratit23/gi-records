@@ -3,7 +3,7 @@ pragma solidity >=0.4.21 <0.7.1;
 
 contract SimpleStorage {
   struct OwnerStruct{
-    string id;
+    address id;
     string firstName;
     string lastName;
     string lats;
@@ -17,12 +17,12 @@ contract SimpleStorage {
     string price;
   }
 
-  mapping(string => OwnerStruct) ownerList;
+  mapping(address => int) ownerList;
   mapping(string => OwnerStruct) lands;
 
-  string[] public ownerAccts;
+  address[] public ownerAccts;
 
-  function setOwner(string memory _address, string memory _id, string memory _fName,
+  function setOwner(address _address, string memory _id, string memory _fName,
   string memory _lName, string memory _lats, string memory _state, string memory _city, 
   string memory _locality, string memory _plotNo,
   string memory _buyingRate, string memory _landSize, string memory _hashValue, string memory _price) public {
@@ -39,13 +39,15 @@ contract SimpleStorage {
       owner.landSize = _landSize;
       owner.hashValue = _hashValue;
       owner.price = _price;
-      ownerList[_address] = owner;
       lands[_id] = owner;
-      ownerAccts.push(_address);
+      if(ownerList[owner.id] == 0) {
+        ownerAccts.push(_address);
+        ownerList[owner.id] = 1;  
+      }
   }
 
   function transaction(string memory _buyerID, string memory _sellerID, 
-  string memory _address, string memory _fName, string memory _lName, string memory _sellerLastID) public {
+  address _address, string memory _fName, string memory _lName, string memory _sellerLastID) public {
       OwnerStruct memory owner;
       owner = lands[_sellerID];
       owner.id = _address;
@@ -100,5 +102,7 @@ contract SimpleStorage {
       return (lands[_id].price);
   }
 
-
+  function getOwners() public view returns (address[] memory){
+      return ownerAccts;
+  }
 }
