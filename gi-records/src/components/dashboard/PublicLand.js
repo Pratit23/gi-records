@@ -4,6 +4,8 @@ import Sidenav from '../layout/Sidenav'
 import { simpleStorageAbi } from '../../abis/abis'
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, Polygon } from "react-google-maps"
 
+var latLngs = []
+
 const PublicLand = () => {
 
     const [ownerAccts, setOwnerAccts] = useState([])
@@ -58,6 +60,12 @@ const PublicLand = () => {
                     flag = false;
                 }
                 else {
+                    newArray = newArray.concat(result)
+                    newArray = newArray.split(" ")
+                    for (var k = 0; k < newArray.length; k += 2) {
+                        intArray.push({ lat: parseFloat(newArray[k + 1]), lng: parseFloat(newArray[k]) })
+                    }
+                    array[j] = intArray;
                     ownerProperty.push({
                         firstName: firstName,
                         lastName: lastName,
@@ -68,14 +76,8 @@ const PublicLand = () => {
                         buyingRate: buyingRate,
                         landSize: landSize,
                         price: price,
-                        coordsArray: result
+                        coordsArray: intArray
                     })
-                    newArray = newArray.concat(result)
-                    newArray = newArray.split(" ")
-                    for (var k = 0; k < newArray.length; k += 2) {
-                        intArray.push({ lat: parseFloat(newArray[k + 1]), lng: parseFloat(newArray[k]) })
-                    }
-                    array[j] = intArray;
                     intArray = []
                     newArray = ''
                     j++;
@@ -92,12 +94,13 @@ const PublicLand = () => {
         finalCoords.map((coords, key) => {
             points.push(coords)
         })
+
         console.log("Final Coords: ", finalCoords)
     }
 
     const GoogleMapExample = withGoogleMap(props => (
-        <GoogleMap defaultZoom={16} defaultCenter={{ lat: 15.998976, lng: 73.675307 }}>
-            {props.isMarkerShown && <Marker position={{ lat: 15.998976, lng: 73.675307 }} />}
+        <GoogleMap defaultZoom={17} defaultCenter={key ? latLngs : { lat: 15.998976, lng: 73.675307 }}>
+            {props.isMarkerShown && <Marker position={key ? latLngs : { lat: 15.998976, lng: 73.675307 }} />}
             {points.map((coords, key) => (
                 <Polygon
                     path={coords}
@@ -118,12 +121,30 @@ const PublicLand = () => {
     ));
 
     const handleClick = (key) => {
+        var avgLats = 0
+        var avgLngs = 0
+
+        for (var i = 0; i < ownerProperty[key].coordsArray.length; i++) {
+            console.log("For is running")
+            avgLats += ownerProperty[key].coordsArray[i].lat
+            avgLngs += ownerProperty[key].coordsArray[i].lng
+        }
+
+        avgLats /= ownerProperty[key].coordsArray.length
+        avgLngs /= ownerProperty[key].coordsArray.length
+
+        console.log("Avg lats: ", avgLats)
+
+        latLngs = { lat: avgLats, lng: avgLngs }
         setKey(key)
         setInfoWindow(true)
     };
 
     useEffect(() => {
         getCoords()
+        window.$(document).ready(function(){
+            window.$('.tooltipped').tooltip();
+          });
     }, [update])
 
     return (
@@ -132,22 +153,34 @@ const PublicLand = () => {
                 <Sidenav />
             </div>
             <div className="col s10">
-                <div className="mapBG">
-                    {
-                        finalCoords.length != 0 ?
-                            <div>
-                                <GoogleMapExample
-                                    containerElement={<div style={{ height: `100vh` }} />}
-                                    mapElement={<div className="mapElement" style={{ height: `100vh` }} />}
-                                />
-                                {
-                                    console.log("Info window: ", infoWindow),
-                                    infoWindow ?
-                                        <h1>{ownerProperty[key].lastName}</h1>
-                                        : null
-                                }
-                            </div> : null
-                    }
+                <h1>Public Land Info</h1>
+                <div className="section dashSec2">
+                    <div className="mapBG">
+                        {
+                            finalCoords.length != 0 ?
+                                <>
+                                    {
+                                        console.log("New Property CHECK THIS: ", ownerProperty[key]),
+                                        infoWindow ?
+                                            <div className="row">
+                                                <div className="col s12 m6">
+                                                    <div className="card propertyCard blue-grey darken-1">
+                                                        <div className="card-content white-text">
+                                                            <span className="card-title">{ownerProperty[key].plotNo}</span>
+                                                            <p>{ownerProperty[key].firstName} {ownerProperty[key].lastName}<br />{ownerProperty[key].locality}, {ownerProperty[key].city}<br />{ownerProperty[key].state}<br />Area: {ownerProperty[key].landSize} sq/m<br />Buying Rate: ₹{ownerProperty[key].buyingRate}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            : null
+                                    }
+                                    <GoogleMapExample
+                                        containerElement={<div style={{ height: `100vh` }} />}
+                                        mapElement={<div className="mapElement" style={{ height: `100vh` }} />}
+                                    />
+                                </> : null
+                        }
+                    </div>
                 </div>
             </div>
         </div>
