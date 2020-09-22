@@ -86,8 +86,9 @@ router.get('/setPrice', function (req, res) {
 });
 
 app.post('/razorpay', async (req, res) => {
+    console.log("Req amount: ", req.query.amount)
     const payment_capture = 1
-    const amount = 499
+    const amount = req.query.amount
     const currency = 'INR'
 
     const options = {

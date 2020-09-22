@@ -280,6 +280,10 @@ form button, form h5{
   border-radius: 24px !important;
 }
 
+.emptyText {
+  text-align: center !important;
+}
+
 /*=========TESTING================*/
 body::-webkit-scrollbar {
   width: 0.25rem;

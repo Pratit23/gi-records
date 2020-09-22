@@ -34,7 +34,8 @@ const SecondNav = () => {
                     >
                     <ul>
                     <li className="tab col s3"><NavLink className="black-text" to='/SellLand'>Sell Land</NavLink></li>
-                    <li className="tab col s3"><NavLink className="black-text" to='/BuyLand'>Buy Land</NavLink></li></ul></Dropdown>
+                    <li className="tab col s3"><NavLink className="black-text" to='/BuyLand'>Buy Land</NavLink></li>
+                    <li className="tab col s3"><NavLink className="black-text" to='/transactions'>Transactions</NavLink></li></ul></Dropdown>
                 </ul>
             </div>
         </div>

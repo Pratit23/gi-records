@@ -28,7 +28,8 @@ function loadScript(src) {
 
 class Notifications extends Component {
 
-    displayRazorPay = async () => {
+
+    displayRazorPay = async (amount, details) => {
 
         const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js')
 
@@ -37,7 +38,9 @@ class Notifications extends Component {
             return
         }
 
-        const data = await fetch('http://localhost:2000/razorpay', { method: 'POST' }).then((t) =>
+        console.log("Amount in notif: ", amount)
+
+        const data = await fetch('http://localhost:2000/razorpay/?amount=' + amount, { method: 'POST' }).then((t) =>
             t.json()
         )
 
@@ -51,10 +54,38 @@ class Notifications extends Component {
             description: "Thank you for purchasing me Land!",
             image: "https://picsum.photos/200/300",
             order_id: data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-            handler: function (response) {
-                alert(response.razorpay_payment_id);
-                alert(response.razorpay_order_id);
-                alert(response.razorpay_signature)
+            handler: async function (response) {
+                //GOTTA PUT THE BLOCKCHAIN CODE IN HERE
+                console.log("PUT THE BLOCKCHAIN CODE IN HERE")
+                // alert(response.razorpay_payment_id);
+                // alert(response.razorpay_order_id);
+                // alert(response.razorpay_signature)
+                await db.collection('transactions').add({
+                    ...details,
+                    ...data
+                }).then(() => {
+                    console.log("Transaction stored to firestore")
+                }).catch(function (error) {
+                    console.error("Error adding transaction to firestore: ", error);
+                });
+
+                await db.collection('sellLand')
+                .doc(details.landID)
+                .delete()
+                .then(() => {
+                    console.log("Listing removed from sell land")
+                }).catch(function (error) {
+                    console.error("Error removing listing from sellLand: ", error);
+                });
+
+                await db.collection('quotes')
+                .doc(details.landID + localData.ethereumAdd)
+                .delete()
+                .then(() => {
+                    console.log("Quote removed from quote")
+                }).catch(function (error) {
+                    console.error("Error removing quote from quotes: ", error);
+                });
             },
             prefill: {
                 name: localData.firstName + " " + localData.lastName,
@@ -128,7 +159,7 @@ class Notifications extends Component {
                             <div className="section collapWrapper">
                                 <Collapsible accordion popout>
                                     {
-                                        (accepted && accepted.map((notif, key) => {
+                                        typeof(accepted) !== "undefined" && accepted.length !== 0 ? accepted.map((notif, key) => {
                                             console.log("Notif: ", notif)
                                             return (
                                                 <CollapsibleItem
@@ -168,14 +199,13 @@ class Notifications extends Component {
                                                                 trigger={<Button className="btn red white-text">Transact</Button>}
                                                             ><div className="row">
                                                                     <div className="col s6">
-                                                                        <p>Seller Details:<br /><div className="divider"></div>
+                                                                        Seller Details:<br /><div className="divider"></div>
                                                             First Name: {notif.sellerFName}<br />
                                                             Last Name: {notif.sellerLName}<br /><br />
                                                             Buyer Details:<br />
                                                             <div className="divider"></div>
                                                             First Name: {notif.authorFirstName}<br />
                                                             Last Name: {notif.authorLastName}<br /><br />
-                                                                        </p>
                                                                     </div>
                                                                     <div className="col s6">
                                                                         Total Price:
@@ -183,13 +213,13 @@ class Notifications extends Component {
                                                                         ₹{notif.quotedPrice}<br/>
                                                                         + tax calculated after the payment is complete
                                                                     </div>
-                                                                </div><br /><a onClick={() => this.displayRazorPay()} className="btn red white-text">Accept</a></Modal>
+                                                                </div><br /><a onClick={() => this.displayRazorPay(notif.quotedPrice, notif)} className="btn red white-text">Accept</a></Modal>
                                                             <a className="btn blue white-text" onClick={() => this.handleDismiss(notif.landID, notif.buyerEthID)}>Decline</a>
                                                         </div>
                                                     </div>
                                                 </CollapsibleItem>
                                             )
-                                        }))
+                                        }) : <p className="grey-text emptyText">No acceptances yet</p>
                                     }
                                 </Collapsible>
                             </div>
@@ -201,7 +231,7 @@ class Notifications extends Component {
                             <div className="section collapWrapper">
                                 <Collapsible accordion popout>
                                     {
-                                        notifications ? notifications.map((notif, key) => {
+                                        typeof(notifications) !== "undefined" && notifications.length !== 0 ? notifications.map((notif, key) => {
                                             console.log("Notif: ", notif)
                                             return (
                                                 <CollapsibleItem
@@ -249,7 +279,7 @@ class Notifications extends Component {
                                                     </div>
                                                 </CollapsibleItem>
                                             )
-                                        }) : <h6>Issa empty fam</h6>
+                                        }) : <p className="grey-text emptyText">No incoming quotations</p>
                                     }
                                 </Collapsible>
                             </div>
