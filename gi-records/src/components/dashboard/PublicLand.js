@@ -142,9 +142,9 @@ const PublicLand = () => {
 
     useEffect(() => {
         getCoords()
-        window.$(document).ready(function(){
+        window.$(document).ready(function () {
             window.$('.tooltipped').tooltip();
-          });
+        });
     }, [update])
 
     return (
@@ -162,13 +162,11 @@ const PublicLand = () => {
                                     {
                                         console.log("New Property CHECK THIS: ", ownerProperty[key]),
                                         infoWindow ?
-                                            <div className="row">
-                                                <div className="col s12 m6">
-                                                    <div className="card propertyCard blue-grey darken-1">
-                                                        <div className="card-content white-text">
-                                                            <span className="card-title">{ownerProperty[key].plotNo}</span>
-                                                            <p>{ownerProperty[key].firstName} {ownerProperty[key].lastName}<br />{ownerProperty[key].locality}, {ownerProperty[key].city}<br />{ownerProperty[key].state}<br />Area: {ownerProperty[key].landSize} sq/m<br />Buying Rate: ₹{ownerProperty[key].buyingRate}</p>
-                                                        </div>
+                                            <div className="viewAllCards">
+                                                <div className="card propertyCard blue-grey darken-1">
+                                                    <div className="card-content white-text">
+                                                        <span className="card-title">{ownerProperty[key].plotNo}</span>
+                                                        <p>{ownerProperty[key].firstName} {ownerProperty[key].lastName}<br />{ownerProperty[key].locality}, {ownerProperty[key].city}<br />{ownerProperty[key].state}<br />Area: {ownerProperty[key].landSize} sq/m<br />Buying Rate: ₹{ownerProperty[key].buyingRate}</p>
                                                     </div>
                                                 </div>
                                             </div>

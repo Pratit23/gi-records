@@ -137,6 +137,11 @@ form button, form h5{
 .propertyCard {
   margin-top: 10px!important;
   border-radius: 24px!important;
+  opacity: 0.8;
+}
+
+.propertyCard:hover {
+  opacity: 1.0;
 }
 
 .detailInfoCard {
@@ -282,6 +287,14 @@ form button, form h5{
 
 .emptyText {
   text-align: center !important;
+}
+
+.viewAllCards {
+  position: absolute;
+  z-index: 1;
+  width: 50%;
+  left: 12px !important;
+  top: 50px !important;
 }
 
 /*=========TESTING================*/
