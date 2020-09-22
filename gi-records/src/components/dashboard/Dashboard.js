@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import ProjectList from '../projects/ProjectList'
-import Notifications from './Notifications'
 import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
@@ -14,23 +12,25 @@ import Web3 from 'web3';
 import { simpleStorageAbi } from '../../abis/abis';
 import M from "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
+import globalVal from '../../BlockchainAdd'
 
 // showDropDown: false,
 //       showButton: true,
 //       property: [],
 //       selectPlot: '',
 
-const Dashboard = () => {
+const Dashboard = (props) => {
 
   const [showDropDown, setShowDropDown] = useState(false)
   const [showButton, setShowButton] = useState(true)
   const [property, setProperty] = useState([])
   const [selectPLot, setSelectPlot] = useState('')
 
+  const { profile } = props
 
   const handleDropdown = async () => {
     const web3 = new Web3(Web3.givenProvider);
-    const contractAddr = '0xbdDB204381B459AD0d328A896A10d62129212634';
+    const contractAddr = globalVal.address
     const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
 
     var localData = localStorage.getItem('userDetails')
@@ -79,15 +79,14 @@ const Dashboard = () => {
     //var val = window.$('select').val()
   }
 
-
   useEffect(() => {
 
-  })
-
+  }, [profile])
 
   return (
     <div className="row">
       <div className="col s2 mainSideNav">
+
         <Sidenav />
       </div>
       <div className="col s10">

@@ -9,8 +9,11 @@
     "express": "^4.17.1",
     "firebase": "^7.16.0",
     "mysql": "^2.18.1",
+    "ngrok": "^3.3.0",
+    "razorpay": "^2.0.6",
     "react-chartjs-2": "^2.9.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "shortid": "^2.2.15"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

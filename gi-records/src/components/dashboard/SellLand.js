@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { simpleStorageAbi } from '../../abis/abis';
 import Web3 from 'web3';
+import globalVal from '../../BlockchainAdd'
 
 export default class SellLand extends Component {
 
@@ -25,7 +26,7 @@ export default class SellLand extends Component {
     handleSubmit = async (e) => {
         e.preventDefault()
         const web3 = new Web3(Web3.givenProvider);
-        const contractAddr = '0xbdDB204381B459AD0d328A896A10d62129212634';
+        const contractAddr = globalVal.address
         const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
         const accounts = await window.ethereum.enable();
         const account = accounts[0];

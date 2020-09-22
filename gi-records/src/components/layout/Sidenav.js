@@ -69,7 +69,7 @@ const Sidenav = (props) => {
                         <NavLink to="/notifications">
                             <div className="card sideNavCard">
                                 <div className="card-content white-text">
-                                    <span className="card-title"><Icon className="white-text">no</Icon>Notifications</span>
+                                    <Icon className="white-text">notifications</Icon><span>Notifications</span>
                                 </div>
                             </div>
                         </NavLink>
@@ -87,7 +87,7 @@ const mapStateToProps = (state) => {
     return {
         auth: state.firebase.auth,
         profile: state.firebase.profile, //adding profile which is on the state to the props
-        accepted: state.firestore.ordered.notif
+        accepted: state.firestore.ordered.accept
     }
 }
 

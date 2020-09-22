@@ -7,6 +7,7 @@ import { Redirect } from 'react-router-dom';
 import  Sidenav from '../layout/Sidenav'
 import { db } from '../../config/fbConfig'
 import M from 'materialize-css'
+import globalVal from '../../BlockchainAdd'
 
 var tempData = []
 const month = new Date().getMonth()
@@ -65,7 +66,7 @@ class AddLand extends Component {
     handleSubmit = async (e) => {
         e.preventDefault();
         const web3 = new Web3(Web3.givenProvider);
-        const contractAddr = '0xbdDB204381B459AD0d328A896A10d62129212634';
+        const contractAddr = globalVal.address
         const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
         const { profile } = this.props;
         const fName = profile.firstName;

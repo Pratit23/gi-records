@@ -5,13 +5,14 @@ import { connect } from 'react-redux'
 import MapContainer from '../components/layout/Map1'
 import { Link } from 'react-router-dom'
 import Sidenav from '../components/layout/Sidenav'
+import globalVal from '../BlockchainAdd'
 
 
 const Blockchain = (props) => {
 
   // note, contract address must match the address provided by Truffle after migrations
   const web3 = new Web3(Web3.givenProvider);
-  const contractAddr = '0xbdDB204381B459AD0d328A896A10d62129212634';
+  const contractAddr = globalVal.address
   const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
 
   const [id, setId] = useState()

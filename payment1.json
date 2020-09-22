@@ -1,0 +1,60 @@
+{
+    "entity": "event",
+    "account_id": "acc_FfwhIBgaYJZk3e",
+    "event": "payment.captured",
+    "contains": [
+        "payment"
+    ],
+    "payload": {
+        "payment": {
+            "entity": {
+                "id": "pay_FfyOkNCJ9nH96j",
+                "entity": "payment",
+                "amount": 49900,
+                "currency": "INR",
+                "status": "captured",
+                "order_id": "order_FfyOQwvqFraM5A",
+                "invoice_id": null,
+                "international": false,
+                "method": "card",
+                "amount_refunded": 0,
+                "refund_status": null,
+                "captured": true,
+                "description": "Thank you for purchasing me Land!",
+                "card_id": "card_Ffy8TSScPb0bSV",
+                "card": {
+                    "id": "card_Ffy8TSScPb0bSV",
+                    "entity": "card",
+                    "name": "Gaurav Kumar",
+                    "last4": "1111",
+                    "network": "Visa",
+                    "type": "debit",
+                    "issuer": null,
+                    "international": false,
+                    "emi": false,
+                    "sub_type": "consumer"
+                },
+                "bank": null,
+                "wallet": null,
+                "vpa": null,
+                "email": "gaurav.kumar@example.com",
+                "contact": "+919999999999",
+                "notes": {
+                    "address": "Razorpay Corporate Office"
+                },
+                "fee": 924,
+                "tax": 0,
+                "error_code": null,
+                "error_description": null,
+                "error_source": null,
+                "error_step": null,
+                "error_reason": null,
+                "acquirer_data": {
+                    "auth_code": "936731"
+                },
+                "created_at": 1600755345
+            }
+        }
+    },
+    "created_at": 1600755347
+}

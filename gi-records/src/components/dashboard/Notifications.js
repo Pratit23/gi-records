@@ -7,19 +7,69 @@ import { Collapsible, CollapsibleItem, Icon, Modal, Button, Toast } from 'react-
 import M from 'materialize-css';
 import moment from 'moment'
 import Sidenav from '../layout/Sidenav'
-import GPay from '../../store/payment/GPay'
 
-var data = localStorage.getItem('userDetails')
-data = JSON.parse(data)
+var localData = localStorage.getItem('userDetails')
+localData = JSON.parse(localData)
+
+function loadScript(src) {
+    return new Promise((resolve) => {
+        const script = document.createElement('script')
+        script.src = src
+        script.onload = () => {
+            resolve(true)
+        }
+        script.onerror = () => {
+            resolve(false)
+        }
+        document.body.appendChild(script)
+    })
+}
 
 
 class Notifications extends Component {
 
-    handleTransact = () => {
-        console.log("Handle Transact is running")
-        return (
-            <GPay/>
+    displayRazorPay = async () => {
+
+        const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js')
+
+        if (!res) {
+            alert('Razorpay SDK failed to load. Are you online?')
+            return
+        }
+
+        const data = await fetch('http://localhost:2000/razorpay', { method: 'POST' }).then((t) =>
+            t.json()
         )
+
+        console.log("This is the response: ", data)
+
+        const options = {
+            key: "rzp_test_drE1kuhaA651IE", // Enter the Key ID generated from the Dashboard
+            amount: data.amount.toString(), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            currency: data.currency,
+            name: "Land",
+            description: "Thank you for purchasing me Land!",
+            image: "https://picsum.photos/200/300",
+            order_id: data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            handler: function (response) {
+                alert(response.razorpay_payment_id);
+                alert(response.razorpay_order_id);
+                alert(response.razorpay_signature)
+            },
+            prefill: {
+                name: localData.firstName + " " + localData.lastName,
+                email: this.props.auth.email,
+                contact: "9999999999"
+            },
+            notes: {
+                address: "Razorpay Corporate Office"
+            },
+            theme: {
+                color: "#1e88e5"
+            }
+        };
+        const paymentObject = new window.Razorpay(options)
+        paymentObject.open()
     }
 
     handleDismiss = (landID, buyerEthID) => {
@@ -99,7 +149,7 @@ class Notifications extends Component {
                                                                 ]}
                                                                 bottomSheet={false}
                                                                 fixedFooter={false}
-                                                                header="Modal Header"
+                                                                header="Your offer is accepted!"
                                                                 id="Modal-0"
                                                                 open={false}
                                                                 options={{
@@ -116,15 +166,24 @@ class Notifications extends Component {
                                                                     startingTop: '4%'
                                                                 }}
                                                                 trigger={<Button className="btn red white-text">Transact</Button>}
-                                                            ><div>
-                                                                    <p>Seller Details:<br />
-                                                First Name: {notif.sellerFName}<br />
-                                                Last Name: {notif.sellerLName}<br /><br />
-                                                Buyer Details:<br />
-                                                First Name: {notif.authorFirstName}<br />
-                                                Last Name: {notif.authorLastName}<br /><br />
-                                                                    </p>
-                                                                </div><br /><a onClick={() => this.handleTransact()} className="btn red white-text">Accept</a></Modal>
+                                                            ><div className="row">
+                                                                    <div className="col s6">
+                                                                        <p>Seller Details:<br /><div className="divider"></div>
+                                                            First Name: {notif.sellerFName}<br />
+                                                            Last Name: {notif.sellerLName}<br /><br />
+                                                            Buyer Details:<br />
+                                                            <div className="divider"></div>
+                                                            First Name: {notif.authorFirstName}<br />
+                                                            Last Name: {notif.authorLastName}<br /><br />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div className="col s6">
+                                                                        Total Price:
+                                                                        <div className="divider"></div>
+                                                                        ₹{notif.quotedPrice}<br/>
+                                                                        + tax calculated after the payment is complete
+                                                                    </div>
+                                                                </div><br /><a onClick={() => this.displayRazorPay()} className="btn red white-text">Accept</a></Modal>
                                                             <a className="btn blue white-text" onClick={() => this.handleDismiss(notif.landID, notif.buyerEthID)}>Decline</a>
                                                         </div>
                                                     </div>
@@ -215,8 +274,8 @@ const mapStateToProps = (state) => {
 export default compose(
     connect(mapStateToProps, null),
     firestoreConnect((props) => [
-        { collection: 'quotes', orderBy: ['createdAt', 'desc'], where: [['sellerEthID', '==', data.ethereumAdd]], storeAs: 'notif' },
-        { collection: 'quotes', orderBy: ['createdAt', 'desc'], where: [['buyerEthID', '==', data.ethereumAdd], ['accepted', '==', 1]], storeAs: 'accept' },
+        { collection: 'quotes', orderBy: ['createdAt', 'desc'], where: [['sellerEthID', '==', localData.ethereumAdd]], storeAs: 'notif' },
+        { collection: 'quotes', orderBy: ['createdAt', 'desc'], where: [['buyerEthID', '==', localData.ethereumAdd], ['accepted', '==', 1]], storeAs: 'accept' },
     ])
 )(Notifications)
 
