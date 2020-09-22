@@ -18,6 +18,7 @@ import Sidenav from './components/layout/Sidenav'
 import { signIn } from './store/actions/authActions';
 import { connect } from 'react-redux';
 import PublicLand from './components/dashboard/PublicLand';
+import AllTransactions from './components/dashboard/AllTransactions';
 
 const App = (props) => {
 
@@ -44,6 +45,7 @@ const App = (props) => {
           <Route path='/signin' component={SignIn} />
           <Route path='/signup' component={SignUp} />
           <Route path='/public' component={PublicLand} />
+          <Route path='/transactions' component={AllTransactions} />
         </Switch>
       </div>
     </BrowserRouter>
