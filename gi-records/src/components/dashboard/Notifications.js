@@ -7,6 +7,9 @@ import { Collapsible, CollapsibleItem, Icon, Modal, Button, Toast } from 'react-
 import M from 'materialize-css';
 import moment from 'moment'
 import Sidenav from '../layout/Sidenav'
+import { simpleStorageAbi } from '../../abis/abis';
+import Web3 from 'web3';
+import globalVal from '../../BlockchainAdd'
 
 var localData = localStorage.getItem('userDetails')
 localData = JSON.parse(localData)
@@ -60,6 +63,61 @@ class Notifications extends Component {
                 // alert(response.razorpay_payment_id);
                 // alert(response.razorpay_order_id);
                 // alert(response.razorpay_signature)
+
+                const web3 = new Web3(Web3.givenProvider);
+                const contractAddr = globalVal.address
+                const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
+                const accounts = await window.ethereum.enable();
+                const account = accounts[0];
+
+                var j = 0;
+
+                var tempId = details.buyerEthID;
+                var newId = details.buyerEthID;
+
+                var tempNewID = details.sellerEthID;
+                var newNewID = details.sellerEthID;
+                //console.log(newId)
+                var flag = true
+                while (flag == true) {
+                    //console.log("get if is running")
+                    newId = tempId + j;
+                    var result = await SimpleContract.methods.getLats(newId).call();
+                    if (result.length == 0) {
+                        flag = false;
+                    }
+                    else {
+                        j++;
+                    }
+                }
+
+                var i = 0
+                var flag1 = true
+
+                while (flag1 == true) {
+                    //console.log("get if is running")
+                    newNewID = tempNewID + i;
+                    var result1 = await SimpleContract.methods.getLats(newNewID).call();
+                    if (result1.length == 0) {
+                        flag1 = false;
+                    }
+                    else {
+                        i++;
+                    }
+                }
+
+                i = i - 1
+
+                var sellerLastFull = tempNewID + i;
+
+                var setResult = await SimpleContract.methods.transaction(newId, details.landID, details.buyerEthID,
+                    details.authorFirstName, details.authorLastName, sellerLastFull).send({ from: account });
+
+                if (setResult) {
+                    console.log("Land sold")
+                } else {
+                    console.log("Something went wrong with selling")
+                }
                 await db.collection('transactions').add({
                     ...details,
                     ...data
@@ -70,22 +128,22 @@ class Notifications extends Component {
                 });
 
                 await db.collection('sellLand')
-                .doc(details.landID)
-                .delete()
-                .then(() => {
-                    console.log("Listing removed from sell land")
-                }).catch(function (error) {
-                    console.error("Error removing listing from sellLand: ", error);
-                });
+                    .doc(details.landID)
+                    .delete()
+                    .then(() => {
+                        console.log("Listing removed from sell land")
+                    }).catch(function (error) {
+                        console.error("Error removing listing from sellLand: ", error);
+                    });
 
                 await db.collection('quotes')
-                .doc(details.landID + localData.ethereumAdd)
-                .delete()
-                .then(() => {
-                    console.log("Quote removed from quote")
-                }).catch(function (error) {
-                    console.error("Error removing quote from quotes: ", error);
-                });
+                    .doc(details.landID + localData.ethereumAdd)
+                    .delete()
+                    .then(() => {
+                        console.log("Quote removed from quote")
+                    }).catch(function (error) {
+                        console.error("Error removing quote from quotes: ", error);
+                    });
             },
             prefill: {
                 name: localData.firstName + " " + localData.lastName,
@@ -159,7 +217,7 @@ class Notifications extends Component {
                             <div className="section collapWrapper">
                                 <Collapsible accordion popout>
                                     {
-                                        typeof(accepted) !== "undefined" && accepted.length !== 0 ? accepted.map((notif, key) => {
+                                        typeof (accepted) !== "undefined" && accepted.length !== 0 ? accepted.map((notif, key) => {
                                             console.log("Notif: ", notif)
                                             return (
                                                 <CollapsibleItem
@@ -203,14 +261,14 @@ class Notifications extends Component {
                                                             First Name: {notif.sellerFName}<br />
                                                             Last Name: {notif.sellerLName}<br /><br />
                                                             Buyer Details:<br />
-                                                            <div className="divider"></div>
+                                                                        <div className="divider"></div>
                                                             First Name: {notif.authorFirstName}<br />
                                                             Last Name: {notif.authorLastName}<br /><br />
                                                                     </div>
                                                                     <div className="col s6">
                                                                         Total Price:
                                                                         <div className="divider"></div>
-                                                                        ₹{notif.quotedPrice}<br/>
+                                                                        ₹{notif.quotedPrice}<br />
                                                                         + tax calculated after the payment is complete
                                                                     </div>
                                                                 </div><br /><a onClick={() => this.displayRazorPay(notif.quotedPrice, notif)} className="btn red white-text">Accept</a></Modal>
@@ -231,7 +289,7 @@ class Notifications extends Component {
                             <div className="section collapWrapper">
                                 <Collapsible accordion popout>
                                     {
-                                        typeof(notifications) !== "undefined" && notifications.length !== 0 ? notifications.map((notif, key) => {
+                                        typeof (notifications) !== "undefined" && notifications.length !== 0 ? notifications.map((notif, key) => {
                                             console.log("Notif: ", notif)
                                             return (
                                                 <CollapsibleItem

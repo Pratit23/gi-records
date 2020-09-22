@@ -20,7 +20,7 @@ const AllTransactions = (props) => {
             <div className="col s10">
                 <h1>All Transactions</h1>
                 <div className="section dashSec2">
-                    <div className="row">
+                    <div className="allTransacCollap">
                         <Collapsible accordion popout>
                             {
                                 typeof (props.all) !== "undefined" && (props.all).length !== 0 ?
@@ -33,7 +33,7 @@ const AllTransactions = (props) => {
                                                 icon={<Icon>filter_drama</Icon>}
                                                 node="div"
                                             >
-                                                <p className="black-text">{transaction.landID}</p>
+                                                <p className="black-text allTransactText">TESTING<br/>{transaction.landID}</p>
                                             </CollapsibleItem>
 
 

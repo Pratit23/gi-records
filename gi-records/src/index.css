@@ -216,6 +216,15 @@ form button, form h5{
   background-color: #212121 !important;
 }
 
+.allTransacCollap .collapsible-body {
+  background-color: white !important;
+}
+
+.allTransactText {
+  margin: 0 !important;
+  padding: 20px !important;
+}
+
 .dashSec2 {
   background-color: #e0e0e0 !important;
   border-radius: 24px !important;

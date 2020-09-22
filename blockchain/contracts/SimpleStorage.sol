@@ -19,6 +19,7 @@ contract SimpleStorage {
 
   mapping(address => int) ownerList;
   mapping(string => OwnerStruct) lands;
+  
 
   address[] public ownerAccts;
 
