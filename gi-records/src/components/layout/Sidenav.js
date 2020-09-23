@@ -58,7 +58,6 @@ const Sidenav = (props) => {
                         header={<span className="white-text">Land Transactions</span>}
                         node="div">
                         <ul>
-                            <li><NavLink className="white-text" to='/SellLand'><Icon className="white-text">local_offer</Icon>Sell Land</NavLink></li>
                             <li><NavLink className="white-text" to='/BuyLand'><Icon className="white-text">local_offer</Icon>Buy Land</NavLink></li>
                             <li><NavLink className="white-text" to='/transactions'><Icon className="white-text">local_offer</Icon>Transacts</NavLink></li>
                         </ul>
