@@ -1,17 +1,37 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import Chart from "chart.js";
 import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
+import { db } from '../../config/fbConfig'
 
 const month = new Date().getMonth()
 const year = new Date().getFullYear()
 
- class LineGraph extends Component {
-    chartRef = React.createRef();
+var chartRef = React.createRef();
 
-    componentDidMount() {
-        const myChartRef = this.chartRef.current.getContext("2d");
+var months = {
+    1 : 'Jan',
+    2 : 'Feb',
+    3 : 'Mar',
+    4 : 'Apr',
+    5 : 'May',
+    6 : 'Jun',
+    7 : 'Jul',
+    8 : 'Aug',
+    9 : 'Sep',
+    10 : 'Oct',
+    11 : 'Nov',
+    12 : 'Dec',
+}
+
+const DashChart1 = (props) => {
+
+    useEffect(() => {
+
+        //FIRESTORE FETCH FUNCTION HERE
+        
+        const myChartRef = chartRef.current.getContext("2d");
 
         new Chart(myChartRef, {
             type: "line",
@@ -57,18 +77,16 @@ const year = new Date().getFullYear()
                 }
             },
         });
-    }
-    render() {
-        console.log("Props of Line graph: ", this.props)
-        return (
-            <div>
-                <canvas
-                    id="myChart"
-                    ref={this.chartRef}
-                />
-            </div>
-        )
-    }
+    },)
+
+    return (
+        <div>
+            <canvas
+                id="myChart"
+                ref={chartRef}
+            />
+        </div>
+    )
 }
 
 const mapStateToProps = (state) => {
@@ -84,5 +102,5 @@ export default compose(
     firestoreConnect((props) => [
         { collection: 'rates', orderBy: ['createdAt', 'desc'], where: [['year', '==', year]], storeAs: 'chartData' },
     ])
-)(LineGraph)
+)(DashChart1)
 

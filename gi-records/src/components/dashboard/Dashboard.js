@@ -14,17 +14,15 @@ import M from "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import globalVal from '../../BlockchainAdd'
 
-// showDropDown: false,
-//       showButton: true,
-//       property: [],
-//       selectPlot: '',
+var temp = []
 
 const Dashboard = (props) => {
 
   const [showDropDown, setShowDropDown] = useState(false)
   const [showButton, setShowButton] = useState(true)
   const [property, setProperty] = useState([])
-  const [selectPLot, setSelectPlot] = useState('')
+  const [selectPlot, setSelectPlot] = useState('')
+  const [selectLocality, setSelectLocality] = useState('')
 
   const { profile } = props
 
@@ -48,19 +46,17 @@ const Dashboard = (props) => {
       var city = await SimpleContract.methods.getCity(newId).call();
       var locality = await SimpleContract.methods.getLocality(newId).call();
       var plotNo = await SimpleContract.methods.getPlotNo(newId).call();
-      var ownerAccts = await SimpleContract.methods.getOwners().call();
-
-      console.log("Owners Accounts: ", ownerAccts)
 
       if (states.length == 0 && city.length == 0 && locality.length == 0 && plotNo.length == 0) {
         flag1 = false
       } else {
-        property.push({
+        temp.push({
           states: states,
           city: city,
           locality: locality,
           plotNo: plotNo
         })
+        property[plotNo] = { temp }
       }
       handleSelect()
       j++
@@ -68,20 +64,28 @@ const Dashboard = (props) => {
 
     setShowButton(false)
     setShowDropDown(true)
+
+    console.log("THIS IS AMAZING: ", property)
   }
 
   const handleSelect = () => {
     window.$(document).ready(function () {
       var selected = window.$('select').formSelect()
-      setSelectPlot(window.$('select').val())
     });
-    console.log("Selected: ", selectPLot)
     //var val = window.$('select').val()
   }
 
-  useEffect(() => {
+  const getValue = () => {
+    var plotVal = window.$('#plotSelect').val()
+    console.log("The value: ", plotVal)
+    var check = plotVal.split(",")
+    setSelectPlot(check[0])
+    setSelectLocality(check[1])
+  }
 
-  }, [profile])
+  // useEffect(() => {
+
+  // }, [profile])
 
   return (
     <div className="row">
@@ -109,25 +113,24 @@ const Dashboard = (props) => {
                           {
                             showDropDown ?
                               <div className="input-field col s12">
-                                <select id="select">
+                                <select onChange={() => getValue()} id="plotSelect">
                                   {
-                                    property && property.map((property, key) => {
+                                    temp && temp.map((property, key) => {
                                       return (
-                                        <option key={key} value="">
-                                          {property.plotNo}
+                                        <option key={key} value={[property.plotNo, property.locality]}>
+                                          {property.plotNo}, {property.locality}
                                         </option>
                                       )
                                     })
                                   }
                                 </select>
                                 <label>Choose your Plot</label>
-                                <a onClick={() => handleSelect()} className="btn">Get Deets</a>
                               </div> : null
                           }
                         </div>
                       </div>
                       <div className="cardChart section">
-                        <DashChart1 />
+                        <DashChart1 plotNo={selectPlot} locality={selectLocality}/>
                       </div>
                     </div>
                   </div>

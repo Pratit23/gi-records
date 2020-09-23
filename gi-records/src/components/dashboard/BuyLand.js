@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropertyList from '../projects/PropertyList'
 import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase'
@@ -10,128 +10,156 @@ import Sidenav from '../layout/Sidenav'
 var localData = localStorage.getItem('userDetails')
 localData = JSON.parse(localData)
 
-class BuyLand extends Component {
+const BuyLand = (props) => {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            states: '',
-            city: '',
-            locality: '',
-            showForm: true,
-            showCards: false,
-            property: [],
-        }
-        this.goBack = this.goBack.bind(this);
+    const [states, setTheState] = useState('')
+    const [city, setCity] = useState('')
+    const [locality, setLocality] = useState('')
+    const [showForm, setShowForm] = useState(true)
+    const [showCards, setShowCards] = useState(false)
+    const [property, setProperty] = useState([])
+    const [tempProperty, setTempProperty] = useState([])
+
+    const goBack = () => {
+        setTheState('')
+        setCity('')
+        setLocality('')
+        setShowForm(true)
+        setShowCards(false)
     }
 
-    goBack() {
-        this.setState({
-            states: '',
-            city: '',
-            locality: '',
-            showForm: true,
-            showCards: false,
-        })
-    }
+    // const handleChange = (e) => {
+    //     e.preventDefault();
+    //     this.setState({
+    //         [e.target.id]: e.target.value
+    //     })
+    // }
 
-    handleChange = (e) => {
-        e.preventDefault();
-        this.setState({
-            [e.target.id]: e.target.value
-        })
-    }
-
-    handleSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
         var tempArray = []
         db.collection('sellLand')
-            .where("state", "==", this.state.states)
-            .where("city", "==", this.state.city)
-            .where("locality", "==", this.state.locality)
+            .where("state", "==", states)
+            .where("city", "==", city)
+            .where("locality", "==", locality)
             .get()
             .then(snapshot => {
                 snapshot.forEach(doc => {
                     const data = doc.data()
                     console.log("DOC ID", data)
-                    if(data.sellerID != localData.ethereumAdd) {
+                    if (data.sellerID != localData.ethereumAdd) {
                         tempArray[doc.id] = { data }
                     }
                 })
                 console.log("Snapshot thingy: ", tempArray)
-                this.setState({
-                    property: tempArray,
-                    showForm: false,
-                    showCards: true
-                })
-                console.log("Buy land property: ", this.state.property)
-                console.log("Length of state property: ", (this.state.property).length)
-                localStorage.setItem('sellDetails', JSON.stringify(this.state.property))
-                this.props.sell(this.state.property)
+                setProperty(property)
+                setShowForm(false)
+                setShowCards(true)
+                localStorage.setItem('sellDetails', JSON.stringify(property))
+                props.sell(property)
             })
             .catch(error => console.log(error))
-        console.log("CHECK THIS: ", this.state.property)
+        console.log("CHECK THIS: ", property)
     }
 
-    shouldComponentUpdate(prevProps, prevState) {
-        if (prevState.showForm != this.state.showForm) {
-            return true
-        } else {
-            return false
-        }
+    const getValue = () => {
+        var state = window.$('#stateSelect').val()
+        var cities = window.$('#citySelect').val()
+        var localities = window.$('#localitySelect').val()
+        setTheState(state)
+        setCity(cities)
+        setLocality(localities)
+        console.log("State Value: ", states)
+        console.log("City Value: ", city)
+        console.log("Locality Value: ", locality)
     }
 
-    render() {
-        const { property, auth } = this.props;
-        if (!auth.uid) return <Redirect to='/signin' />
-        const showForm = this.state.showForm
-        const showCards = this.state.showCards
+    const getList = async () => {
+        console.log("Use effect be working")
+        window.$(document).ready(function () {
+            window.$('#stateSelect').formSelect()
+            window.$('#citySelect').formSelect()
+            window.$('#localitySelect').formSelect()
+        });
+        await db.collection('sellLand').get()
+            .then(snapshot => {
+                snapshot.forEach(doc => {
+                    const data = doc.data()
+                    tempProperty.push(data)
+                })
+            })
+        console.log("State array: ", tempProperty)
+    }
 
-        return (
-            <div className="row">
-                <div className="col s2 mainSideNav">
-                    <Sidenav />
-                </div>
-                <div className="col s10">
-                    <h1>Buy Land</h1>
-                    <div className="container buyLandContainer">
-                        {
-                            showForm ? (
-                                <form className="white addLandForm z-depth-3" onSubmit={this.handleSubmit}>
-                                    <div className="input-field">
-                                        <label htmlFor="states">State</label>
-                                        <input type="text" id='states' onChange={this.handleChange} />
-                                    </div>
-                                    <div className="input-field">
-                                        <label htmlFor="city">City</label>
-                                        <input type="text" id='city' onChange={this.handleChange} />
-                                    </div>
-                                    <div className="input-field">
-                                        <label htmlFor="locality">Locality</label>
-                                        <input type="text" id='locality' onChange={this.handleChange} />
-                                    </div>
-                                    <button className="waves-effect waves-light btn black">Search</button>
-                                </form>
-                            ) : (
-                                    null
-                                )
-                        }
-                        {
-                            showCards === true ? (
-                                <div>
-                                    <button onClick={this.goBack} className="waves-effect waves-light btn black">Back</button>
-                                    <PropertyList property={this.state.property} />
-                                </div>
-                            ) : (
-                                    null
-                                )
-                        }
-                    </div>
+    useEffect(() => {
+        getList()
+    }, [tempProperty])
+
+    return (
+        <div className="row">
+            <div className="col s2 mainSideNav">
+                <Sidenav />
+            </div>
+            <div className="col s10">
+                <h1>Buy Land</h1>
+                <div className="container buyLandContainer">
+                    {
+                        showForm ? (
+                            <div className="input-field col s12 white addLandForm z-depth-3" onSubmit={() => handleSubmit()}>
+                                <select id='stateSelect' onChange={() => getValue()}>
+                                    {
+                                        console.log("Rendering: ", tempProperty),
+                                            tempProperty.map((states, key) => {
+                                                console.log("States bruuu: ", states)
+                                                return (
+                                                    <option key={key} value={states.state} className="black-text">Testing</option>
+                                                )
+                                            })
+                                    }
+                                </select>
+                                <select id='citySelect' onChange={() => getValue()}>
+                                    {
+                                        console.log("Rendering: ", tempProperty),
+                                        typeof (tempProperty) !== 'undefined' && (tempProperty).length !== 0 ?
+                                            tempProperty.map((cities, key) => {
+                                                return (
+                                                    <option key={key} value={cities.city}>{cities.city}</option>
+                                                )
+                                            }) : null
+                                    }
+                                </select>
+                                <select id='localitySelect' onChange={() => this.getValue()}>
+                                    {
+                                        console.log("Rendering: ", tempProperty),
+                                        typeof (tempProperty) !== 'undefined' && (tempProperty).length !== 0 ?
+                                            tempProperty.map((localities, key) => {
+                                                return (
+                                                    <option key={key} value={localities.locality}>{localities.locality}</option>
+                                                )
+                                            }) : null
+                                    }
+                                </select>
+                            </div>
+                        ) : (
+                                null
+                            )
+                    }
+                    {
+                        showCards === true ? (
+                            <div>
+                                <button onClick={() => goBack} className="waves-effect waves-light btn black">Back</button>
+                                <PropertyList property={property} />
+                            </div>
+                        ) : (
+                                null
+                            )
+                    }
                 </div>
             </div>
-        )
-    }
+        </div>
+    )
 }
+
 
 const mapStateToProps = (state) => {
     return {
