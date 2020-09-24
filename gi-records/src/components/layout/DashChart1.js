@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Chart from "chart.js";
 import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase'
@@ -11,25 +11,50 @@ const year = new Date().getFullYear()
 var chartRef = React.createRef();
 
 var months = {
-    1 : 'Jan',
-    2 : 'Feb',
-    3 : 'Mar',
-    4 : 'Apr',
-    5 : 'May',
-    6 : 'Jun',
-    7 : 'Jul',
-    8 : 'Aug',
-    9 : 'Sep',
-    10 : 'Oct',
-    11 : 'Nov',
-    12 : 'Dec',
+    '1' : 'Jan',
+    '2' : 'Feb',
+    '3' : 'Mar',
+    '4' : 'Apr',
+    '5' : 'May',
+    '6' : 'Jun',
+    '7' : 'Jul',
+    '8' : 'Aug',
+    '9' : 'Sep',
+    '10' : 'Oct',
+    '11' : 'Nov',
+    '12' : 'Dec',
 }
+var len = 0
 
 const DashChart1 = (props) => {
 
+    const[marketRate, setMarketRate] = useState([])
+    const[theMonths, setTheMonths] = useState([])
+
     useEffect(() => {
 
+        console.log("Dashchart 1 props: ", props)
+
         //FIRESTORE FETCH FUNCTION HERE
+        db.collection('rates')
+            .where("year", "==", year)
+            .where("locality", "==", props.locality)
+            .orderBy("createdAt", "desc")
+            .get()
+            .then(snapshot => {
+                snapshot.forEach(doc => {
+                    const data = doc.data()
+                    console.log("DOC ID", data)
+                    marketRate.push(data.marketRate)
+                    theMonths.push(data.month)
+                })
+                len = marketRate.length
+            }).catch(error => console.log(error))
+
+
+        console.log("Market rate: ", marketRate)
+
+        console.log("Market rate length: ", len)
         
         const myChartRef = chartRef.current.getContext("2d");
 
@@ -37,14 +62,14 @@ const DashChart1 = (props) => {
             type: "line",
             data: {
                 //Bring in data
-                labels: ["Jan", "Feb", "March"],
+                labels: [months[theMonths[len - 1]], months[theMonths[len - 2]], months[theMonths[len - 3]], months[theMonths[len - 4]], months[theMonths[len - 5]]],
                 datasets: [
                     {
-                        label: "Sales",
-                        data: [86, 67, 91],
+                        label: "MR",
+                        data: [parseInt(marketRate[len - 1]), parseInt(marketRate[len - 2]), parseInt(marketRate[len - 3]), parseInt(marketRate[len - 4]), parseInt(marketRate[len - 5])],
                         borderWidth: 2,
                         borderColor: '#fff',
-                        pointRadius: 2,
+                        pointRadius: 3,
                         pointBackgroundColor: '#000000',
                         pointStyle: 'circle',
                         pointBorderColor: '#000000'

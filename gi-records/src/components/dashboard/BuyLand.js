@@ -92,8 +92,8 @@ const BuyLand = (props) => {
     }
 
     useEffect(() => {
-        getList()
-    }, [tempProperty])
+       getList()
+    },)
 
     return (
         <div className="row">
@@ -106,15 +106,15 @@ const BuyLand = (props) => {
                     {
                         showForm ? (
                             <div className="input-field col s12 white addLandForm z-depth-3" onSubmit={() => handleSubmit()}>
-                                <select id='stateSelect' onChange={() => getValue()}>
+                                <select id='stateSelect' onChange={() => getList()}>
                                     {
                                         console.log("Rendering: ", tempProperty),
-                                            tempProperty.map((states, key) => {
-                                                console.log("States bruuu: ", states)
-                                                return (
-                                                    <option key={key} value={states.state} className="black-text">Testing</option>
-                                                )
-                                            })
+                                        tempProperty.map((states, key) => {
+                                            console.log("States bruuu: ", states)
+                                            return (
+                                                <option key={key} value={states.state} className="black-text">Testing</option>
+                                            )
+                                        })
                                     }
                                 </select>
                                 <select id='citySelect' onChange={() => getValue()}>
