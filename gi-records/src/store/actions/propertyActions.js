@@ -1,4 +1,4 @@
-export const sellProperty = (key, price, states, city, locality, plotNo, buyingRate, coords, firebase) => {
+export const sellProperty = (key, price, states, city, locality, plotNo, buyingRate, coords, landSize, firebase) => {
     return (dispatch, getState) => {
       const profile = getState().firebase.profile;
       const sellerID = getState().firebase.profile.ethereumAdd;
@@ -16,6 +16,7 @@ export const sellProperty = (key, price, states, city, locality, plotNo, buyingR
         rate: buyingRate,
         price: price,
         coords: coords,
+        landSize: landSize,
         createdAt: new Date()
       }).then(() => {
         dispatch({ type: 'SELL_PROPERTY_SUCCESS' });
@@ -25,7 +26,7 @@ export const sellProperty = (key, price, states, city, locality, plotNo, buyingR
     }
   };
 
-export const quotePrice = (sellerID, price, state, city, locality, plotNo, landID, coords, sellerFName, sellerLName, firebase) => {
+export const quotePrice = (sellerID, price, state, city, locality, plotNo, landID, coords, sellerFName, sellerLName, landSize, firebase) => {
   console.log("Seller ID: ", sellerID)
     return (dispatch, getState) => {
       const profile = getState().firebase.profile;
@@ -49,6 +50,7 @@ export const quotePrice = (sellerID, price, state, city, locality, plotNo, landI
         accepted : accepted,
         sellerFName: sellerFName,
         sellerLName: sellerLName,
+        landSize: landSize
       }).then(() => {
         dispatch({ type: 'SENT_QUOTE' });
       }).catch(err => {

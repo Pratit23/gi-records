@@ -21,6 +21,7 @@ const PropertyDetails = (props) => {
     const [coords, setCoords] = useState([])
     const [update, setUpdate] = useState([])
     const [showGraph, setShowGraph] = useState(false)
+    const [landSize, setLandSize] = useState('')
 
     var data = localStorage.getItem('propertyDetails')
     data = JSON.parse(data)
@@ -28,7 +29,7 @@ const PropertyDetails = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         props.sellProperty(stateKey, price, states, city, locality, plotNo,
-            buyingRate, coords, props.firebase);
+            buyingRate, coords, landSize, props.firebase);
     }
 
     const updateData = (e) => {
@@ -45,6 +46,7 @@ const PropertyDetails = (props) => {
         setStateProperty(newProperty)
         setCoords(newProperty.coordsArray[i])
         setPrice(newProperty.price)
+        setLandSize(newProperty.landSize)
         if (coords.length != 0) {
             update.push(true)
         }
@@ -119,7 +121,7 @@ const PropertyDetails = (props) => {
                                                         <span className="cardTitle card-title white-text">Rate/sq.m</span>
                                                     </div>
                                                     <div className="cardChart section">
-                                                        <DashChart2 locality={stateProperty.locality}/>
+                                                        <DashChart2 city={stateProperty.city} state={stateProperty.states} locality={stateProperty.locality} landSize={stateProperty.landSize}/>
                                                     </div>
                                                 </div>
                                             </div> : null
@@ -151,7 +153,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        sellProperty: (key, price, states, city, locality, plotNo, buyingRate, coords, firebase) => dispatch(sellProperty(key, price, states, city, locality, plotNo, buyingRate, coords, firebase))
+        sellProperty: (key, price, states, city, locality, plotNo, buyingRate, coords, landSize, firebase) => dispatch(sellProperty(key, price, states, city, locality, plotNo, buyingRate, coords, landSize, firebase))
     }
 }
 

@@ -8,7 +8,7 @@ html,body {
   background-size: 100%;
   background-position: bottom;
   overflow: overlay; */
-  background-color: #eeeeee;
+  background-color: #bdbdbd ;
 }
 
 .mb-0 {
@@ -315,6 +315,10 @@ form button, form h5{
   margin-right: 10px !important;
   margin-top: 10px !important;
   margin-bottom: 5px !important;
+}
+
+.dashCard {
+  height: 170px !important;
 }
 
 /*=========TESTING================*/

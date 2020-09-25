@@ -2,17 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
-import { Redirect } from 'react-router-dom';
 import DashChart1 from '../layout/DashChart1';
-import DashChart2 from '../layout/DashChart2';
-import { db } from '../../config/fbConfig'
 import Sidenav from '../layout/Sidenav'
-import { Select } from 'react-materialize'
 import Web3 from 'web3';
 import { simpleStorageAbi } from '../../abis/abis';
-import M from "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import globalVal from '../../BlockchainAdd'
+import { Collapsible, CollapsibleItem, Icon } from 'react-materialize'
 
 var temp = []
 
@@ -23,6 +19,9 @@ const Dashboard = (props) => {
   const [property, setProperty] = useState([])
   const [selectPlot, setSelectPlot] = useState('')
   const [selectLocality, setSelectLocality] = useState('')
+  const [selectCity, setSelectCity] = useState('')
+  const [selectState, setSelectState] = useState('')
+  const [selectLandSize, setSelectLandSize] = useState('')
 
   const { profile } = props
 
@@ -46,6 +45,7 @@ const Dashboard = (props) => {
       var city = await SimpleContract.methods.getCity(newId).call();
       var locality = await SimpleContract.methods.getLocality(newId).call();
       var plotNo = await SimpleContract.methods.getPlotNo(newId).call();
+      var landSize = await SimpleContract.methods.getLandSize(newId).call();
 
       if (states.length == 0 && city.length == 0 && locality.length == 0 && plotNo.length == 0) {
         flag1 = false
@@ -54,7 +54,8 @@ const Dashboard = (props) => {
           states: states,
           city: city,
           locality: locality,
-          plotNo: plotNo
+          plotNo: plotNo,
+          landSize: landSize,
         })
         property[plotNo] = { temp }
       }
@@ -81,6 +82,9 @@ const Dashboard = (props) => {
     var check = plotVal.split(",")
     setSelectPlot(check[0])
     setSelectLocality(check[1])
+    setSelectCity(check[2])
+    setSelectState(check[3])
+    setSelectLandSize(check[4])
   }
 
   // useEffect(() => {
@@ -104,7 +108,7 @@ const Dashboard = (props) => {
                 <div className="col s6">
                   <div className="card red darken-1 chartCard">
                     <div className="mainCard card-content white-text">
-                      <div className="section">
+                      <div className="section dashCard">
                         <span className="cardTitle card-title white-text">Watchlist</span>
                         <div className="input-field section">
                           {
@@ -117,8 +121,8 @@ const Dashboard = (props) => {
                                   {
                                     temp && temp.map((property, key) => {
                                       return (
-                                        <option key={key} value={[property.plotNo, property.locality]}>
-                                          {property.plotNo}, {property.locality}
+                                        <option key={key} value={[property.plotNo, property.locality, property.city, property.states, property.landSize]}>
+                                          {property.plotNo}, {property.locality}, {property.city}, {property.states}, {property.landSize}
                                         </option>
                                       )
                                     })
@@ -130,7 +134,11 @@ const Dashboard = (props) => {
                         </div>
                       </div>
                       <div className="cardChart section">
-                        <DashChart1 plotNo={selectPlot} locality={selectLocality} />
+                      {
+                        console.log("selectState: ", selectState),
+                        selectState.length !== 0 && selectCity.length !== 0 && selectLocality.length !== 0 && selectLandSize.length !== 0 ?
+                        <DashChart1 city={selectCity} locality={selectLocality} state={selectState} landSize={selectLandSize}/> : null
+                      }
                       </div>
                     </div>
                   </div>
@@ -138,6 +146,37 @@ const Dashboard = (props) => {
               </div>
               <div className="section">
               </div>
+            </div>
+            <div className="col s6 collapWrapper">
+              <Collapsible
+                accordion
+                popout
+              >
+                <CollapsibleItem
+                  expanded={false}
+                  header="Better safe than sorry. That's my motto."
+                  icon={<Icon>filter_drama</Icon>}
+                  node="div"
+                >
+                  Better safe than sorry. That's my motto.
+            </CollapsibleItem>
+                <CollapsibleItem
+                  expanded={false}
+                  header="Yeah, you do seem to have a little 'shit creek' action going."
+                  icon={<Icon>place</Icon>}
+                  node="div"
+                >
+                  Yeah, you do seem to have a little 'shit creek' action going.
+            </CollapsibleItem>
+                <CollapsibleItem
+                  expanded={false}
+                  header="You know, FYI, you can buy a paddle. Did you not plan for this contingency?"
+                  icon={<Icon>whatshot</Icon>}
+                  node="div"
+                >
+                  You know, FYI, you can buy a paddle. Did you not plan for this contingency?
+            </CollapsibleItem>
+              </Collapsible>
             </div>
           </div>
         </div>

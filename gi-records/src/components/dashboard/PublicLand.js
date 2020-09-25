@@ -5,6 +5,10 @@ import { simpleStorageAbi } from '../../abis/abis'
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, Polygon } from "react-google-maps"
 import globalVal from '../../BlockchainAdd'
 import DashChart2 from '../layout/DashChart2';
+import { db } from '../../config/fbConfig';
+
+var localData = localStorage.getItem('userDetails')
+localData = JSON.parse(localData)
 
 var latLngs = []
 
@@ -147,6 +151,16 @@ const PublicLand = () => {
         setShowGraph(true)
     }
 
+    const addToWatchlist = (property) => {
+        console.log("Property coordsArray: ", toString(property.coordsArray[0]['lat']))
+        const docID = localData.ethereumAdd + property.coordsArray[0]['lat']
+        db.collection('watchlist').doc(docID).set({
+            ...property
+        }).then(() => {
+            console.log("Added to watchlist")
+        })
+    }
+
     useEffect(() => {
         getCoords()
         window.$(document).ready(function () {
@@ -195,9 +209,9 @@ const PublicLand = () => {
                                                             }
                                                         </div>
                                                     </div>
-                                                    <div class="card-action propertyCard">
-                                                        <a className="black white-text btn">Add to wishlist</a>
-                                                        <a onClick={() => showTheGraph()} class="blue white-text btn">Show Graph</a>
+                                                    <div className="card-action propertyCard">
+                                                        <a onClick={() => addToWatchlist(ownerProperty[key])} className="black white-text btn">Add to watchlist</a>
+                                                        <a onClick={() => showTheGraph()} className="blue white-text btn">Show Graph</a>
                                                     </div>
                                                 </div>
                                             </div>

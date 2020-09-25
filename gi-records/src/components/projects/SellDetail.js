@@ -19,6 +19,7 @@ const SellDetail = (props) => {
     const [landID, setLandID] = useState('')
     const [qPrice, setQPrice] = useState('')
     const [showGraph, setShowGraph] = useState(false)
+    const [landSize, setLandSize] = useState('')
 
     // var data = localStorage.getItem('sellDetails')
     // data = JSON.parse(data)
@@ -34,10 +35,11 @@ const SellDetail = (props) => {
         setLocatily(newProperty.locality)
         setPlotNo(newProperty.plotNo)
         setLandID(newProperty.landID)
+        setLandSize(newProperty.landSize)
         const firebase = props.firebase
         console.log("Firebase: ", firebase)
         console.log("New property test: ", newProperty.state)
-        props.quotePrice(newProperty.sellerID, qPrice, newProperty.state, newProperty.city, newProperty.locality, newProperty.plotNo, newProperty.landID, coords, newProperty.authorFirstName, newProperty.authorLastName, firebase);
+        props.quotePrice(newProperty.sellerID, qPrice, newProperty.state, newProperty.city, newProperty.locality, newProperty.plotNo, newProperty.landID, coords, newProperty.authorFirstName, newProperty.authorLastName, newProperty.landSize, firebase);
         //props.quotePrice(newProperty ,firebase);
     }
 
@@ -155,7 +157,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        quotePrice: (sellerID, price, states, city, locality, plotNo, landID, coords, sellerFName, sellerLName, firebase) => dispatch(quotePrice(sellerID, price, states, city, locality, plotNo, landID, coords, sellerFName, sellerLName, firebase))
+        quotePrice: (sellerID, price, states, city, locality, plotNo, landID, coords, sellerFName, sellerLName, landSize, firebase) => dispatch(quotePrice(sellerID, price, states, city, locality, plotNo, landID, coords, sellerFName, sellerLName, landSize, firebase))
     }
 }
 

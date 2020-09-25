@@ -113,6 +113,35 @@ class Notifications extends Component {
                 var setResult = await SimpleContract.methods.transaction(newId, details.landID, details.buyerEthID,
                     details.authorFirstName, details.authorLastName, sellerLastFull).send({ from: account });
 
+
+                //FIREBASE RATES
+                const docID = details.city + details.locality + details.state
+
+                await db.collection("rates").doc(docID)
+                    .get()
+                    .then(async snapshot => {
+                        console.log("this is running")
+                        var tempData = snapshot.data()
+                        console.log("Tempdata: ", tempData)
+                        var dates = tempData.dates
+                        var marketRate = tempData.marketRate
+                        var govRate = tempData.govRate
+                        dates.push(new Date())
+                        console.log("Dates: ", dates)
+                        console.log("First: ", parseFloat(details.quotedPrice))
+                        console.log("Second: ", parseFloat(details.landSize))
+                        marketRate.push(parseFloat(details.quotedPrice) / parseFloat(details.landSize))
+                        console.log("Market Rate: ", marketRate)
+                        await db.collection('rates').doc(docID).set({
+                            state: tempData.state,
+                            city: tempData.city,
+                            locality: tempData.locality,
+                            marketRate: marketRate,
+                            govRate: govRate,
+                            dates: dates
+                        })
+                    }).catch(error => console.log(error))
+
                 if (setResult) {
                     console.log("Land sold")
                 } else {

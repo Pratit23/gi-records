@@ -4,7 +4,7 @@ import { simpleStorageAbi } from '../../abis/abis';
 import { connect } from 'react-redux'
 import MapContainer from '../layout/Map'
 import { Redirect } from 'react-router-dom';
-import  Sidenav from '../layout/Sidenav'
+import Sidenav from '../layout/Sidenav'
 import { db } from '../../config/fbConfig'
 import M from 'materialize-css'
 import globalVal from '../../BlockchainAdd'
@@ -181,55 +181,72 @@ class AddLand extends Component {
         //         console.log('caught it!', err);
         //     })
 
-        const docID = this.state.city + this.state.locality + month + year
-        console.log("BRUUU DOC ID: ", docID)
+        //check if locality exists
+        // if yes there is already a land
+        // 
+
+        const docID = this.state.city + this.state.locality + this.state.state
 
         await db.collection("rates").doc(docID)
             .get()
-            .then(snapshot => {
+            .then(async snapshot => {
                 console.log("this is running")
                 tempData = snapshot.data()
+                if (!tempData) {
+                    var dates = [new Date()]
+                    var marketRate = [this.state.marketRate]
+                    var govRate = [this.state.govRate]
+                    await db.collection('rates').doc(docID).set({
+                        state: this.state.state,
+                        city: this.state.city,
+                        locality: this.state.locality,
+                        marketRate: marketRate,
+                        govRate: govRate,
+                        dates: dates,
+                        landSize: this.state.landSize,
+                    })
+                } 
             }).catch(error => console.log(error))
-            
-            console.log("BRUUUU data: ", tempData)
-            
-        if(!tempData) {
-            await db.collection("rates").doc(docID).set({
-                state: this.state.state,
-                city: this.state.city,
-                locality: this.state.locality,
-                marketRate: this.state.marketRate,
-                govRate: this.state.govRate,
-                buyingRate: this.state.buyingRate,
-                month: month,
-                year: year,
-                createdAt: new Date(),
-            })
-            .then(function () {
-                M.toast({ html: 'Land Added' })
-            }).catch(function (error) {
-                console.error("Error: ", error);
-            });
-        } else {
-            if(parseInt(this.state.marketRate) > parseInt(tempData.marketRate) || parseInt(this.state.govRate) > parseInt(tempData.govRate) || parseInt(this.state.buyingRate) > parseInt(tempData.buyingRate) || !tempData) {
-                await db.collection("rates").doc(docID).set({
-                    state: this.state.state,
-                    city: this.state.city,
-                    locality: this.state.locality,
-                    marketRate: this.state.marketRate,
-                    govRate: this.state.govRate,
-                    buyingRate: this.state.buyingRate,
-                    month: month,
-                    year: year,
-                    createdAt: new Date(),
-                })
-                .then(function () {
-                    M.toast({ html: 'Land Added' })
-                }).catch(function (error) {
-                    console.error("Error: ", error);
-                });
-            }
-        }
+
+        //     console.log("BRUUUU data: ", tempData)
+
+        // if(!tempData) {
+        //     await db.collection("rates").doc(docID).set({
+        //         state: this.state.state,
+        //         city: this.state.city,
+        //         locality: this.state.locality,
+        //         marketRate: this.state.marketRate,
+        //         govRate: this.state.govRate,
+        //         buyingRate: this.state.buyingRate,
+        //         month: month,
+        //         year: year,
+        //         createdAt: new Date(),
+        //     })
+        //     .then(function () {
+        //         M.toast({ html: 'Land Added' })
+        //     }).catch(function (error) {
+        //         console.error("Error: ", error);
+        //     });
+        // } else {
+        //     if(parseInt(this.state.marketRate) > parseInt(tempData.marketRate) || parseInt(this.state.govRate) > parseInt(tempData.govRate) || parseInt(this.state.buyingRate) > parseInt(tempData.buyingRate) || !tempData) {
+        //         await db.collection("rates").doc(docID).set({
+        //             state: this.state.state,
+        //             city: this.state.city,
+        //             locality: this.state.locality,
+        //             marketRate: this.state.marketRate,
+        //             govRate: this.state.govRate,
+        //             buyingRate: this.state.buyingRate,
+        //             month: month,
+        //             year: year,
+        //             createdAt: new Date(),
+        //         })
+        //         .then(function () {
+        //             M.toast({ html: 'Land Added' })
+        //         }).catch(function (error) {
+        //             console.error("Error: ", error);
+        //         });
+        //     }
+        // }
 
         await fetch('http://localhost:2000/delete/?hash=' + this.state.hash, {
             method: 'GET'
