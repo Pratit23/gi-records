@@ -6,6 +6,7 @@ import { withFirebase } from 'react-redux-firebase'
 import { Modal, Button } from 'react-materialize';
 import { Redirect } from 'react-router-dom';
 import Sidenav from '../layout/Sidenav'
+import DashChart2 from '../layout/DashChart2';
 
 const PropertyDetails = (props) => {
 
@@ -19,6 +20,7 @@ const PropertyDetails = (props) => {
     const [stateProperty, setStateProperty] = useState([])
     const [coords, setCoords] = useState([])
     const [update, setUpdate] = useState([])
+    const [showGraph, setShowGraph] = useState(false)
 
     var data = localStorage.getItem('propertyDetails')
     data = JSON.parse(data)
@@ -48,6 +50,10 @@ const PropertyDetails = (props) => {
         }
     }
 
+    const showTheGraph = () => {
+        setShowGraph(true)
+    }
+
     useEffect(() => {
         console.log("Property Detail props: ", props)
         updateData()
@@ -62,43 +68,63 @@ const PropertyDetails = (props) => {
                 <div className="container">
                     <div className="row">
                         <div className="col s12">
-                            <div className="card blue-grey darken-1 detailInfoCard">
-                                <div className="card-content white-text">
-                                    <span className="card-title">PLOT NO - {plotNo}</span>
-                                    <p>Owner - {stateProperty.firstName} {stateProperty.lastName}<br />Address -<br />
-                                        {locality}, {city},<br />{states}<br />Purchase Rate - {buyingRate}/sq.ft
-                            <br />Purchase Price - ₹{price}</p>
-                                    <Modal
-                                        actions={[
-                                            <Button className="black white-text" flat modal="close" node="button">Close</Button>
-                                        ]}
-                                        bottomSheet={false}
-                                        fixedFooter
-                                        header="LIST PROPERTY"
-                                        id="Modal-0"
-                                        open={false}
-                                        options={{
-                                            dismissible: true,
-                                            endingTop: '10%',
-                                            inDuration: 250,
-                                            onCloseEnd: null,
-                                            onCloseStart: null,
-                                            onOpenEnd: null,
-                                            onOpenStart: null,
-                                            opacity: 0.5,
-                                            outDuration: 250,
-                                            preventScrolling: true,
-                                            startingTop: '4%'
-                                        }}
-                                        trigger={<Button node="button">List Property</Button>}>
-                                        <form className="white addLandForm z-depth-3" onSubmit={(handleSubmit)}>
-                                            <div className="input-field">
-                                                <label htmlFor="price">Price</label>
-                                                <input type="text" id='hash' onChange={e => setPrice(e.target.value)} />
-                                            </div>
-                                            <button className="waves-effect waves-light btn black">List for Selling</button>
-                                        </form>
-                                    </Modal>
+                            <div className="card blue-grey darken-4 detailInfoCard">
+                                <div className="row">
+                                    <div className="col s6">
+                                        <div className="card-content white-text">
+                                            <span className="card-title">PLOT NO - {plotNo}</span>
+                                            <p>Owner - {stateProperty.firstName} {stateProperty.lastName}<br />Address -<br />
+                                                {locality}, {city},<br />{states}<br />Purchase Rate - {buyingRate}/sq.ft
+                                    <br />Purchase Price - ₹{price}</p>
+                                            <Modal
+                                                actions={[
+                                                    <Button className="black white-text" flat modal="close" node="button">Close</Button>
+                                                ]}
+                                                bottomSheet={false}
+                                                fixedFooter
+                                                header="LIST PROPERTY"
+                                                id="Modal-0"
+                                                open={false}
+                                                options={{
+                                                    dismissible: true,
+                                                    endingTop: '10%',
+                                                    inDuration: 250,
+                                                    onCloseEnd: null,
+                                                    onCloseStart: null,
+                                                    onOpenEnd: null,
+                                                    onOpenStart: null,
+                                                    opacity: 0.5,
+                                                    outDuration: 250,
+                                                    preventScrolling: true,
+                                                    startingTop: '4%'
+                                                }}
+                                                trigger={<Button className="black white-text" node="button">List Property</Button>}>
+                                                <form className="white addLandForm z-depth-3" onSubmit={(handleSubmit)}>
+                                                    <div className="input-field">
+                                                        <label htmlFor="price">Price</label>
+                                                        <input type="text" id='hash' onChange={e => setPrice(e.target.value)} />
+                                                    </div>
+                                                    <button className="waves-effect waves-light btn black">List for Selling</button>
+                                                </form>
+                                            </Modal>
+                                            <a onClick={() => showTheGraph()} class="blue white-text btn">Show Graph</a>
+                                        </div>
+                                    </div>
+                                    <div className="col s6">
+                                    {
+                                        showGraph ?
+                                            <div className="card  blue-grey darken-4 chartCard sellDetailChart">
+                                                <div className="mainCard card-content white-text">
+                                                    <div className="section">
+                                                        <span className="cardTitle card-title white-text">Rate/sq.m</span>
+                                                    </div>
+                                                    <div className="cardChart section">
+                                                        <DashChart2 locality={stateProperty.locality}/>
+                                                    </div>
+                                                </div>
+                                            </div> : null
+                                    }
+                                    </div>
                                 </div>
                                 {
                                     coords ?

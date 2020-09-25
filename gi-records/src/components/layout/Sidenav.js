@@ -50,7 +50,7 @@ const Sidenav = (props) => {
                 <li><NavLink className="white-text" to='/chartboard'><Icon className="white-text">insert_chart</Icon>Chartboard</NavLink></li>
                 <li><NavLink className="white-text" to='/ViewAllLand'><Icon className="white-text">place</Icon>Your Lands</NavLink></li>
                 <li><NavLink className="white-text" to='/Database'><Icon className="white-text">add</Icon>Add Land</NavLink></li>
-                <li><NavLink className="white-text" to='/public'><Icon className="white-text">add</Icon>View All</NavLink></li>
+                <li><NavLink className="white-text" to='/public'><Icon className="white-text">search</Icon>View All</NavLink></li>
                 <Collapsible accordion className="collapHead">
                     <CollapsibleItem
                         className="collapHead"
@@ -58,7 +58,7 @@ const Sidenav = (props) => {
                         header={<span className="white-text">Land Transactions</span>}
                         node="div">
                         <ul>
-                            <li><NavLink className="white-text" to='/BuyLand'><Icon className="white-text">local_offer</Icon>Buy Land</NavLink></li>
+                            <li><NavLink className="white-text" to='/BuyLand'><Icon className="white-text">add_shopping_cart</Icon>Buy Land</NavLink></li>
                             <li><NavLink className="white-text" to='/transactions'><Icon className="white-text">local_offer</Icon>Transacts</NavLink></li>
                         </ul>
                     </CollapsibleItem>

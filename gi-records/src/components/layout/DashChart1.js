@@ -35,6 +35,7 @@ const DashChart1 = (props) => {
 
         console.log("Dashchart 1 props: ", props)
 
+
         //FIRESTORE FETCH FUNCTION HERE
         db.collection('rates')
             .where("year", "==", year)

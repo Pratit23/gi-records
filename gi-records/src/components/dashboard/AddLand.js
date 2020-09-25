@@ -266,10 +266,10 @@ class AddLand extends Component {
                             <div className="mapBG">
                                 <MapContainer temp={this.state.coordsArray} />
                                 <div className="yourLandFloatingDiv">
-                                    <form className="white addLandForm z-depth-3" onSubmit={this.handleSubmit}>
+                                    <form className="blue-grey darken-4 addLandForm z-depth-3" onSubmit={this.handleSubmit}>
                                         <div className="input-field">
                                             <label htmlFor="hash">Hash Value</label>
-                                            <input type="text" id='hash' onChange={this.handleChange} />
+                                            <input className="white-text" type="text" id='hash' onChange={this.handleChange} />
                                         </div>
                                         <button className="waves-effect waves-light btn black">Add</button>
                                     </form>

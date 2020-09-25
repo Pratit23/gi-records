@@ -101,7 +101,7 @@ const Dashboard = (props) => {
           <div className="row">
             <div className="col s6">
               <div className="row">
-                <div className="col s12">
+                <div className="col s6">
                   <div className="card red darken-1 chartCard">
                     <div className="mainCard card-content white-text">
                       <div className="section">
@@ -130,23 +130,11 @@ const Dashboard = (props) => {
                         </div>
                       </div>
                       <div className="cardChart section">
-                        <DashChart1 plotNo={selectPlot} locality={selectLocality}/>
+                        <DashChart1 plotNo={selectPlot} locality={selectLocality} />
                       </div>
                     </div>
                   </div>
                 </div>
-                {/*<div className="col s12 m6">
-                    <div className="card  blue darken-1">
-                      <div className="mainCard card-content white-text">
-                        <div className="section">
-                          <span className="cardTitle card-title white-text">Rate</span>
-                        </div>
-                        <div className="cardChart section">
-                          <DashChart2 />
-                        </div>
-                      </div>
-                    </div>
-                  </div>*/}
               </div>
               <div className="section">
               </div>

@@ -29,11 +29,15 @@ const AllTransactions = (props) => {
                                             <CollapsibleItem
                                                 key={key}
                                                 expanded={false}
-                                                header="Better safe than sorry. That's my motto."
+                                                header={(transaction.id).toUpperCase()}
                                                 icon={<Icon>filter_drama</Icon>}
                                                 node="div"
                                             >
-                                                <p className="black-text allTransactText">TESTING<br/>{transaction.landID}</p>
+                                                <p className="black-text allTransactText">Seller Details:<br />{transaction.sellerFName} {transaction.sellerLName}<br /></p>
+                                                <div className="divider"></div>
+                                                <p className="allTransactText">Land Details:<br />{transaction.plotNo},<br />{transaction.locality}, {transaction.city}<br />{transaction.state}<br /></p>
+                                                <div className="divider"></div>
+                                                <p className="allTransactText">Transaction Details:<br/>Total Amount: ₹{transaction.quotedPrice}</p>
                                             </CollapsibleItem>
 
 

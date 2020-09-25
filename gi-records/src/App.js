@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import Dashboard from './components/dashboard/Dashboard'
 import SignIn from './components/auth/SignIn'
 import SignUp from './components/auth/SignUp'
@@ -22,6 +22,9 @@ const App = (props) => {
 
   return (
     <BrowserRouter>
+    {
+      auth.uid ?  <Redirect to='/signin' /> : null
+    }
       <div className="App">
         <Switch>
           <Route exact path='/' component={Dashboard} />

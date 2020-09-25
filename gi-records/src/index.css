@@ -73,6 +73,7 @@ form button, form h5{
 
 .brand-logo {
   font-family:"Posterama 2001 W04 Light" !important;
+  padding-left: 25px !important;
 }
 
 .right {
@@ -288,7 +289,6 @@ form button, form h5{
   background-color: #e0e0e0 !important;
   padding: 20px !important;
   border-radius: 24px !important;
-  height: 275px !important;
 }
 
 .propertySummary {
@@ -309,6 +309,12 @@ form button, form h5{
 
 .chartjs-render-monitor{
   border-radius: 24px !important;
+}
+
+.sellDetailChart {
+  margin-right: 10px !important;
+  margin-top: 10px !important;
+  margin-bottom: 5px !important;
 }
 
 /*=========TESTING================*/

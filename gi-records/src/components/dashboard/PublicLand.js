@@ -4,6 +4,7 @@ import Sidenav from '../layout/Sidenav'
 import { simpleStorageAbi } from '../../abis/abis'
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, Polygon } from "react-google-maps"
 import globalVal from '../../BlockchainAdd'
+import DashChart2 from '../layout/DashChart2';
 
 var latLngs = []
 
@@ -17,6 +18,7 @@ const PublicLand = () => {
     const [infoWindow, setInfoWindow] = useState(false)
     const [key, setKey] = useState(0)
     const [points, setPoints] = useState([]);
+    const [showGraph, setShowGraph] = useState(false);
 
     const getCoords = async () => {
         console.log("Get coords is running")
@@ -55,6 +57,7 @@ const PublicLand = () => {
                 var locality = await SimpleContract.methods.getLocality(newId).call();
                 var plotNo = await SimpleContract.methods.getPlotNo(newId).call();
                 var buyingRate = await SimpleContract.methods.getBuyingRate(newId).call();
+                //var marketRate = await SimpleContract.methods.getMarketRate(newId).call();
                 var landSize = await SimpleContract.methods.getLandSize(newId).call();
                 var price = await SimpleContract.methods.getPrice(newId).call();
                 if (result.length == 0) {
@@ -77,7 +80,7 @@ const PublicLand = () => {
                         buyingRate: buyingRate,
                         landSize: landSize,
                         price: price,
-                        coordsArray: intArray
+                        coordsArray: intArray,
                     })
                     intArray = []
                     newArray = ''
@@ -140,6 +143,10 @@ const PublicLand = () => {
         setInfoWindow(true)
     };
 
+    const showTheGraph = () => {
+        setShowGraph(true)
+    }
+
     useEffect(() => {
         getCoords()
         window.$(document).ready(function () {
@@ -162,11 +169,35 @@ const PublicLand = () => {
                                     {
                                         console.log("New Property CHECK THIS: ", ownerProperty[key]),
                                         infoWindow ?
+
                                             <div className="viewAllCards">
-                                                <div className="card propertyCard blue-grey darken-1">
-                                                    <div className="card-content white-text">
-                                                        <span className="card-title">{ownerProperty[key].plotNo}</span>
-                                                        <p>{ownerProperty[key].firstName} {ownerProperty[key].lastName}<br />{ownerProperty[key].locality}, {ownerProperty[key].city}<br />{ownerProperty[key].state}<br />Area: {ownerProperty[key].landSize} sq/m<br />Buying Rate: ₹{ownerProperty[key].buyingRate}</p>
+                                                <div className="card propertyCard blue-grey darken-4">
+                                                    <div className="row">
+                                                        <div className="col s6">
+                                                            <div className="card-content white-text">
+                                                                <span className="card-title">{ownerProperty[key].plotNo}</span>
+                                                                <p>{ownerProperty[key].firstName} {ownerProperty[key].lastName}<br />{ownerProperty[key].locality}, {ownerProperty[key].city}<br />{ownerProperty[key].state}<br />Area: {ownerProperty[key].landSize} sq/m<br />Buying Rate: ₹{ownerProperty[key].buyingRate}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col s6">
+                                                            {
+                                                                showGraph ?
+                                                                    <div className="card  blue-grey darken-4 chartCard sellDetailChart">
+                                                                        <div className="mainCard card-content white-text">
+                                                                            <div className="section">
+                                                                                <span className="cardTitle card-title white-text">Rate</span>
+                                                                            </div>
+                                                                            <div className="cardChart section">
+                                                                                <DashChart2 locality={ownerProperty[key].locality} />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div> : null
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-action propertyCard">
+                                                        <a className="black white-text btn">Add to wishlist</a>
+                                                        <a onClick={() => showTheGraph()} class="blue white-text btn">Show Graph</a>
                                                     </div>
                                                 </div>
                                             </div>

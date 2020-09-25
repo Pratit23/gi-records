@@ -128,7 +128,7 @@ const Blockchain = (props) => {
                       (details, key) => (
                         <div key={key}>
                           <div className="col s12" key={key}>
-                            <div className="card propertyCard blue-grey darken-1" key={key}>
+                            <div className="card propertyCard blue-grey darken-4" key={key}>
                               <Link to={'/property/' + key} key={key}>
                                 <div className="card-content white-text">
                                   <span className="card-title">{details.plotNo}</span>
