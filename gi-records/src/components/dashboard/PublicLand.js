@@ -6,6 +6,7 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker, Polygon } from "react-g
 import globalVal from '../../BlockchainAdd'
 import DashChart2 from '../layout/DashChart2';
 import { db } from '../../config/fbConfig';
+import M from 'materialize-css'
 
 var localData = localStorage.getItem('userDetails')
 localData = JSON.parse(localData)
@@ -155,9 +156,12 @@ const PublicLand = () => {
         console.log("Property coordsArray: ", toString(property.coordsArray[0]['lat']))
         const docID = localData.ethereumAdd + property.coordsArray[0]['lat']
         db.collection('watchlist').doc(docID).set({
-            ...property
+            ...property,
+            ethereumAdd: localData.ethereumAdd,
+            createdAt: new Date()
         }).then(() => {
             console.log("Added to watchlist")
+            M.toast({ html: 'Added to Watchlist' })
         })
     }
 

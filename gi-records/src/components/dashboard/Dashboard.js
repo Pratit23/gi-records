@@ -9,6 +9,8 @@ import { simpleStorageAbi } from '../../abis/abis';
 import "materialize-css/dist/css/materialize.min.css";
 import globalVal from '../../BlockchainAdd'
 import { Collapsible, CollapsibleItem, Icon } from 'react-materialize'
+import { db } from '../../config/fbConfig';
+import moment from 'moment'
 
 var temp = []
 
@@ -22,6 +24,9 @@ const Dashboard = (props) => {
   const [selectCity, setSelectCity] = useState('')
   const [selectState, setSelectState] = useState('')
   const [selectLandSize, setSelectLandSize] = useState('')
+  const [showCollapsible, setShowCollapsible] = useState(false)
+  const [watchlist, setWatchlist] = useState([])
+  const [update, setUpdate] = useState(false)
 
   const { profile } = props
 
@@ -87,9 +92,35 @@ const Dashboard = (props) => {
     setSelectLandSize(check[4])
   }
 
-  // useEffect(() => {
+  const getWatchlist = async () => {
+    var localData = localStorage.getItem('userDetails')
+    localData = JSON.parse(localData)
+    if (typeof (localData.ethereumAdd) !== 'undefined') {
+      console.log("Ethereum Add: ", localData.ethereumAdd)
+      if (watchlist.length == 0) {
+        await db.collection('watchlist')
+          .where("ethereumAdd", "==", localData.ethereumAdd)
+          .orderBy('createdAt', 'desc')
+          .get()
+          .then(snapshot => {
+            console.log("Snapshot: ", snapshot)
+            snapshot.forEach(doc => {
+              console.log("this is ronning")
+              const data = doc.data()
+              watchlist.push(data)
+            })
+          })
+        console.log("Watchlist: ", watchlist)
+        if (watchlist.length !== 0) {
+          setShowCollapsible(true)
+        }
+      }
+    }
+  }
 
-  // }, [profile])
+  useEffect(() => {
+    getWatchlist()
+  })
 
   return (
     <div className="row">
@@ -105,7 +136,7 @@ const Dashboard = (props) => {
           <div className="row">
             <div className="col s6">
               <div className="row">
-                <div className="col s6">
+                <div className="col s12">
                   <div className="card red darken-1 chartCard">
                     <div className="mainCard card-content white-text">
                       <div className="section dashCard">
@@ -116,7 +147,7 @@ const Dashboard = (props) => {
                           }
                           {
                             showDropDown ?
-                              <div className="input-field col s12">
+                              <div className="input-field col s12 inputDashCard">
                                 <select onChange={() => getValue()} id="plotSelect">
                                   {
                                     temp && temp.map((property, key) => {
@@ -134,11 +165,11 @@ const Dashboard = (props) => {
                         </div>
                       </div>
                       <div className="cardChart section">
-                      {
-                        console.log("selectState: ", selectState),
-                        selectState.length !== 0 && selectCity.length !== 0 && selectLocality.length !== 0 && selectLandSize.length !== 0 ?
-                        <DashChart1 city={selectCity} locality={selectLocality} state={selectState} landSize={selectLandSize}/> : null
-                      }
+                        {
+                          console.log("selectState: ", selectState),
+                          selectState.length !== 0 && selectCity.length !== 0 && selectLocality.length !== 0 && selectLandSize.length !== 0 ?
+                            <DashChart1 city={selectCity} locality={selectLocality} state={selectState} landSize={selectLandSize} /> : null
+                        }
                       </div>
                     </div>
                   </div>
@@ -148,35 +179,30 @@ const Dashboard = (props) => {
               </div>
             </div>
             <div className="col s6 collapWrapper">
-              <Collapsible
-                accordion
-                popout
-              >
-                <CollapsibleItem
-                  expanded={false}
-                  header="Better safe than sorry. That's my motto."
-                  icon={<Icon>filter_drama</Icon>}
-                  node="div"
-                >
-                  Better safe than sorry. That's my motto.
-            </CollapsibleItem>
-                <CollapsibleItem
-                  expanded={false}
-                  header="Yeah, you do seem to have a little 'shit creek' action going."
-                  icon={<Icon>place</Icon>}
-                  node="div"
-                >
-                  Yeah, you do seem to have a little 'shit creek' action going.
-            </CollapsibleItem>
-                <CollapsibleItem
-                  expanded={false}
-                  header="You know, FYI, you can buy a paddle. Did you not plan for this contingency?"
-                  icon={<Icon>whatshot</Icon>}
-                  node="div"
-                >
-                  You know, FYI, you can buy a paddle. Did you not plan for this contingency?
-            </CollapsibleItem>
-              </Collapsible>
+              {
+                showCollapsible ?
+                  <Collapsible
+                    accordion
+                    popout>
+                    {
+                      watchlist.map((property, key) => {
+                        return (
+                          <CollapsibleItem
+                            key={key}
+                            expanded={false}
+                            header="Better safe than sorry. That's my motto."
+                            icon={<Icon>filter_drama</Icon>}
+                            node="div">
+
+                            {property.plotNo}
+                            <br /><p>{moment(property.createdAt.toDate()).format('MMMM Do YYYY')}</p>
+
+                          </CollapsibleItem>
+                        )
+                      })
+                    }
+                  </Collapsible> : null
+              }
             </div>
           </div>
         </div>
