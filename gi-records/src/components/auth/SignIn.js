@@ -33,7 +33,7 @@ class SignIn extends Component {
           <div className="nav-wrapper">
             <Link to='/' className="brand-logo">Gi-Records</Link>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
-              <li><a href="sass.html">About</a></li>
+              <li><NavLink to='/landing'>About</NavLink></li>
               <li><NavLink to='/SignUp'>Signup</NavLink></li>
               <li><NavLink to='/signin'>Login</NavLink></li>
             </ul>

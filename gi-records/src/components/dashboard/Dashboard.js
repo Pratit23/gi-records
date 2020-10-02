@@ -125,7 +125,6 @@ const Dashboard = (props) => {
   return (
     <div className="row">
       <div className="col s2 mainSideNav">
-
         <Sidenav />
       </div>
       <div className="col s10">
@@ -181,6 +180,7 @@ const Dashboard = (props) => {
             <div className="col s6 collapWrapper">
               {
                 showCollapsible ?
+                <div className="allTransacCollap">
                   <Collapsible
                     accordion
                     popout>
@@ -190,10 +190,9 @@ const Dashboard = (props) => {
                           <CollapsibleItem
                             key={key}
                             expanded={false}
-                            header="Better safe than sorry. That's my motto."
+                            header={property.plotNo}
                             icon={<Icon>filter_drama</Icon>}
                             node="div">
-
                             {property.plotNo}
                             <br /><p>{moment(property.createdAt.toDate()).format('MMMM Do YYYY')}</p>
 
@@ -201,7 +200,7 @@ const Dashboard = (props) => {
                         )
                       })
                     }
-                  </Collapsible> : null
+                  </Collapsible> </div>: null
               }
             </div>
           </div>

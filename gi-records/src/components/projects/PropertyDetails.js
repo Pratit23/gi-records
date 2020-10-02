@@ -77,7 +77,7 @@ const PropertyDetails = (props) => {
                                             <span className="card-title">PLOT NO - {plotNo}</span>
                                             <p>Owner - {stateProperty.firstName} {stateProperty.lastName}<br />Address -<br />
                                                 {locality}, {city},<br />{states}<br />Purchase Rate - {buyingRate}/sq.ft
-                                    <br />Purchase Price - ₹{price}</p>
+                                    <br />Purchase Price - ₹{stateProperty.landSize * stateProperty.buyingRate}</p>
                                             <Modal
                                                 actions={[
                                                     <Button className="black white-text" flat modal="close" node="button">Close</Button>

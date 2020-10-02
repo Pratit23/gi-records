@@ -7,8 +7,9 @@ html,body {
   /* background-image: url("./images/4030971.jpg");
   background-size: 100%;
   background-position: bottom;
-  overflow: overlay; */
   background-color: #eeeeee ;
+  overflow: overlay; */
+
 }
 
 .mb-0 {
@@ -72,7 +73,7 @@ form button, form h5{
 }
 
 .brand-logo {
-  font-family:"Posterama 2001 W04 Light" !important;
+  font-family:'Open Sans',sans-serif !important;
   padding-left: 25px !important;
 }
 
@@ -219,6 +220,7 @@ form button, form h5{
 
 .allTransacCollap .collapsible-body {
   background-color: white !important;
+  padding: 10px !important;
 }
 
 .allTransactText {
@@ -320,6 +322,7 @@ form button, form h5{
   margin-right: 10px !important;
   margin-top: 10px !important;
   margin-bottom: 5px !important;
+  height: 250px !important;
 }
 
 .dashCard {
@@ -330,6 +333,56 @@ form button, form h5{
 .inputDashCard {
   margin: 0 !important;
 }
+
+.landing1 {
+  height: 620px !important;
+  padding: 0px !important;
+}
+
+.landing2 {
+  background-color: white !important;
+}
+
+.subFirst {
+  padding-top: 100px !important
+}
+
+.subFirstBtn {
+  background-color: #1ED760 !important;
+  border-radius: 24px !important;
+}
+
+.signUpBtn {
+  padding: 10px !important;
+}
+
+.holistic {
+  text-align: center !important;
+  font-weight: bold;
+}
+
+.forParallax {
+  opacity: 0.5 !important;
+}
+
+.featureImages {
+  height: 200px !important;
+}
+
+.featureCard {
+  border-radius: 24px !important;
+}
+
+.featureImagesSec {
+  height: 200px !important;
+  width: 250px !important;
+}
+
+.theNav {
+  background-color: black !important;
+  transition: background-color 200ms linear !important;
+}
+
 
 /*=========TESTING================*/
 body::-webkit-scrollbar {

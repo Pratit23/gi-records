@@ -75,7 +75,7 @@ class BuyLand extends Component {
     }
     render() {
         const { property, auth } = this.props;
-        if (!auth.uid) return <Redirect to='/signin' />
+        if (!auth.uid) return <Redirect to='/landing' />
         const showForm = this.state.showForm
         const showCards = this.state.showCards
         return (

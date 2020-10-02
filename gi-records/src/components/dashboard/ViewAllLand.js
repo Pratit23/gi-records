@@ -7,7 +7,7 @@ class AddLand extends Component {
 
     render() {
         const { auth } = this.props;
-        if (!auth.uid) return <Redirect to='/signin' />
+        if (!auth.uid) return <Redirect to='/landing' />
         return (
             <div>
                 <Blockchain/>

@@ -17,7 +17,7 @@ data = JSON.parse(data)
 const Sidenav = (props) => {
     const { auth, profile, accepted } = props;
     const links = auth.uid ? <SignedInLinks profile={profile} /> : <SignedOutLinks />;
-    if (!auth.uid) return <Redirect to='/signin' />
+    if (!auth.uid) return <Redirect to='/landing' />
     console.log("Accepeted:", accepted)
 
     return (

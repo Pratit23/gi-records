@@ -271,7 +271,7 @@ class AddLand extends Component {
         const firstName = this.props.profile.firstName;
         const lastName = this.props.profile.lastName;
         const { auth } = this.props;
-        if (!auth.uid) return <Redirect to='/signin' />
+        if (!auth.uid) return <Redirect to='/landing' />
         return (
             <div className="row">
                 <div className="col s2 mainSideNav">

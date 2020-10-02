@@ -102,11 +102,11 @@ class SignUp extends Component {
     const { formErrors } = this.state;
     return (
       <div>
-      <nav className="grey darken-4">
+        <nav className="grey darken-4">
           <div className="nav-wrapper">
-            <a href="#" className="brand-logo"></a>
+            <Link to='/' className="brand-logo">Gi-Records</Link>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
-              <li><a href="sass.html">About</a></li>
+              <li><NavLink to='/landing'>About</NavLink></li>
               <li><NavLink to='/SignUp'>Signup</NavLink></li>
               <li><NavLink to='/signin'>Login</NavLink></li>
             </ul>

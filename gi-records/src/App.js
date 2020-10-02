@@ -13,6 +13,7 @@ import Notifications from './components/dashboard/Notifications';
 import { connect } from 'react-redux';
 import PublicLand from './components/dashboard/PublicLand';
 import AllTransactions from './components/dashboard/AllTransactions';
+import LandingPage from './components/auth/LandingPage'
 
 const App = (props) => {
 
@@ -23,11 +24,12 @@ const App = (props) => {
   return (
     <BrowserRouter>
     {
-      auth.uid ?  <Redirect to='/signin' /> : null
+      auth.uid ?  <Redirect to='/landing' /> : null
     }
       <div className="App">
         <Switch>
           <Route exact path='/' component={Dashboard} />
+          <Route exact path='/landing' component={LandingPage} />
           <Route path='/chartboard' component={ChartBoard} />
           <Route path='/ViewAllLand' component={ViewAllLand} />
           <Route path='/property/:id' component={PropertyDetails} />
