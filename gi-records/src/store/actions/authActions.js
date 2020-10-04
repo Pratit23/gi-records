@@ -1,3 +1,5 @@
+import { storage } from '../../config/fbConfig'
+
 export const signIn = (credentials, firebase) => {
   return (dispatch, getState) => {
     
@@ -23,6 +25,8 @@ export const signOut = (firebase) => {
 }
 
 export const signUp = (newUser, firebase) => {
+  console.log("New user: ", newUser)
+
   return (dispatch, getState) => {
 
     firebase.auth().createUserWithEmailAndPassword(

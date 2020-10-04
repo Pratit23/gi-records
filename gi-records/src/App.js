@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import PublicLand from './components/dashboard/PublicLand';
 import AllTransactions from './components/dashboard/AllTransactions';
 import LandingPage from './components/auth/LandingPage'
+import Profile from './components/dashboard/Profile'
 
 const App = (props) => {
 
@@ -29,7 +30,8 @@ const App = (props) => {
       <div className="App">
         <Switch>
           <Route exact path='/' component={Dashboard} />
-          <Route exact path='/landing' component={LandingPage} />
+          <Route path='/landing' component={LandingPage} />
+          <Route path='/profile' component={Profile} />
           <Route path='/chartboard' component={ChartBoard} />
           <Route path='/ViewAllLand' component={ViewAllLand} />
           <Route path='/property/:id' component={PropertyDetails} />

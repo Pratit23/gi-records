@@ -33,6 +33,16 @@ class SignUp extends Component {
       email: '',
       password: '',
       ethereumAdd: ''
+    },
+    image: null,
+  }
+
+  handlePicture = (e) => {
+    e.preventDefault()
+    if (e.target.files[0]) {
+      this.setState({
+        image: e.target.files[0]
+      })
     }
   }
 
@@ -160,6 +170,10 @@ class SignUp extends Component {
                   <div className="center red-text">
                     {authError ? <p>{authError}</p> : null}
                   </div>
+                </div>
+                <div className="input-field">
+                  <p className="white-text">Upload profile picture</p>
+                  <input className="white-text" type="file" onChange={this.handlePicture}/>
                 </div>
               </div>
             </div>

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
 import DashChart1 from '../layout/DashChart1';
+import DashChart3 from '../layout/DashChart3';
 import Sidenav from '../layout/Sidenav'
 import Web3 from 'web3';
 import { simpleStorageAbi } from '../../abis/abis';
@@ -18,12 +19,18 @@ const Dashboard = (props) => {
 
   const [showDropDown, setShowDropDown] = useState(false)
   const [showButton, setShowButton] = useState(true)
+  const [showDropDownTwo, setShowDropDownTwo] = useState(false)
   const [property, setProperty] = useState([])
   const [selectPlot, setSelectPlot] = useState('')
   const [selectLocality, setSelectLocality] = useState('')
   const [selectCity, setSelectCity] = useState('')
   const [selectState, setSelectState] = useState('')
   const [selectLandSize, setSelectLandSize] = useState('')
+  const [selectPlot1, setSelectPlot1] = useState('')
+  const [selectLocality1, setSelectLocality1] = useState('')
+  const [selectCity1, setSelectCity1] = useState('')
+  const [selectState1, setSelectState1] = useState('')
+  const [selectLandSize1, setSelectLandSize1] = useState('')
   const [showCollapsible, setShowCollapsible] = useState(false)
   const [watchlist, setWatchlist] = useState([])
   const [update, setUpdate] = useState(false)
@@ -44,6 +51,7 @@ const Dashboard = (props) => {
     var j = 0
     var tempProperty = []
 
+    temp = []
     while (flag1 == true) {
       newId = tempId + j;
       var states = await SimpleContract.methods.getState(newId).call();
@@ -90,6 +98,21 @@ const Dashboard = (props) => {
     setSelectCity(check[2])
     setSelectState(check[3])
     setSelectLandSize(check[4])
+
+    console.log("Select Plot: ", selectPlot)
+  }
+
+  const getValueAnother = () => {
+    var plotVal = window.$('#anotherSelect').val()
+    console.log("The value: ", plotVal)
+    var check = plotVal.split(",")
+    setSelectPlot1(check[0])
+    setSelectLocality1(check[1])
+    setSelectCity1(check[2])
+    setSelectState1(check[3])
+    setSelectLandSize1(check[4])
+
+    console.log("Select Plot: ", selectPlot)
   }
 
   const getWatchlist = async () => {
@@ -113,6 +136,7 @@ const Dashboard = (props) => {
         console.log("Watchlist: ", watchlist)
         if (watchlist.length !== 0) {
           setShowCollapsible(true)
+          setShowDropDownTwo(true)
         }
       }
     }
@@ -120,6 +144,9 @@ const Dashboard = (props) => {
 
   useEffect(() => {
     getWatchlist()
+    window.$(document).ready(function () {
+      var selected = window.$('select').formSelect()
+    });
   })
 
   return (
@@ -139,7 +166,7 @@ const Dashboard = (props) => {
                   <div className="card red darken-1 chartCard">
                     <div className="mainCard card-content white-text">
                       <div className="section dashCard">
-                        <span className="cardTitle card-title white-text">Watchlist</span>
+                        <span className="cardTitle card-title white-text">Your Lands</span>
                         <div className="input-field section">
                           {
                             showButton ? <a onClick={() => handleDropdown()} className="btn">Get Plots</a> : null
@@ -149,6 +176,7 @@ const Dashboard = (props) => {
                               <div className="input-field col s12 inputDashCard">
                                 <select onChange={() => getValue()} id="plotSelect">
                                   {
+                                    console.log("Watchlist: ", watchlist),
                                     temp && temp.map((property, key) => {
                                       return (
                                         <option key={key} value={[property.plotNo, property.locality, property.city, property.states, property.landSize]}>
@@ -174,33 +202,68 @@ const Dashboard = (props) => {
                   </div>
                 </div>
               </div>
-              <div className="section">
+            </div>
+            <div className="col s6">
+              <div className="col s12">
+                <div className="card blue darken-1 chartCard">
+                  <div className="mainCard card-content white-text">
+                    <div className="section dashCard">
+                      <span className="cardTitle card-title white-text">Watchlist</span>
+                      <div className="input-field section">
+                        {
+                          showDropDownTwo ?
+                            <div className="input-field col s12 inputDashCard">
+                              <select onChange={() => getValueAnother()} id="anotherSelect">
+                                {
+                                  watchlist && watchlist.map((property, key) => {
+                                    return (
+                                      <option key={key} value={[property.plotNo, property.locality, property.city, property.state, property.landSize]}>
+                                        {property.plotNo}, {property.locality}, {property.city}, {property.state}, {property.landSize}
+                                      </option>
+                                    )
+                                  })
+                                }
+                              </select>
+                              <label>Choose your Plot</label>
+                            </div> : null
+                        }
+                      </div>
+                    </div>
+                    <div className="cardChart section">
+                      {
+                        console.log("selectState: ", selectState1),
+                        selectState1.length !== 0 && selectCity1.length !== 0 && selectLocality1.length !== 0 && selectLandSize1.length !== 0 ?
+                          <DashChart3 city={selectCity1} locality={selectLocality1} state={selectState1} landSize={selectLandSize1} /> : null
+                      }
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="col s6 collapWrapper">
+            <div className="col s6 collapWrapperDash">
               {
                 showCollapsible ?
-                <div className="allTransacCollap">
-                  <Collapsible
-                    accordion
-                    popout>
-                    {
-                      watchlist.map((property, key) => {
-                        return (
-                          <CollapsibleItem
-                            key={key}
-                            expanded={false}
-                            header={property.plotNo}
-                            icon={<Icon>filter_drama</Icon>}
-                            node="div">
-                            {property.plotNo}
-                            <br /><p>{moment(property.createdAt.toDate()).format('MMMM Do YYYY')}</p>
+                  <div className="allTransacCollap">
+                    <Collapsible
+                      accordion
+                      popout>
+                      {
+                        watchlist.map((property, key) => {
+                          return (
+                            <CollapsibleItem
+                              key={key}
+                              expanded={false}
+                              header={property.plotNo}
+                              icon={<Icon>filter_drama</Icon>}
+                              node="div">
+                              {property.plotNo}
+                              <br /><p>{moment(property.createdAt.toDate()).format('MMMM Do YYYY')}</p>
 
-                          </CollapsibleItem>
-                        )
-                      })
-                    }
-                  </Collapsible> </div>: null
+                            </CollapsibleItem>
+                          )
+                        })
+                      }
+                    </Collapsible> </div> : null
               }
             </div>
           </div>

@@ -246,6 +246,13 @@ form button, form h5{
   padding: 10px !important;
 }
 
+.collapWrapperDash {
+  height: 500px !important;
+  background-color: #e0e0e0 !important;
+  border-radius: 24px !important;
+  padding: 10px !important;
+}
+
 .signInWrapper {
   position: absolute !important;
 }
@@ -357,6 +364,7 @@ form button, form h5{
 }
 
 .holistic {
+  padding-top: 15% !important;
   text-align: center !important;
   font-weight: bold;
 }
