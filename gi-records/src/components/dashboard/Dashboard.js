@@ -161,43 +161,41 @@ const Dashboard = (props) => {
         <div className="section dashSec2">
           <div className="row">
             <div className="col s6">
-              <div className="row">
-                <div className="col s12">
-                  <div className="card red darken-1 chartCard">
-                    <div className="mainCard card-content white-text">
-                      <div className="section dashCard">
-                        <span className="cardTitle card-title white-text">Your Lands</span>
-                        <div className="input-field section">
-                          {
-                            showButton ? <a onClick={() => handleDropdown()} className="btn">Get Plots</a> : null
-                          }
-                          {
-                            showDropDown ?
-                              <div className="input-field col s12 inputDashCard">
-                                <select onChange={() => getValue()} id="plotSelect">
-                                  {
-                                    console.log("Watchlist: ", watchlist),
-                                    temp && temp.map((property, key) => {
-                                      return (
-                                        <option key={key} value={[property.plotNo, property.locality, property.city, property.states, property.landSize]}>
-                                          {property.plotNo}, {property.locality}, {property.city}, {property.states}, {property.landSize}
-                                        </option>
-                                      )
-                                    })
-                                  }
-                                </select>
-                                <label>Choose your Plot</label>
-                              </div> : null
-                          }
-                        </div>
-                      </div>
-                      <div className="cardChart section">
+              <div className="col s12">
+                <div className="card red darken-1 chartCard">
+                  <div className="mainCard card-content white-text">
+                    <div className="section dashCard">
+                      <span className="cardTitle card-title white-text">Your Lands</span>
+                      <div className="input-field section">
                         {
-                          console.log("selectState: ", selectState),
-                          selectState.length !== 0 && selectCity.length !== 0 && selectLocality.length !== 0 && selectLandSize.length !== 0 ?
-                            <DashChart1 city={selectCity} locality={selectLocality} state={selectState} landSize={selectLandSize} /> : null
+                          showButton ? <a onClick={() => handleDropdown()} className="btn">Get Plots</a> : null
+                        }
+                        {
+                          showDropDown ?
+                            <div className="input-field col s12 inputDashCard">
+                              <select onChange={() => getValue()} id="plotSelect">
+                                {
+                                  console.log("Watchlist: ", watchlist),
+                                  temp && temp.map((property, key) => {
+                                    return (
+                                      <option key={key} value={[property.plotNo, property.locality, property.city, property.states, property.landSize]}>
+                                        {property.plotNo}, {property.locality}, {property.city}, {property.states}, {property.landSize}
+                                      </option>
+                                    )
+                                  })
+                                }
+                              </select>
+                              <label>Choose your Plot</label>
+                            </div> : null
                         }
                       </div>
+                    </div>
+                    <div className="cardChart section">
+                      {
+                        console.log("selectState: ", selectState),
+                        selectState.length !== 0 && selectCity.length !== 0 && selectLocality.length !== 0 && selectLandSize.length !== 0 ?
+                          <DashChart1 city={selectCity} locality={selectLocality} state={selectState} landSize={selectLandSize} /> : null
+                      }
                     </div>
                   </div>
                 </div>

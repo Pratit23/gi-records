@@ -18,7 +18,7 @@ const Sidenav = (props) => {
     const { auth, profile, accepted } = props;
     const links = auth.uid ? <SignedInLinks profile={profile} /> : <SignedOutLinks />;
     if (!auth.uid) return <Redirect to='/landing' />
-    console.log("Accepeted:", accepted)
+    console.log("Profile of sidenav:", profile)
 
     return (
         <div>
@@ -33,15 +33,18 @@ const Sidenav = (props) => {
                 }}
             //trigger={<Button node="button">SIDE NAV DEMO</Button>}
             >
-                <SideNavItem
-                    user={{
-                        //background: 'https://placeimg.com/640/480/tech',
-                        email: auth.email,
-                        image: 'https://picsum.photos/200/300',
-                        name: profile.firstName + " " + profile.lastName
-                    }}
-                    userView
-                />
+                <Link to="/profile">
+                    <SideNavItem
+                        to='/profile'
+                        user={{
+                            //background: 'https://placeimg.com/640/480/tech',
+                            email: auth.email,
+                            image: profile.profilePicture,
+                            name: profile.firstName + " " + profile.lastName
+                        }}
+                        userView
+                    />
+                </Link>
                 <SideNavItem divider />
                 <SideNavItem subheader>
                     <span className="white-text">Main Menu</span>

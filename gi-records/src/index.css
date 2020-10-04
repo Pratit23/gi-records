@@ -391,6 +391,23 @@ form button, form h5{
   transition: background-color 200ms linear !important;
 }
 
+.profileSec {
+  background-color: #2196f3 !important;
+  height: 100vh !important;
+  border-radius: 24px !important;
+}
+
+.upperCase {
+  text-transform: uppercase !important;
+  padding-left: 25px !important;
+}
+
+.circlePic {
+  height: 200px !important;
+  width: 200px !important;
+  margin-left: 130px !important
+}
+
 
 /*=========TESTING================*/
 body::-webkit-scrollbar {
