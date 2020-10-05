@@ -72,7 +72,7 @@ const Sidenav = (props) => {
                         <NavLink to="/notifications">
                             <div className="card sideNavCard">
                                 <div className="card-content white-text">
-                                    <Icon className="white-text">notifications</Icon><span>Notifications</span>
+                                    <Icon className="white-text notifIcon">notifications</Icon><span>Notifications</span>
                                 </div>
                             </div>
                         </NavLink>

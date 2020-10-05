@@ -339,7 +339,7 @@ class Notifications extends Component {
                                                                 ]}
                                                                 bottomSheet={false}
                                                                 fixedFooter={false}
-                                                                header="Modal Header"
+                                                                header="Are you sure you want to accept the following offer?"
                                                                 id="Modal-0"
                                                                 open={false}
                                                                 options={{
@@ -356,11 +356,14 @@ class Notifications extends Component {
                                                                     startingTop: '4%'
                                                                 }}
                                                                 trigger={<a><i className="material-icons">check</i></a>}
-                                                            >{
+                                                            ><p>By: {notif.authorFirstName} {notif.authorLastName}<br/>₹{notif.quotedPrice}
+                                                                <br/>Property: {notif.plotNo}, {notif.locality}<br/>{notif.city}, {notif.state}
+                                                            </p>
+                                                            {
                                                                     notif.accepted === 1 ? <p className="red-text">Already Accepted</p> : <a onClick={() => this.handleAccept(notif.landID, notif.buyerEthID)} className="btn red white-text">Accept</a>
                                                                 }</Modal>
                                                             {
-                                                                notif.accepted === 1 ? <p className="red-text">Already Accepted</p> : <a className="btn blue white-text" onClick={() => this.handleDismiss(notif.landID, notif.buyerEthID)}>Decline</a>
+                                                                notif.accepted === 1 ? <p className="red-text">Already Accepted</p> : <a onClick={() => this.handleDismiss(notif.landID, notif.buyerEthID)}><i className="material-icons">close</i></a>
                                                             }
                                                         </div>
                                                     </div>

@@ -65,7 +65,7 @@ const LandingPage = () => {
                             <ul>
                                 <li><a className="grey-text text-lighten-3" href="#!">About us</a></li>
                                 <li><a className="grey-text text-lighten-3" href="#!">Contact us</a></li>
-                                <li><a className="grey-text text-lighten-3" href="#!">Terms of use3</a></li>
+                                <li><a className="grey-text text-lighten-3" href="#!">Terms of use</a></li>
                                 <li><a className="grey-text text-lighten-3" href="#!">Site map</a></li>
                             </ul>
                         </div>

@@ -37,7 +37,7 @@ export const signUp = (newUser, firebase) => {
     ).then (resp => {
       const { image } = newUser
 
-      const uploadTask = storage.ref(`profilePictures/${image.name}`).put(image);
+      const uploadTask = storage.ref(`profilePictures/${newUser.ethereumAdd}/${image.name}`).put(image);
       uploadTask.on('state_changed', (snapshot) => {
         //progress function
 
@@ -46,7 +46,7 @@ export const signUp = (newUser, firebase) => {
         console.log("Error: ", error)
       }, async() => {
         //Complete Function
-        await storage.ref('profilePictures').child(image.name).getDownloadURL().then(url => {
+        await storage.ref(`profilePictures/${newUser.ethereumAdd}`).child(image.name).getDownloadURL().then(url => {
           imageURL = url
           console.log("Image URL: ", imageURL)
           return firebase.firestore().collection('users').doc(resp.user.uid).set({

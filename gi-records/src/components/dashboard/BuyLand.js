@@ -8,6 +8,11 @@ import { db } from '../../config/fbConfig'
 import Sidenav from '../layout/Sidenav'
 var localData = localStorage.getItem('userDetails')
 localData = JSON.parse(localData)
+
+var tempStates = []
+var tempLocality = []
+var tempCity = []
+
 class BuyLand extends Component {
     constructor(props) {
         super(props)
@@ -68,11 +73,60 @@ class BuyLand extends Component {
     }
     shouldComponentUpdate(prevProps, prevState) {
         if (prevState.showForm != this.state.showForm) {
+            this.getStates()
             return true
         } else {
             return false
         }
     }
+
+    getStates = async() => {
+        await db.collection('sellLand')
+        .get()
+        .then(snapshot => {
+            snapshot.forEach(doc => {
+                const data = doc.data()
+                console.log("DOC ID", data)
+                var s = data.state
+                var c = data.city
+                var l = data.locality
+                tempStates[s] = null 
+                tempCity[c] = null 
+                tempLocality[l] = null 
+            })
+        }).then(() => {
+            window.$(document).ready(function(){
+                console.log("Tempstates: ", tempStates)
+                window.$('input.stateInput').autocomplete({
+                  data: {
+                    ...tempStates
+                  },
+                });
+              });
+            window.$(document).ready(function(){
+                console.log("Tempstates: ", tempStates)
+                window.$('input.cityInput').autocomplete({
+                  data: {
+                    ...tempCity
+                  },
+                });
+              });
+            window.$(document).ready(function(){
+                console.log("Tempstates: ", tempStates)
+                window.$('input.localityInput').autocomplete({
+                  data: {
+                    ...tempLocality
+                  },
+                });
+              });
+        })
+        console.log("Temp states: ", tempStates)
+    }
+
+    componentDidMount() {
+        this.getStates()
+    }
+
     render() {
         const { property, auth } = this.props;
         if (!auth.uid) return <Redirect to='/landing' />
@@ -92,15 +146,15 @@ class BuyLand extends Component {
                                 <form className="blue-grey darken-4 addLandForm z-depth-3" onSubmit={this.handleSubmit}>
                                     <div className="input-field">
                                         <label htmlFor="states">State</label>
-                                        <input className="white-text" type="text" id='states' onChange={this.handleChange} />
+                                        <input className="white-text stateInput" id="autocomplete-input" type="text" id='states' onChange={this.handleChange} />
                                     </div>
                                     <div className="input-field">
                                         <label htmlFor="city">City</label>
-                                        <input className="white-text" type="text" id='city' onChange={this.handleChange} />
+                                        <input className="white-text cityInput" type="text" id='city' onChange={this.handleChange} />
                                     </div>
                                     <div className="input-field">
                                         <label htmlFor="locality">Locality</label>
-                                        <input className="white-text" type="text" id='locality' onChange={this.handleChange} />
+                                        <input className="white-text localityInput" type="text" id='locality' onChange={this.handleChange} />
                                     </div>
                                     <button className="waves-effect waves-light btn black">Search</button>
                                 </form>

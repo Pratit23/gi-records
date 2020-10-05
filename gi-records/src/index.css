@@ -408,6 +408,10 @@ form button, form h5{
   margin-left: 130px !important
 }
 
+.changePic {
+  margin-left: 185px !important
+}
+
 
 /*=========TESTING================*/
 body::-webkit-scrollbar {

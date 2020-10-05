@@ -118,9 +118,9 @@ const Dashboard = (props) => {
   const getWatchlist = async () => {
     var localData = localStorage.getItem('userDetails')
     localData = JSON.parse(localData)
-    if (typeof (localData.ethereumAdd) !== 'undefined') {
+    if (typeof(localData.ethereumAdd) !== 'undefined') {
       console.log("Ethereum Add: ", localData.ethereumAdd)
-      if (watchlist.length == 0) {
+      if (watchlist.length === 0) {
         await db.collection('watchlist')
           .where("ethereumAdd", "==", localData.ethereumAdd)
           .orderBy('createdAt', 'desc')

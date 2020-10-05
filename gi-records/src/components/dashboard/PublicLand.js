@@ -206,7 +206,7 @@ const PublicLand = () => {
                                                                                 <span className="cardTitle card-title white-text">Rate</span>
                                                                             </div>
                                                                             <div className="cardChart section">
-                                                                                <DashChart2 locality={ownerProperty[key].locality} />
+                                                                                <DashChart2 locality={ownerProperty[key].locality} city={ownerProperty[key].city} state={ownerProperty[key].state} landSize={ownerProperty[key].landSize} />
                                                                             </div>
                                                                         </div>
                                                                     </div> : null
