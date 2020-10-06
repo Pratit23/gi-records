@@ -6,7 +6,15 @@ import MapContainer from '../components/layout/Map1'
 import { Link } from 'react-router-dom'
 import Sidenav from '../components/layout/Sidenav'
 import globalVal from '../BlockchainAdd'
+import { Switch } from 'react-materialize'
+import { db } from '../config/fbConfig';
 
+
+var localData = localStorage.getItem('userDetails')
+localData = JSON.parse(localData)
+
+var arrayOfKeys = []
+var tempArray = []
 
 const Blockchain = (props) => {
 
@@ -17,8 +25,19 @@ const Blockchain = (props) => {
 
   const [id, setId] = useState()
   const [property, setProperty] = useState([])
+  const [listedProperty, setListedProperty] = useState([])
   const [coordsArray, setCoordsArray] = useState([])
-  const [update, setUpdate] = useState([])
+  const [toggle, setToggle] = useState(false)
+
+  const checkToggle = async () => {
+    if (toggle) {
+      setToggle(false)
+      props.show(property)
+    } else {
+      setToggle(true)
+      props.show(listedProperty)
+    }
+  }
 
   const handleGet = async () => {
 
@@ -76,7 +95,7 @@ const Blockchain = (props) => {
         flag1 = false
       } else {
         console.log("Else is running")
-        property.push({
+        property[plotNo + locality] = {
           firstName: firstName,
           lastName: lastName,
           states: states,
@@ -88,12 +107,36 @@ const Blockchain = (props) => {
           hashValue: hashValue,
           price: price,
           coordsArray: array,
-        })
+        }
         j++
       }
     }
 
+    await db.collection('sellLand')
+      .where('sellerID', '==', localData.ethereumAdd)
+      .get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          const data = doc.data()
+          listedProperty.push({
+            firstName: data.authorFirstName,
+            lastName: data.authorLastName,
+            states: data.state,
+            city: data.city,
+            locality: data.locality,
+            plotNo: data.plotNo,
+            buyingRate: data.rate,
+            landSize: data.landSize,
+            price: data.price,
+            coordsArray: data.coords,
+          })
+        })
+      })
+
+    console.log("Listed property: ", listedProperty)
+
     setCoordsArray(array)
+    console.log("Property in blockchain: ", property)
     props.show(property)
     localStorage.setItem('propertyDetails', JSON.stringify(property))
   }
@@ -119,27 +162,66 @@ const Blockchain = (props) => {
           <div className="row mb-0">
             <div style={{ padding: '0' }} className="col s12">
               <div className="mapBG">
+                {
+                  console.log("CoordsArray jsx: ", coordsArray)
+                }
                 <MapContainer temp={coordsArray} />
                 <div className="yourLandFloatingDiv">
-                  <div className="scrollLand">
-                    {property.length == 0 ? <div className="progress">
-                    <div className="indeterminate"></div>
-                    </div> : (property).map(
-                      (details, key) => (
-                        <div key={key}>
-                          <div className="col s12" key={key}>
-                            <div className="card propertyCard blue-grey darken-4" key={key}>
-                              <Link to={'/property/' + key} key={key}>
-                                <div className="card-content white-text">
-                                  <span className="card-title">{details.plotNo}</span>
-                                  <p>{details.locality}, {details.states}, {details.city}</p>
+                  <Switch
+                    id="Switch-11"
+                    offLabel="All Lands"
+                    onChange={() => checkToggle()}
+                    onLabel="Listed"
+                    checked={toggle}
+                  />
+                  {
+                    toggle ?
+                      <div className="scrollLand">
+                        {listedProperty.length == 0 ? <div className="progress">
+                          <div className="indeterminate"></div>
+                        </div> : (listedProperty).map(
+                          (details, key) => (
+                            <div key={key}>
+                              <div className="col s12" key={key}>
+                                <div className="card propertyCard blue-grey darken-4" key={key}>
+                                  <Link to={'/property/' + key} key={key}>
+                                    <div className="card-content white-text">
+                                      <span className="card-title">{details.plotNo}</span>
+                                      <p>{details.locality}, {details.states}, {details.city}</p>
+                                    </div>
+                                  </Link>
                                 </div>
-                              </Link>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                      ))}
-                  </div>
+                          ))}
+                      </div>
+                      :
+                      <div className="scrollLand">
+                        {
+                          console.log("Length of ze property: ", Object.values(property)),
+                          console.log("Length of ze property: ", Object.keys(property).length)
+                        }
+                        {
+                          Object.keys(property).length == 0 ? <div className="progress">
+                            <div className="indeterminate"></div>
+                          </div> : 
+                          Object.values(property).map(
+                            (details, key) => (
+                              <div key={key}>
+                                <div className="col s12" key={key}>
+                                  <div className="card propertyCard blue-grey darken-4" key={key}>
+                                    <Link to={'/property/' + Object.keys(property)[key]} key={key}>
+                                      <div className="card-content white-text">
+                                        <span className="card-title">{details.plotNo}</span>
+                                        <p>{details.locality}, {details.states}, {details.city}</p>
+                                      </div>
+                                    </Link>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                      </div>
+                  }
                 </div>
               </div>
             </div>

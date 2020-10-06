@@ -23,9 +23,6 @@ const PropertyDetails = (props) => {
     const [showGraph, setShowGraph] = useState(false)
     const [landSize, setLandSize] = useState('')
 
-    var data = localStorage.getItem('propertyDetails')
-    data = JSON.parse(data)
-
     const handleSubmit = (e) => {
         e.preventDefault();
         props.sellProperty(stateKey, price, states, city, locality, plotNo,
@@ -33,18 +30,17 @@ const PropertyDetails = (props) => {
     }
 
     const updateData = (e) => {
-        var key = props.location.pathname;
-        var key = key.slice(-1)
-        var i = parseInt(key)
-        var newProperty = data[i]
-        setStateKey(i)
+        console.log("Property detail props: ", props)
+        const i = props.match.params.id;
+        var newProperty = props.property[i]
+        console.log("New property: ", newProperty)
         setStates(newProperty.states)
         setCity(newProperty.city)
         setLocality(newProperty.locality)
         setPlotNo(newProperty.plotNo)
         setBuyingRate(newProperty.buyingRate)
         setStateProperty(newProperty)
-        setCoords(newProperty.coordsArray[i])
+        setCoords(newProperty.coordsArray)
         setPrice(newProperty.price)
         setLandSize(newProperty.landSize)
         if (coords.length != 0) {
