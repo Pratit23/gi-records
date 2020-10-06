@@ -13,8 +13,7 @@ const DetailsCardMap = (props) => {
         console.log("Map2: ", props.temp)
         if ((props.temp).length !== 0) {
             console.log("if is running")
-            var l = (props.temp).length
-            setPoints((props.temp)[l - 1])
+            setPoints(props.temp)
             console.log("Points: ", points)
             console.log("getAverage is running")
 

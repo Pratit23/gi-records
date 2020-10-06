@@ -76,6 +76,7 @@ const Blockchain = (props) => {
     tempId = id
     newId = id
     j = 0
+    var v = 0
 
     while (flag1 == true) {
       newId = tempId + j;
@@ -106,9 +107,10 @@ const Blockchain = (props) => {
           landSize: landSize,
           hashValue: hashValue,
           price: price,
-          coordsArray: array,
+          coordsArray: array[parseInt(v)],
         }
         j++
+        v++
       }
     }
 
