@@ -3,6 +3,7 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker, Polygon } from "react-g
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
+var tempArray = []
 
 
 const ViewAllLandMaps = (props) => {
@@ -14,8 +15,9 @@ const ViewAllLandMaps = (props) => {
     console.log("Map1 Props:", props)
 
     useEffect(() => {
+        tempArray = []
         props.temp.map((coords, key) => {
-            points.push(coords)
+            tempArray.push(coords)
         })
 
         console.log("Map 1 points: ", points)
@@ -35,7 +37,7 @@ const ViewAllLandMaps = (props) => {
     const GoogleMapExample = withGoogleMap(props => (
         <GoogleMap defaultZoom={15} defaultCenter={{ lat: 15.998976, lng: 73.675307 }}>
             {props.isMarkerShown && <Marker position={{ lat: 15.998976, lng: 73.675307 }} />}
-            {points.map((coords, key) => (
+            {tempArray.map((coords, key) => (
                 console.log("Arrays inside point: ", coords),
                 <Polygon
                     path={coords}

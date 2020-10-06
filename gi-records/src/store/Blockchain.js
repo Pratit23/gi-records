@@ -26,6 +26,7 @@ const Blockchain = (props) => {
   const [property, setProperty] = useState([])
   const [listedProperty, setListedProperty] = useState([])
   const [coordsArray, setCoordsArray] = useState([])
+  const [listedCoordsArray, setListedCoordsArray] = useState([])
   const [toggle, setToggle] = useState(false)
 
   const checkToggle = async () => {
@@ -52,7 +53,6 @@ const Blockchain = (props) => {
     //console.log(newId)
     var flag = true
     while (flag == true) {
-      //console.log("get if is running")
       newId = tempId + j;
       var result = await SimpleContract.methods.getLats(newId).call();
       if (result.length == 0) {
@@ -133,6 +133,7 @@ const Blockchain = (props) => {
             price: data.price,
             coordsArray: data.coords,
           }
+          listedCoordsArray.push(data.coords)
         })
       })
 
@@ -166,9 +167,8 @@ const Blockchain = (props) => {
             <div style={{ padding: '0' }} className="col s12">
               <div className="mapBG">
                 {
-                  console.log("CoordsArray jsx: ", coordsArray)
+                  toggle ? <MapContainer temp={listedCoordsArray} /> : <MapContainer temp={coordsArray} />
                 }
-                <MapContainer temp={coordsArray} />
                 <div className="yourLandFloatingDiv">
                   <Switch
                     id="Switch-11"
