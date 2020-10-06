@@ -13,7 +13,6 @@ import { db } from '../config/fbConfig';
 var localData = localStorage.getItem('userDetails')
 localData = JSON.parse(localData)
 
-var arrayOfKeys = []
 var tempArray = []
 
 const Blockchain = (props) => {
@@ -35,7 +34,7 @@ const Blockchain = (props) => {
       props.show(property)
     } else {
       setToggle(true)
-      props.show(listedProperty)
+      props.show(tempArray)
     }
   }
 
@@ -114,13 +113,15 @@ const Blockchain = (props) => {
       }
     }
 
+    tempArray = []
+
     await db.collection('sellLand')
       .where('sellerID', '==', localData.ethereumAdd)
       .get()
       .then(snapshot => {
         snapshot.forEach(doc => {
           const data = doc.data()
-          listedProperty.push({
+          tempArray[data.plotNo + data.locality] = {
             firstName: data.authorFirstName,
             lastName: data.authorLastName,
             states: data.state,
@@ -131,11 +132,11 @@ const Blockchain = (props) => {
             landSize: data.landSize,
             price: data.price,
             coordsArray: data.coords,
-          })
+          }
         })
       })
 
-    console.log("Listed property: ", listedProperty)
+    console.log("Listed property: ", tempArray)
 
     setCoordsArray(array)
     console.log("Property in blockchain: ", property)
@@ -179,40 +180,19 @@ const Blockchain = (props) => {
                   {
                     toggle ?
                       <div className="scrollLand">
-                        {listedProperty.length == 0 ? <div className="progress">
-                          <div className="indeterminate"></div>
-                        </div> : (listedProperty).map(
-                          (details, key) => (
-                            <div key={key}>
-                              <div className="col s12" key={key}>
-                                <div className="card propertyCard blue-grey darken-4" key={key}>
-                                  <Link to={'/property/' + key} key={key}>
-                                    <div className="card-content white-text">
-                                      <span className="card-title">{details.plotNo}</span>
-                                      <p>{details.locality}, {details.states}, {details.city}</p>
-                                    </div>
-                                  </Link>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                      </div>
-                      :
-                      <div className="scrollLand">
                         {
-                          console.log("Length of ze property: ", Object.values(property)),
-                          console.log("Length of ze property: ", Object.keys(property).length)
+                          console.log("ze tempArray: ", Object.values(tempArray)),
+                          console.log("Length of ze tempArray: ", Object.keys(tempArray))
                         }
                         {
-                          Object.keys(property).length == 0 ? <div className="progress">
+                          Object.keys(tempArray).length == 0 ? <div className="progress">
                             <div className="indeterminate"></div>
-                          </div> : 
-                          Object.values(property).map(
+                          </div> : Object.values(tempArray).map(
                             (details, key) => (
                               <div key={key}>
                                 <div className="col s12" key={key}>
                                   <div className="card propertyCard blue-grey darken-4" key={key}>
-                                    <Link to={'/property/' + Object.keys(property)[key]} key={key}>
+                                    <Link to={'/property/' + Object.keys(tempArray)[key]} key={key}>
                                       <div className="card-content white-text">
                                         <span className="card-title">{details.plotNo}</span>
                                         <p>{details.locality}, {details.states}, {details.city}</p>
@@ -222,6 +202,28 @@ const Blockchain = (props) => {
                                 </div>
                               </div>
                             ))}
+                      </div>
+                      :
+                      <div className="scrollLand">
+                        {
+                          Object.keys(property).length == 0 ? <div className="progress">
+                            <div className="indeterminate"></div>
+                          </div> :
+                            Object.values(property).map(
+                              (details, key) => (
+                                <div key={key}>
+                                  <div className="col s12" key={key}>
+                                    <div className="card propertyCard blue-grey darken-4" key={key}>
+                                      <Link to={'/property/' + Object.keys(property)[key]} key={key}>
+                                        <div className="card-content white-text">
+                                          <span className="card-title">{details.plotNo}</span>
+                                          <p>{details.locality}, {details.states}, {details.city}</p>
+                                        </div>
+                                      </Link>
+                                    </div>
+                                  </div>
+                                </div>
+                              ))}
                       </div>
                   }
                 </div>
