@@ -13,6 +13,10 @@ var tempStates = []
 var tempLocality = []
 var tempCity = []
 
+var st = ''
+var ci = ''
+var lo = ''
+
 class BuyLand extends Component {
     constructor(props) {
         super(props)
@@ -26,6 +30,7 @@ class BuyLand extends Component {
         }
         this.goBack = this.goBack.bind(this);
     }
+
     goBack() {
         this.setState({
             states: '',
@@ -35,19 +40,36 @@ class BuyLand extends Component {
             showCards: false,
         })
     }
+
     handleChange = (e) => {
         e.preventDefault();
         this.setState({
             [e.target.id]: e.target.value
         })
     }
+
     handleSubmit = (e) => {
         e.preventDefault()
+
+        var temp = document.getElementById('states').value
+
+        console.log("Temp: ", temp)
+        
+        this.setState({
+            states:  temp,
+            city:  document.getElementById('city').value,
+            locality:  document.getElementById('locality').value,
+        })
+
+        console.log("CHECK THIS BRUH BRUH: ", this.state.states)
+        console.log("CHECK THIS BRUH BRUH: ", this.state.city)
+        console.log("CHECK THIS BRUH BRUH: ", this.state.locality)
+        
         var tempArray = []
         db.collection('sellLand')
-            .where("state", "==", this.state.states)
-            .where("city", "==", this.state.city)
-            .where("locality", "==", this.state.locality)
+            .where("state", "==", st)
+            .where("city", "==", ci)
+            .where("locality", "==", lo)
             .get()
             .then(snapshot => {
                 snapshot.forEach(doc => {
@@ -101,6 +123,9 @@ class BuyLand extends Component {
                   data: {
                     ...tempStates
                   },
+                  onAutocomplete: function(txt) {
+                    st = txt
+                  },
                 });
               });
             window.$(document).ready(function(){
@@ -109,6 +134,9 @@ class BuyLand extends Component {
                   data: {
                     ...tempCity
                   },
+                  onAutocomplete: function(txt) {
+                    ci = txt
+                  },
                 });
               });
             window.$(document).ready(function(){
@@ -116,6 +144,9 @@ class BuyLand extends Component {
                 window.$('input.localityInput').autocomplete({
                   data: {
                     ...tempLocality
+                  },
+                  onAutocomplete: function(txt) {
+                    lo = txt
                   },
                 });
               });
@@ -146,7 +177,7 @@ class BuyLand extends Component {
                                 <form className="blue-grey darken-4 addLandForm z-depth-3" onSubmit={this.handleSubmit}>
                                     <div className="input-field">
                                         <label htmlFor="states">State</label>
-                                        <input className="white-text stateInput" id="autocomplete-input" type="text" id='states' onChange={this.handleChange} />
+                                        <input className="white-text stateInput" type="text" id='states' onChange={this.handleChange} />
                                     </div>
                                     <div className="input-field">
                                         <label htmlFor="city">City</label>
