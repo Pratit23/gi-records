@@ -6,6 +6,7 @@ import { compose } from 'redux'
 import { Redirect } from 'react-router-dom';
 import { db } from '../../config/fbConfig'
 import Sidenav from '../layout/Sidenav'
+
 var localData = localStorage.getItem('userDetails')
 localData = JSON.parse(localData)
 
@@ -60,10 +61,6 @@ class BuyLand extends Component {
             city:  document.getElementById('city').value,
             locality:  document.getElementById('locality').value,
         })
-
-        console.log("CHECK THIS BRUH BRUH: ", this.state.states)
-        console.log("CHECK THIS BRUH BRUH: ", this.state.city)
-        console.log("CHECK THIS BRUH BRUH: ", this.state.locality)
         
         var tempArray = []
         db.collection('sellLand')

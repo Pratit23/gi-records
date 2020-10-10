@@ -11,6 +11,7 @@ import "materialize-css/dist/css/materialize.min.css";
 import globalVal from '../../BlockchainAdd'
 import { Collapsible, CollapsibleItem, Icon } from 'react-materialize'
 import { db } from '../../config/fbConfig';
+import GeoLocation from './GeoLocation'
 import moment from 'moment'
 
 var temp = []
@@ -118,7 +119,7 @@ const Dashboard = (props) => {
   const getWatchlist = async () => {
     var localData = localStorage.getItem('userDetails')
     localData = JSON.parse(localData)
-    if (typeof(localData.ethereumAdd) !== 'undefined') {
+    if (typeof (localData.ethereumAdd) !== 'undefined') {
       console.log("Ethereum Add: ", localData.ethereumAdd)
       if (watchlist.length === 0) {
         await db.collection('watchlist')
@@ -238,7 +239,13 @@ const Dashboard = (props) => {
                 </div>
               </div>
             </div>
-            <div className="col s6 collapWrapperDash">
+            <div className="suggestedContainer">
+              <div className="col s6">
+                <GeoLocation />
+              </div>
+            </div>
+
+            {/*<div className="col s6 collapWrapperDash">
               {
                 showCollapsible ?
                   <div className="allTransacCollap">
@@ -263,7 +270,7 @@ const Dashboard = (props) => {
                       }
                     </Collapsible> </div> : null
               }
-            </div>
+            </div>*/}
           </div>
         </div>
       </div>

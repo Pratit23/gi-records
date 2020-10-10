@@ -412,6 +412,13 @@ form button, form h5{
   margin-left: 185px !important
 }
 
+.horiCards {
+  border-radius: 24px !important;
+}
+
+.horiCardsContainer {
+  padding-top: 50px !important;
+}
 
 /*=========TESTING================*/
 body::-webkit-scrollbar {
