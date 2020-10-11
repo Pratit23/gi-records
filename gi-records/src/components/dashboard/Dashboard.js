@@ -13,8 +13,35 @@ import { Collapsible, CollapsibleItem, Icon } from 'react-materialize'
 import { db } from '../../config/fbConfig';
 import GeoLocation from './GeoLocation'
 import moment from 'moment'
+import { geolocated } from "react-geolocated";
+import Geocode from "react-geocode";
+import { Link } from 'react-router-dom'
 
 var temp = []
+
+var address = ''
+var tempArray = ''
+var theState = ''
+var theCity = ''
+var dbResults = []
+var arrayOfKeys = []
+
+// set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
+Geocode.setApiKey("AIzaSyBvZX8lKdR6oCkPOn2z-xmw0JHMEzrM_6w");
+
+// set response language. Defaults to english.
+Geocode.setLanguage("en");
+
+var localData = localStorage.getItem('userDetails')
+localData = JSON.parse(localData)
+
+
+// set response region. Its optional.
+// A Geocoding request with region=es (Spain) will return the Spanish city.
+//Geocode.setRegion("es");
+
+// Enable or disable logs. Its optional.
+//Geocode.enableDebug();
 
 const Dashboard = (props) => {
 
@@ -119,11 +146,11 @@ const Dashboard = (props) => {
   const getWatchlist = async () => {
     var localData = localStorage.getItem('userDetails')
     localData = JSON.parse(localData)
-    if (typeof (localData.ethereumAdd) !== 'undefined') {
-      console.log("Ethereum Add: ", localData.ethereumAdd)
+    if (typeof (props.ethID) !== 'undefined') {
+      //console.log("Ethereum Add: ", localData.ethereumAdd)
       if (watchlist.length === 0) {
         await db.collection('watchlist')
-          .where("ethereumAdd", "==", localData.ethereumAdd)
+          .where("ethereumAdd", "==", props.ethID)
           .orderBy('createdAt', 'desc')
           .get()
           .then(snapshot => {
@@ -141,14 +168,54 @@ const Dashboard = (props) => {
         }
       }
     }
+    if (props.coords) {
+      Geocode.fromLatLng(props.coords.latitude, props.coords.longitude).then(
+        response => {
+          address = response.results[0].formatted_address;
+          console.log("The address of the land:", address);
+        },
+        error => {
+          console.error("Error fetching the land: ", error);
+        }
+      ).then(async() => {
+        tempArray = address.split(',')
+        theState = ((tempArray[tempArray.length - 2]).slice(0, (tempArray[tempArray.length - 2]).length - 6)).trim()
+        theCity = (tempArray[tempArray.length - 3]).trim()
+        // console.log("The state: ", theState)
+        // console.log("The city: ", theCity)
+        // console.log("Temp Array: ", tempArray)
+
+        await db.collection('sellLand')
+          .where("state", "==", theState)
+          .where("city", "==", theCity)
+          .get()
+          .then(snapshot => {
+            snapshot.forEach(doc => {
+              const data = doc.data()
+              // console.log("DOC", doc.id)
+              console.log("DOC ID", data)
+              if (data.sellerID !== props.ethID) {
+                dbResults[data.plotNo + data.locality] = { ...data }
+              }
+            })
+          }).then(() => {
+            props.sell(dbResults)
+          })
+          .catch(error => console.log(error))
+        console.log("DB Results: ", dbResults)
+        arrayOfKeys = Object.keys(dbResults);
+        console.log("Array of dbresult keys: ", arrayOfKeys)
+      })
+    }
   }
 
   useEffect(() => {
     getWatchlist()
     window.$(document).ready(function () {
+      console.log("Selector is running")
       var selected = window.$('select').formSelect()
     });
-  })
+  },[props.ethID])
 
   return (
     <div className="row">
@@ -241,7 +308,31 @@ const Dashboard = (props) => {
             </div>
             <div className="suggestedContainer">
               <div className="col s6">
-                <GeoLocation />
+                <h5 className="center-align">Suggested Lands</h5>
+                <div className="row">
+                  <div className="col s12">
+                    {
+                      console.log("Length of dbresults: ", Object.values(dbResults).length),
+                      Object.values(dbResults).length !== 0 ?
+                        Object.values(dbResults).map((detail, key) => {
+                          console.log("Is this working?")
+                          return (
+                            <Link key={key} to={'/sellDetail/' + Object.keys(dbResults)[key]}>
+                            {
+                              console.log("Array of key key key: ", Object.keys(dbResults)[key])
+                            }
+                              <div className="card blue-grey darken-1 horiCards">
+                                <div className="card-content white-text">
+                                  <span className="card-title">{detail.plotNo}</span>
+                                  <p>{detail.locality}, {detail.city}<br />{detail.state}</p>
+                                </div>
+                              </div>
+                            </Link>
+                          )
+                        }) : console.log("It aint mapping son")
+                    }
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -290,12 +381,24 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+      sell: (data) => dispatch({ type: 'SHOW_SELL_DETAIL', property: data })
+  }
+}
+
 
 export default compose(
-  connect(mapStateToProps, null),
+  connect(mapStateToProps, mapDispatchToProps),
   firestoreConnect((props) => [
     { collection: 'quotes', orderBy: ['createdAt', 'desc'], storeAs: 'notif' },
-  ])
+  ]),
+  geolocated({
+    positionOptions: {
+        enableHighAccuracy: false,
+    },
+    userDecisionTimeout: 5000,
+}),
 )(Dashboard)
 
 

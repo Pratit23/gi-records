@@ -47,10 +47,14 @@ const SellDetail = (props) => {
         console.log("Sell detail props: ", props)
         const i = props.match.params.id;
         var newProperty = props.property[i]
-        setProperty(newProperty.data)
-        setCoords(newProperty.data.coords)
-        console.log("Length of coords: ", newProperty.data.coords.length)
-        console.log("New property in updateData: ", newProperty)
+
+        if(typeof(newProperty.data) === 'undefined') {
+            setProperty(newProperty)
+            setCoords(newProperty.coords)
+        } else {
+            setProperty(newProperty.data)
+            setCoords(newProperty.data.coords)
+        }
         if (coords.length != 0) {
             update.push(true)
         }

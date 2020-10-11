@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { geolocated } from "react-geolocated";
 import Geocode from "react-geocode";
 import { db } from '../../config/fbConfig'
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom'
+import { compose } from 'redux'
 
 // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
 Geocode.setApiKey("AIzaSyBvZX8lKdR6oCkPOn2z-xmw0JHMEzrM_6w");
@@ -28,19 +29,11 @@ var arrayOfKeys = []
 var localData = localStorage.getItem('userDetails')
 localData = JSON.parse(localData)
 
-class GetLocation extends React.Component {
+const GetLocation = (props) => {
 
-    // constructor(props) {
-    //     super(props)
-    //     this.state = {
-    //         lat: '',
-    //         lng: '',
-    //     }
-    // }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps.coords !== this.props.coords) {
-            Geocode.fromLatLng(this.props.coords.latitude, this.props.coords.longitude).then(
+    const getData = () => {
+        if (props.coords) {
+            Geocode.fromLatLng(props.coords.latitude, props.coords.longitude).then(
                 response => {
                     address = response.results[0].formatted_address;
                     console.log("The address of the land:", address);
@@ -72,48 +65,44 @@ class GetLocation extends React.Component {
                     })
                     .catch(error => console.log(error))
                 console.log("DB Results: ", dbResults)
-                this.props.sell(dbResults)
+                props.sell(dbResults)
 
                 arrayOfKeys = Object.keys(dbResults);
             })
-        } else {
-            return false
         }
     }
+    useEffect(() => {
+        getData()
+    },)
 
-    render() {
-        return !this.props.isGeolocationAvailable ? (
-            <div>Your browser does not support Geolocation</div>
-        ) : !this.props.isGeolocationEnabled ? (
-            <div>Geolocation is not enabled</div>
-        ) : this.props.coords ? (
-            <div>
-                <h5 className="center-align">Suggested Lands</h5>
-                <div className="row">
-                    <div className="col s12">
-                        {
-                            dbResults.length !== 0 ?
-                                Object.values(dbResults).map((detail, key) => {
-                                    return (
-                                        <Link key={key} to={'/sellDetail/' + arrayOfKeys[key]}>
-                                            <div className="card blue-grey darken-1 horiCards">
-                                                <div className="card-content white-text">
-                                                    <span className="card-title">{detail.plotNo}</span>
-                                                    <p>{detail.locality}, {detail.city}<br/>{detail.state}</p>
-                                                </div>
+    return (
+        <div>
+            <h5 className="center-align">Suggested Lands</h5>
+            <div className="row">
+                <div className="col s12">
+                    {
+                        console.log("Length of dbresults: ", Object.values(dbResults).length),
+                        Object.values(dbResults).length !== 0 ?
+                            Object.values(dbResults).map((detail, key) => {
+                                console.log("Is this working?")
+                                return (
+                                    <Link key={key} to={'/sellDetail/' + arrayOfKeys[key]}>
+                                        <div className="card blue-grey darken-1 horiCards">
+                                            <div className="card-content white-text">
+                                                <span className="card-title">{detail.plotNo}</span>
+                                                <p>{detail.locality}, {detail.city}<br />{detail.state}</p>
                                             </div>
-                                        </Link>
-                                    )
-                                }) : null
-                        }
-                    </div>
+                                        </div>
+                                    </Link>
+                                )
+                            }) : console.log("It aint mapping son")
+                    }
                 </div>
             </div>
-        ) : (
-                        <div>Getting the location data&hellip; </div>
-                    );
-    }
+        </div>
+    ) 
 }
+
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -121,11 +110,11 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export const getLoca = () => geolocated({
+export default compose(geolocated({
     positionOptions: {
         enableHighAccuracy: false,
     },
     userDecisionTimeout: 5000,
-})(GetLocation);
-
-export default connect(null, mapDispatchToProps)(GetLocation)
+}),
+    connect(null, mapDispatchToProps)
+)(GetLocation);
