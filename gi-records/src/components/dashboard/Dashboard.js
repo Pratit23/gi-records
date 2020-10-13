@@ -321,7 +321,7 @@ const Dashboard = (props) => {
                             {
                               console.log("Array of key key key: ", Object.keys(dbResults)[key])
                             }
-                              <div className="card blue-grey darken-1 horiCards">
+                              <div className="card blue-grey darken-4 horiCards">
                                 <div className="card-content white-text">
                                   <span className="card-title">{detail.plotNo}</span>
                                   <p>{detail.locality}, {detail.city}<br />{detail.state}</p>

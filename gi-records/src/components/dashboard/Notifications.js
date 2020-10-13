@@ -113,6 +113,7 @@ class Notifications extends Component {
                 var setResult = await SimpleContract.methods.transaction(newId, details.landID, details.buyerEthID,
                     details.authorFirstName, details.authorLastName, sellerLastFull).send({ from: account });
 
+                    M.toast({ html: 'Sold Succesfully!' })
 
                 //FIREBASE RATES
                 const docID = details.city + details.locality + details.state
@@ -206,7 +207,7 @@ class Notifications extends Component {
         db.collection("quotes").doc(docID).update({
             accepted: 1
         }).then(function () {
-            console.log("Accepted successful")
+            M.toast({ html: 'Accepted!' })
         }).catch(function (error) {
             console.error("Error accepting: ", error);
         });

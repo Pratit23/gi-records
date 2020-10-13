@@ -7,6 +7,7 @@ import { Modal, Button } from 'react-materialize';
 import { Redirect } from 'react-router-dom';
 import Sidenav from '../layout/Sidenav'
 import DashChart2 from '../layout/DashChart2';
+import M from 'materialize-css'
 
 const PropertyDetails = (props) => {
 
@@ -27,6 +28,7 @@ const PropertyDetails = (props) => {
         e.preventDefault();
         props.sellProperty(stateKey, price, states, city, locality, plotNo,
             buyingRate, coords, landSize, props.firebase);
+        M.toast({ html: 'Listed successfully!' })
     }
 
     const updateData = (e) => {
@@ -109,19 +111,19 @@ const PropertyDetails = (props) => {
                                         </div>
                                     </div>
                                     <div className="col s6">
-                                    {
-                                        showGraph ?
-                                            <div className="card  blue-grey darken-4 chartCard sellDetailChart">
-                                                <div className="mainCard card-content white-text">
-                                                    <div className="section">
-                                                        <span className="cardTitle card-title white-text">Rate/sq.m</span>
+                                        {
+                                            showGraph ?
+                                                <div className="card  blue-grey darken-4 chartCard sellDetailChart">
+                                                    <div className="mainCard card-content white-text">
+                                                        <div className="section">
+                                                            <span className="cardTitle card-title white-text">Rate/sq.m</span>
+                                                        </div>
+                                                        <div className="cardChart section">
+                                                            <DashChart2 city={stateProperty.city} state={stateProperty.states} locality={stateProperty.locality} landSize={stateProperty.landSize} />
+                                                        </div>
                                                     </div>
-                                                    <div className="cardChart section">
-                                                        <DashChart2 city={stateProperty.city} state={stateProperty.states} locality={stateProperty.locality} landSize={stateProperty.landSize}/>
-                                                    </div>
-                                                </div>
-                                            </div> : null
-                                    }
+                                                </div> : null
+                                        }
                                     </div>
                                 </div>
                                 {
