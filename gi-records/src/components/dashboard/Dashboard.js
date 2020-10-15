@@ -177,7 +177,7 @@ const Dashboard = (props) => {
         error => {
           console.error("Error fetching the land: ", error);
         }
-      ).then(async() => {
+      ).then(async () => {
         tempArray = address.split(',')
         theState = ((tempArray[tempArray.length - 2]).slice(0, (tempArray[tempArray.length - 2]).length - 6)).trim()
         theCity = (tempArray[tempArray.length - 3]).trim()
@@ -215,7 +215,7 @@ const Dashboard = (props) => {
       console.log("Selector is running")
       var selected = window.$('select').formSelect()
     });
-  },[props.ethID])
+  }, [props.ethID])
 
   return (
     <div className="row">
@@ -242,10 +242,13 @@ const Dashboard = (props) => {
                           showDropDown ?
                             <div className="input-field col s12 inputDashCard">
                               <select onChange={() => getValue()} id="plotSelect">
+                                <option value="" disabled selected>Choose your option</option>
                                 {
                                   console.log("Watchlist: ", watchlist),
                                   temp && temp.map((property, key) => {
                                     return (
+
+
                                       <option key={key} value={[property.plotNo, property.locality, property.city, property.states, property.landSize]}>
                                         {property.plotNo}, {property.locality}, {property.city}, {property.states}, {property.landSize}
                                       </option>
@@ -280,12 +283,14 @@ const Dashboard = (props) => {
                           showDropDownTwo ?
                             <div className="input-field col s12 inputDashCard">
                               <select onChange={() => getValueAnother()} id="anotherSelect">
+                                <option value="" disabled selected>Choose your option</option>
                                 {
                                   watchlist && watchlist.map((property, key) => {
                                     return (
                                       <option key={key} value={[property.plotNo, property.locality, property.city, property.state, property.landSize]}>
                                         {property.plotNo}, {property.locality}, {property.city}, {property.state}, {property.landSize}
                                       </option>
+
                                     )
                                   })
                                 }
@@ -318,9 +323,9 @@ const Dashboard = (props) => {
                           console.log("Is this working?")
                           return (
                             <Link key={key} to={'/sellDetail/' + Object.keys(dbResults)[key]}>
-                            {
-                              console.log("Array of key key key: ", Object.keys(dbResults)[key])
-                            }
+                              {
+                                console.log("Array of key key key: ", Object.keys(dbResults)[key])
+                              }
                               <div className="card blue-grey darken-4 horiCards">
                                 <div className="card-content white-text">
                                   <span className="card-title">{detail.plotNo}</span>
@@ -383,7 +388,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      sell: (data) => dispatch({ type: 'SHOW_SELL_DETAIL', property: data })
+    sell: (data) => dispatch({ type: 'SHOW_SELL_DETAIL', property: data })
   }
 }
 
@@ -395,10 +400,10 @@ export default compose(
   ]),
   geolocated({
     positionOptions: {
-        enableHighAccuracy: false,
+      enableHighAccuracy: false,
     },
     userDecisionTimeout: 5000,
-}),
+  }),
 )(Dashboard)
 
 
