@@ -110,6 +110,9 @@ class Notifications extends Component {
 
                 var sellerLastFull = tempNewID + i;
 
+                console.log("Fix this: ", details.plotNo)
+                console.log("Fix this: ", details.landID)
+
                 var setResult = await SimpleContract.methods.transaction(newId, details.landID, details.buyerEthID,
                     details.authorFirstName, details.authorLastName, sellerLastFull).send({ from: account });
 

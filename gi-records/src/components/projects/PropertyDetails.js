@@ -8,6 +8,12 @@ import { Redirect } from 'react-router-dom';
 import Sidenav from '../layout/Sidenav'
 import DashChart2 from '../layout/DashChart2';
 import M from 'materialize-css'
+import Web3 from 'web3';
+import { simpleStorageAbi } from '../../abis/abis';
+import globalVal from '../../BlockchainAdd'
+
+var localData = localStorage.getItem('userDetails')
+localData = JSON.parse(localData)
 
 const PropertyDetails = (props) => {
 
@@ -26,6 +32,21 @@ const PropertyDetails = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // const web3 = new Web3(Web3.givenProvider);
+        // const contractAddr = globalVal.address
+        // const SimpleContract = new web3.eth.Contract(simpleStorageAbi, contractAddr);
+
+        // var j = 0
+        // var flag = false
+        // var selfID = localData.ethereumAdd
+
+        // while(flag === false) {
+        //     var result = await SimpleContract.methods.getLats(newId).call();
+        // 
+        
+        console.log("State key: ", stateKey)
+
         props.sellProperty(stateKey, price, states, city, locality, plotNo,
             buyingRate, coords, landSize, props.firebase);
         M.toast({ html: 'Listed successfully!' })
@@ -45,6 +66,8 @@ const PropertyDetails = (props) => {
         setCoords(newProperty.coordsArray)
         setPrice(newProperty.price)
         setLandSize(newProperty.landSize)
+        setStateKey(newProperty.landID)
+
         if (coords.length != 0) {
             update.push(true)
         }

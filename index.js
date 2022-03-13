@@ -25,10 +25,10 @@ const razorpay = new Razorpay({
 	key_secret: 'DnwmzKThr6zIOV0wFRdLM1kC'
 })
 
-connection.connect(function (err) {
-    if (err) throw err
-    console.log('You are now connected with mysql database...')
-})
+// connection.connect(function (err) {
+//     if (err) throw err
+//     console.log('You are now connected with mysql database...')
+// })
 
 app.use(cors())
 app.use(bodyParser.json());       // to support JSON-encoded bodies

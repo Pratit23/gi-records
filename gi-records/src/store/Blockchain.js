@@ -39,6 +39,8 @@ const Blockchain = (props) => {
     }
   }
 
+  console.log("Propeasd", property)
+
   const handleGet = async () => {
 
     console.log("These are the props: ", props)
@@ -90,6 +92,8 @@ const Blockchain = (props) => {
       var hashValue = await SimpleContract.methods.getHashValue(newId).call();
       var price = await SimpleContract.methods.getPrice(newId).call();
 
+      console.log("I AM BACK", firstName, lastName)
+
       if (firstName.length == 0 && lastName.length == 0 && states.length == 0 && city.length == 0
         && locality.length == 0 && plotNo.length == 0 && buyingRate.length == 0 && landSize.length == 0 && hashValue.length == 0 && price.length == 0) {
         flag1 = false
@@ -107,6 +111,7 @@ const Blockchain = (props) => {
           hashValue: hashValue,
           price: price,
           coordsArray: array[parseInt(v)],
+          landID: newId,
         }
         j++
         v++
@@ -180,10 +185,6 @@ const Blockchain = (props) => {
                   {
                     toggle ?
                       <div className="scrollLand">
-                        {
-                          console.log("ze tempArray: ", Object.values(tempArray)),
-                          console.log("Length of ze tempArray: ", Object.keys(tempArray))
-                        }
                         {
                           Object.keys(tempArray).length == 0 ? <div className="progress">
                             <div className="indeterminate"></div>

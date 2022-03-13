@@ -2,7 +2,7 @@ export const sellProperty = (key, price, states, city, locality, plotNo, buyingR
     return (dispatch, getState) => {
       const profile = getState().firebase.profile;
       const sellerID = getState().firebase.profile.ethereumAdd;
-      const landID = sellerID + key;
+      const landID = key;
       console.log("Firebase: ", firebase)
       firebase.firestore().collection('sellLand').doc(landID).set({
         authorFirstName: profile.firstName,

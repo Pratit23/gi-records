@@ -169,8 +169,10 @@ const Dashboard = (props) => {
       }
     }
     if (props.coords) {
+      console.log("lalalal", props.coords)
       Geocode.fromLatLng(props.coords.latitude, props.coords.longitude).then(
         response => {
+          console.log("Response: ", response)
           address = response.results[0].formatted_address;
           console.log("The address of the land:", address);
         },
@@ -178,6 +180,7 @@ const Dashboard = (props) => {
           console.error("Error fetching the land: ", error);
         }
       ).then(async () => {
+        console.log("address", address)
         tempArray = address.split(',')
         theState = ((tempArray[tempArray.length - 2]).slice(0, (tempArray[tempArray.length - 2]).length - 6)).trim()
         theCity = (tempArray[tempArray.length - 3]).trim()
@@ -244,7 +247,6 @@ const Dashboard = (props) => {
                               <select onChange={() => getValue()} id="plotSelect">
                                 <option value="" disabled selected>Choose your option</option>
                                 {
-                                  console.log("Watchlist: ", watchlist),
                                   temp && temp.map((property, key) => {
                                     return (
 
@@ -263,7 +265,6 @@ const Dashboard = (props) => {
                     </div>
                     <div className="cardChart section">
                       {
-                        console.log("selectState: ", selectState),
                         selectState.length !== 0 && selectCity.length !== 0 && selectLocality.length !== 0 && selectLandSize.length !== 0 ?
                           <DashChart1 city={selectCity} locality={selectLocality} state={selectState} landSize={selectLandSize} /> : null
                       }
@@ -302,7 +303,6 @@ const Dashboard = (props) => {
                     </div>
                     <div className="cardChart section">
                       {
-                        console.log("selectState: ", selectState1),
                         selectState1.length !== 0 && selectCity1.length !== 0 && selectLocality1.length !== 0 && selectLandSize1.length !== 0 ?
                           <DashChart3 city={selectCity1} locality={selectLocality1} state={selectState1} landSize={selectLandSize1} /> : null
                       }
@@ -311,36 +311,29 @@ const Dashboard = (props) => {
                 </div>
               </div>
             </div>
-            <div className="suggestedContainer">
-              <div className="col s6">
-                <h5 className="center-align">Suggested Lands</h5>
-                <div className="row">
-                  <div className="col s12">
-                    {
-                      console.log("Length of dbresults: ", Object.values(dbResults).length),
-                      Object.values(dbResults).length !== 0 ?
-                        Object.values(dbResults).map((detail, key) => {
-                          console.log("Is this working?")
-                          return (
-                            <Link key={key} to={'/sellDetail/' + Object.keys(dbResults)[key]}>
-                              {
-                                console.log("Array of key key key: ", Object.keys(dbResults)[key])
-                              }
-                              <div className="card blue-grey darken-4 horiCards">
-                                <div className="card-content white-text">
-                                  <span className="card-title">{detail.plotNo}</span>
-                                  <p>{detail.locality}, {detail.city}<br />{detail.state}</p>
-                                </div>
+            <div className="col s6 testContainer">
+              <h5 className="center-align">Suggested Lands</h5>
+              <div className="row">
+                <div className="col s12">
+                  {
+                    Object.values(dbResults).length !== 0 ?
+                      Object.values(dbResults).map((detail, key) => {
+                        console.log("Is this working?")
+                        return (
+                          <Link key={key} to={'/sellDetail/' + Object.keys(dbResults)[key]}>
+                            <div className="card blue-grey darken-4 horiCards">
+                              <div className="card-content white-text">
+                                <span className="card-title">{detail.plotNo}</span>
+                                <p>{detail.locality}, {detail.city}<br />{detail.state}</p>
                               </div>
-                            </Link>
-                          )
-                        }) : console.log("It aint mapping son")
-                    }
-                  </div>
+                            </div>
+                          </Link>
+                        )
+                      }) : console.log("It aint mapping son")
+                  }
                 </div>
               </div>
             </div>
-
             {/*<div className="col s6 collapWrapperDash">
               {
                 showCollapsible ?

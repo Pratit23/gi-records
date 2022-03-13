@@ -185,7 +185,6 @@ const PublicLand = () => {
                             finalCoords.length != 0 ?
                                 <>
                                     {
-                                        console.log("New Property CHECK THIS: ", ownerProperty[key]),
                                         infoWindow ?
 
                                             <div className="viewAllCards">
