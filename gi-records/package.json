@@ -16,7 +16,7 @@
     "google-maps-react": "^2.0.6",
     "jquery": "^3.5.1",
     "materialize-css": "^1.0.0-rc.2",
-    "moment": "^2.27.0",
+    "moment": "^2.29.4",
     "mysql": "^2.18.1",
     "node-sass": "^4.14.1",
     "polygon-centroid": "^1.1.0",
